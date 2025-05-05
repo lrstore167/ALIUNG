@@ -3,36 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aliung Finance - Dashboard</title>
+    <title>Dashboard Keuangan Pribadi</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #6c5ce7;
-            --secondary-color: #a29bfe;
-            --accent-color: #fd79a8;
-            --dark-color: #2d3436;
-            --light-color: #f5f6fa;
-            --success-color: #00b894;
-            --danger-color: #d63031;
-            --warning-color: #fdcb6e;
-            --info-color: #0984e3;
+            --warna-utama: #6c5ce7;
+            --warna-sekunder: #a29bfe;
+            --warna-gelap: #2d3436;
+            --warna-terang: #f5f6fa;
+            --warna-sukses: #00b894;
+            --warna-danger: #d63031;
+            --warna-warning: #fdcb6e;
         }
-
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
+        
         body {
-            background-color: #f5f6fa;
+            background-color: #0f0f1a;
+            color: var(--warna-terang);
             overflow-x: hidden;
+            position: relative;
+            height: 100vh;
         }
-
-        /* Animasi Bintang Jatuh */
-        .stars {
+        
+        /* Animasi Bintang */
+        .bintang-bintang {
             position: fixed;
             top: 0;
             left: 0;
@@ -41,717 +41,699 @@
             z-index: -1;
             pointer-events: none;
         }
-
-        .star {
+        
+        .bintang {
             position: absolute;
             background-color: white;
             border-radius: 50%;
-            animation: fall linear infinite;
+            animation: jatuh linear infinite;
+            opacity: 0.8;
         }
-
-        @keyframes fall {
+        
+        @keyframes jatuh {
             to {
                 transform: translateY(100vh);
             }
         }
-
-        /* Container Utama */
-        .container {
+        
+        /* Container Login */
+        .auth-container {
             display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .auth-box {
+            background-color: rgba(30, 30, 46, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            width: 400px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--warna-utama);
+            animation: glow 2s infinite alternate;
+        }
+        
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 10px -5px var(--warna-utama);
+            }
+            to {
+                box-shadow: 0 0 20px 5px var(--warna-utama);
+            }
+        }
+        
+        .auth-box::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--warna-utama), var(--warna-sekunder), var(--warna-utama));
+            z-index: -1;
+            border-radius: 16px;
+            animation: borderRotate 3s linear infinite;
+            opacity: 0.7;
+        }
+        
+        @keyframes borderRotate {
+            100% {
+                filter: hue-rotate(360deg);
+            }
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo img {
+            max-width: 120px;
+            border-radius: 50%;
+            border: 3px solid var(--warna-utama);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .auth-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--warna-terang);
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--warna-terang);
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: var(--warna-terang);
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--warna-utama);
+            background-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2);
+        }
+        
+        .input-group {
+            display: flex;
+            align-items: center;
+        }
+        
+        .input-group .form-control {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        
+        .input-group-append {
+            display: flex;
+        }
+        
+        .btn-request {
+            padding: 12px 15px;
+            background-color: var(--warna-utama);
+            color: white;
+            border: none;
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-request:hover {
+            background-color: #5649d1;
+        }
+        
+        .btn-request:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+        }
+        
+        .btn-auth {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--warna-utama);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .btn-auth:hover {
+            background-color: #5649d1;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+        }
+        
+        .auth-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        
+        .auth-footer a {
+            color: var(--warna-sekunder);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .auth-footer a:hover {
+            color: var(--warna-utama);
+            text-decoration: underline;
+        }
+        
+        .notifikasi {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--warna-sukses);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+        }
+        
+        .notifikasi.show {
+            transform: translateX(0);
+        }
+        
+        /* Dashboard Styles */
+        .dashboard {
+            display: none;
             min-height: 100vh;
         }
-
-        /* Sidebar */
+        
         .sidebar {
             width: 250px;
-            background: linear-gradient(135deg, var(--dark-color), #1a1a1a);
-            color: white;
+            background-color: rgba(30, 30, 46, 0.9);
+            position: fixed;
+            height: 100vh;
             padding: 20px 0;
-            transition: all 0.3s;
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-            position: relative;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
             z-index: 10;
+            transition: all 0.3s;
         }
-
+        
         .sidebar-header {
             display: flex;
             align-items: center;
             padding: 0 20px 20px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-
-        .logo {
+        
+        .sidebar-header img {
             width: 40px;
             height: 40px;
-            margin-right: 10px;
             border-radius: 50%;
-            object-fit: cover;
+            margin-right: 10px;
         }
-
-        .logo-text {
+        
+        .sidebar-header h3 {
+            color: var(--warna-terang);
             font-size: 18px;
-            font-weight: 600;
+            margin: 0;
         }
-
+        
         .sidebar-menu {
-            margin-top: 20px;
+            padding: 20px 0;
         }
-
+        
         .menu-item {
-            padding: 12px 20px;
             display: flex;
             align-items: center;
-            cursor: pointer;
+            padding: 12px 20px;
+            color: var(--warna-terang);
+            text-decoration: none;
             transition: all 0.3s;
             position: relative;
             overflow: hidden;
         }
-
-        .menu-item:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .menu-item.active {
-            background-color: var(--primary-color);
-        }
-
+        
         .menu-item i {
             margin-right: 10px;
             font-size: 18px;
         }
-
+        
+        .menu-item:hover {
+            background-color: rgba(108, 92, 231, 0.2);
+            color: var(--warna-sekunder);
+            transform: translateX(5px);
+        }
+        
+        .menu-item.active {
+            background-color: rgba(108, 92, 231, 0.3);
+            color: var(--warna-sekunder);
+            border-left: 3px solid var(--warna-utama);
+        }
+        
         .menu-item::before {
             content: '';
             position: absolute;
-            left: 0;
             top: 0;
-            width: 4px;
+            left: 0;
+            width: 5px;
             height: 100%;
-            background-color: var(--accent-color);
+            background-color: var(--warna-utama);
             transform: scaleY(0);
-            transition: transform 0.2s, width 0.4s cubic-bezier(1, 0, 0, 1) 0.2s;
+            transform-origin: bottom;
+            transition: transform 0.3s;
         }
-
+        
         .menu-item:hover::before {
             transform: scaleY(1);
-            width: 100%;
-            opacity: 0.2;
         }
-
-        .menu-item.active::before {
-            transform: scaleY(1);
-            width: 4px;
-            opacity: 1;
-            background-color: white;
-        }
-
-        /* Main Content */
+        
         .main-content {
-            flex: 1;
+            margin-left: 250px;
             padding: 20px;
-            background-color: var(--light-color);
-            transition: all 0.3s;
+            width: calc(100% - 250px);
+            min-height: 100vh;
+            background-color: rgba(15, 15, 26, 0.7);
         }
-
-        /* Header */
+        
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 15px 25px;
+            background-color: rgba(30, 30, 46, 0.7);
+            border-radius: 10px;
             margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #ddd;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
-
-        .header-title {
+        
+        .header-title h1 {
             font-size: 24px;
-            font-weight: 600;
-            color: var(--dark-color);
+            color: var(--warna-terang);
+            margin: 0;
         }
-
-        .user-info {
+        
+        .header-actions {
             display: flex;
             align-items: center;
         }
-
-        .user-avatar {
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .user-profile img {
             width: 40px;
             height: 40px;
             border-radius: 50%;
             margin-right: 10px;
-            object-fit: cover;
-            background-color: var(--primary-color);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
+            border: 2px solid var(--warna-utama);
         }
-
-        .user-name {
+        
+        .user-profile span {
+            color: var(--warna-terang);
             font-weight: 500;
-            margin-right: 15px;
         }
-
-        .logout-btn {
-            background-color: var(--danger-color);
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
+        
+        .dropdown-menu {
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background-color: rgba(30, 30, 46, 0.95);
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            width: 200px;
+            padding: 10px 0;
+            opacity: 0;
+            visibility: hidden;
             transition: all 0.3s;
-            display: flex;
-            align-items: center;
+            z-index: 100;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-
-        .logout-btn:hover {
-            background-color: #c0392b;
+        
+        .user-profile:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            top: 50px;
         }
-
-        .logout-btn i {
-            margin-right: 5px;
+        
+        .dropdown-item {
+            display: block;
+            padding: 10px 20px;
+            color: var(--warna-terang);
+            text-decoration: none;
+            transition: all 0.3s;
         }
-
-        /* Dashboard Cards */
-        .cards {
+        
+        .dropdown-item:hover {
+            background-color: rgba(108, 92, 231, 0.2);
+            color: var(--warna-sekunder);
+        }
+        
+        .dropdown-divider {
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 5px 0;
+        }
+        
+        .card-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
-
+        
         .card {
-            background-color: white;
+            background-color: rgba(30, 30, 46, 0.7);
             border-radius: 10px;
             padding: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
-            position: relative;
-            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            border-left: 4px solid var(--warna-utama);
         }
-
+        
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
-
-        .card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-        }
-
-        .card-income::after {
-            background-color: var(--success-color);
-        }
-
-        .card-expense::after {
-            background-color: var(--danger-color);
-        }
-
-        .card-balance::after {
-            background-color: var(--primary-color);
-        }
-
-        .card-title {
-            font-size: 14px;
-            color: #7f8c8d;
-            margin-bottom: 10px;
-        }
-
-        .card-value {
-            font-size: 24px;
-            font-weight: 600;
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 15px;
         }
-
+        
+        .card-title {
+            font-size: 16px;
+            color: var(--warna-terang);
+            font-weight: 500;
+        }
+        
         .card-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
-            position: absolute;
-            right: 20px;
-            top: 20px;
-            opacity: 0.2;
+            background-color: rgba(108, 92, 231, 0.2);
+            color: var(--warna-utama);
         }
-
-        /* Recent Transactions */
-        .section {
-            background-color: white;
+        
+        .card-body {
+            margin-bottom: 10px;
+        }
+        
+        .card-value {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--warna-terang);
+            margin: 5px 0;
+        }
+        
+        .card-footer {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .positive {
+            color: var(--warna-sukses);
+        }
+        
+        .negative {
+            color: var(--warna-danger);
+        }
+        
+        .table-container {
+            background-color: rgba(30, 30, 46, 0.7);
             border-radius: 10px;
             padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
         }
-
-        .section-header {
+        
+        .table-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #eee;
         }
-
-        .section-title {
+        
+        .table-title {
             font-size: 18px;
-            font-weight: 600;
+            color: var(--warna-terang);
+            font-weight: 500;
         }
-
+        
+        .table-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
         .btn {
             padding: 8px 15px;
-            border-radius: 5px;
+            border-radius: 6px;
             border: none;
+            font-size: 14px;
+            font-weight: 500;
             cursor: pointer;
             transition: all 0.3s;
             display: flex;
             align-items: center;
+            gap: 5px;
         }
-
+        
         .btn-primary {
-            background-color: var(--primary-color);
+            background-color: var(--warna-utama);
             color: white;
         }
-
+        
         .btn-primary:hover {
-            background-color: #5d4ac9;
+            background-color: #5649d1;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(108, 92, 231, 0.3);
         }
-
-        .btn i {
-            margin-right: 5px;
+        
+        .btn-success {
+            background-color: var(--warna-sukses);
+            color: white;
         }
-
-        .table {
+        
+        .btn-success:hover {
+            background-color: #00a884;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0, 184, 148, 0.3);
+        }
+        
+        .btn-danger {
+            background-color: var(--warna-danger);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c23616;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(214, 48, 49, 0.3);
+        }
+        
+        table {
             width: 100%;
             border-collapse: collapse;
+            color: var(--warna-terang);
         }
-
-        .table th, .table td {
+        
+        th, td {
             padding: 12px 15px;
             text-align: left;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-
-        .table th {
-            font-weight: 500;
-            color: #7f8c8d;
-            font-size: 14px;
+        
+        th {
+            font-weight: 600;
+            color: var(--warna-sekunder);
+            background-color: rgba(108, 92, 231, 0.1);
         }
-
-        .table tr:hover {
-            background-color: #f9f9f9;
+        
+        tr:hover {
+            background-color: rgba(108, 92, 231, 0.05);
         }
-
+        
         .badge {
-            padding: 5px 10px;
-            border-radius: 20px;
+            padding: 4px 8px;
+            border-radius: 4px;
             font-size: 12px;
             font-weight: 500;
         }
-
+        
         .badge-success {
-            background-color: rgba(0, 184, 148, 0.1);
-            color: var(--success-color);
+            background-color: rgba(0, 184, 148, 0.2);
+            color: var(--warna-sukses);
         }
-
+        
         .badge-danger {
-            background-color: rgba(214, 48, 49, 0.1);
-            color: var(--danger-color);
+            background-color: rgba(214, 48, 49, 0.2);
+            color: var(--warna-danger);
         }
-
-        /* Form Styles */
-        .form-group {
-            margin-bottom: 20px;
+        
+        .badge-warning {
+            background-color: rgba(253, 203, 110, 0.2);
+            color: var(--warna-warning);
         }
-
-        .form-label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 10px 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            transition: all 0.3s;
-        }
-
-        .form-control:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2);
-            outline: none;
-        }
-
-        .form-row {
-            display: flex;
-            gap: 20px;
-        }
-
-        .form-row .form-group {
-            flex: 1;
-        }
-
-        /* Modal Styles */
-        .modal {
-            display: none;
+        
+        .form-modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
             justify-content: center;
             align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
         }
-
+        
+        .form-modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
         .modal-content {
-            background-color: white;
+            background-color: rgba(30, 30, 46, 0.95);
             border-radius: 10px;
-            width: 90%;
-            max-width: 500px;
+            width: 500px;
+            max-width: 95%;
             padding: 30px;
-            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
-            animation: modalFadeIn 0.3s;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            transform: translateY(-20px);
+            transition: all 0.3s;
+            border: 1px solid var(--warna-utama);
         }
-
-        @keyframes modalFadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        
+        .form-modal.show .modal-content {
+            transform: translateY(0);
         }
-
+        
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
             padding-bottom: 10px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-
+        
         .modal-title {
             font-size: 20px;
-            font-weight: 600;
+            color: var(--warna-terang);
+            font-weight: 500;
         }
-
-        .close-btn {
+        
+        .close-modal {
             background: none;
             border: none;
+            color: rgba(255, 255, 255, 0.5);
             font-size: 24px;
             cursor: pointer;
-            color: #7f8c8d;
             transition: all 0.3s;
         }
-
-        .close-btn:hover {
-            color: var(--danger-color);
+        
+        .close-modal:hover {
+            color: var(--warna-danger);
+            transform: rotate(90deg);
         }
-
+        
         .modal-footer {
             display: flex;
             justify-content: flex-end;
             gap: 10px;
             margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
-
-        /* Login Page Styles */
-        .login-container {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .login-box {
-            background-color: rgba(45, 52, 54, 0.9);
-            border-radius: 10px;
-            width: 90%;
-            max-width: 400px;
-            padding: 30px;
-            box-shadow: 0 0 30px rgba(108, 92, 231, 0.5);
-            position: relative;
-            overflow: hidden;
-            border: 1px solid var(--primary-color);
-            animation: loginFadeIn 0.5s;
-        }
-
-        @keyframes loginFadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .login-box::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                to bottom right,
-                transparent,
-                transparent,
-                transparent,
-                var(--primary-color)
-            );
-            transform: rotate(0deg);
-            animation: borderRotate 6s linear infinite;
-            z-index: -1;
-        }
-
-        .login-box::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                to bottom right,
-                transparent,
-                transparent,
-                transparent,
-                var(--accent-color)
-            );
-            transform: rotate(0deg);
-            animation: borderRotate 6s linear infinite reverse;
-            z-index: -1;
-            opacity: 0.7;
-        }
-
-        @keyframes borderRotate {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        .login-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .login-logo {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 15px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--primary-color);
-        }
-
-        .login-title {
-            color: white;
-            font-size: 24px;
-            margin-bottom: 5px;
-        }
-
-        .login-subtitle {
-            color: #b2bec3;
-            font-size: 14px;
-        }
-
-        .login-form .form-group {
-            margin-bottom: 20px;
-        }
-
-        .login-form .form-label {
-            color: #b2bec3;
-        }
-
-        .login-form .form-control {
-            background-color: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
-        }
-
-        .login-form .form-control:focus {
-            background-color: rgba(255, 255, 255, 0.2);
-            border-color: var(--primary-color);
-        }
-
-        .login-form .form-control::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        .code-request {
-            display: flex;
-            gap: 10px;
-        }
-
-        .code-request .form-control {
-            flex: 1;
-        }
-
-        .request-code-btn {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 0 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s;
-            white-space: nowrap;
-        }
-
-        .request-code-btn:hover {
-            background-color: #5d4ac9;
-        }
-
-        .login-btn {
-            width: 100%;
-            padding: 12px;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 10px;
-        }
-
-        .login-btn:hover {
-            background-color: #5d4ac9;
-            transform: translateY(-2px);
-        }
-
-        .login-footer {
-            text-align: center;
-            margin-top: 20px;
-            color: #b2bec3;
-            font-size: 14px;
-        }
-
-        .login-link {
-            color: var(--primary-color);
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-
-        .login-link:hover {
-            color: var(--secondary-color);
-            text-decoration: underline;
-        }
-
-        /* Notification */
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 20px;
-            border-radius: 5px;
-            color: white;
-            font-weight: 500;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            z-index: 3000;
-            display: flex;
-            align-items: center;
-            transform: translateX(150%);
-            transition: transform 0.3s;
-        }
-
-        .notification.show {
-            transform: translateX(0);
-        }
-
-        .notification i {
-            margin-right: 10px;
-            font-size: 20px;
-        }
-
-        .notification-success {
-            background-color: var(--success-color);
-        }
-
-        .notification-error {
-            background-color: var(--danger-color);
-        }
-
-        /* Responsive Styles */
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
-
+        
+        /* Responsive */
+        @media (max-width: 992px) {
             .sidebar {
-                width: 100%;
-                height: auto;
-                padding: 10px 0;
+                width: 70px;
+                overflow: hidden;
             }
-
-            .sidebar-menu {
-                display: flex;
-                overflow-x: auto;
-                padding-bottom: 10px;
+            
+            .sidebar-header h3, .menu-item span {
+                display: none;
             }
-
+            
             .menu-item {
-                min-width: 120px;
                 justify-content: center;
-                flex-direction: column;
-                padding: 10px 15px;
             }
-
+            
             .menu-item i {
                 margin-right: 0;
-                margin-bottom: 5px;
+                font-size: 20px;
             }
-
-            .menu-item span {
-                font-size: 12px;
-            }
-
-            .cards {
-                grid-template-columns: 1fr;
-            }
-
-            .form-row {
-                flex-direction: column;
-                gap: 0;
+            
+            .main-content {
+                margin-left: 70px;
+                width: calc(100% - 70px);
             }
         }
-
-        /* Security Measures */
+        
+        @media (max-width: 768px) {
+            .card-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+        }
+        
+        /* Security measures */
         body {
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
         }
-
+        
         /* Disable right click */
         body {
             -webkit-touch-callout: none;
@@ -761,959 +743,2020 @@
             -ms-user-select: none;
             user-select: none;
         }
-
-        /* Disable F12, Ctrl+Shift+I, Ctrl+U */
-        body.oncontextmenu {
-            pointer-events: none;
-        }
     </style>
 </head>
 <body>
-    <!-- Animasi Bintang Jatuh -->
-    <div class="stars" id="stars"></div>
-
-    <!-- Login Container -->
-    <div class="login-container" id="loginContainer">
-        <div class="login-box">
-            <div class="login-header">
-                <img src="https://i.ibb.co/ns1hHyqq/DASHBOARD.gif" alt="Logo" class="login-logo">
-                <h2 class="login-title">Aliung Finance</h2>
-                <p class="login-subtitle">Masuk ke dashboard keuangan Anda</p>
+    <!-- Background Bintang -->
+    <div class="bintang-bintang" id="bintang-bintang"></div>
+    
+    <!-- Container Login -->
+    <div class="auth-container" id="auth-container">
+        <div class="auth-box" id="login-box">
+            <div class="logo">
+                <img src="https://i.ibb.co/ns1hHyqq/DASHBOARD.gif" alt="Logo">
             </div>
-            <form class="login-form" id="loginForm">
+            <h2 class="auth-title">Login ke Dashboard</h2>
+            <form id="login-form">
                 <div class="form-group">
-                    <label for="loginEmail" class="form-label">Email</label>
-                    <input type="email" id="loginEmail" class="form-control" placeholder="Masukkan email Anda" required>
+                    <label for="login-username">Username</label>
+                    <input type="text" id="login-username" class="form-control" placeholder="Masukkan username" required>
                 </div>
                 <div class="form-group">
-                    <label for="loginPassword" class="form-label">Password</label>
-                    <input type="password" id="loginPassword" class="form-control" placeholder="Masukkan password Anda" required>
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" class="form-control" placeholder="Masukkan password" required>
                 </div>
-                <button type="submit" class="login-btn">Masuk</button>
+                <button type="submit" class="btn-auth">Login</button>
             </form>
-            <div class="login-footer">
-                Tidak punya akun? <a href="#" class="login-link" id="showRegister">Daftar disini</a>
+            <div class="auth-footer">
+                Belum punya akun? <a href="#" id="show-register">Daftar</a>
+            </div>
+        </div>
+        
+        <div class="auth-box" id="register-box" style="display: none;">
+            <div class="logo">
+                <img src="https://i.ibb.co/ns1hHyqq/DASHBOARD.gif" alt="Logo">
+            </div>
+            <h2 class="auth-title">Buat Akun Baru</h2>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="register-username">Username</label>
+                    <input type="text" id="register-username" class="form-control" placeholder="Pilih username" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-email">Email</label>
+                    <input type="email" id="register-email" class="form-control" placeholder="Masukkan email" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-otp">Kode Verifikasi</label>
+                    <input type="text" id="register-otp" class="form-control" placeholder="Masukkan kode dari email" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Password</label>
+                    <input type="password" id="register-password" class="form-control" placeholder="Buat password" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-confirm">Konfirmasi Password</label>
+                    <input type="password" id="register-confirm" class="form-control" placeholder="Konfirmasi password" required>
+                </div>
+                <button type="submit" class="btn-auth">Daftar</button>
+            </form>
+            <div class="auth-footer">
+                Sudah punya akun? <a href="#" id="show-login">Login</a>
             </div>
         </div>
     </div>
-
-    <!-- Register Container -->
-    <div class="login-container" id="registerContainer" style="display: none;">
-        <div class="login-box">
-            <div class="login-header">
-                <img src="https://i.ibb.co/ns1hHyqq/DASHBOARD.gif" alt="Logo" class="login-logo">
-                <h2 class="login-title">Daftar Akun Baru</h2>
-                <p class="login-subtitle">Buat akun untuk mengelola keuangan Anda</p>
-            </div>
-            <form class="login-form" id="registerForm">
-                <div class="form-group">
-                    <label for="registerName" class="form-label">Nama Lengkap</label>
-                    <input type="text" id="registerName" class="form-control" placeholder="Masukkan nama lengkap Anda" required>
-                </div>
-                <div class="form-group">
-                    <label for="registerEmail" class="form-label">Email</label>
-                    <div class="code-request">
-                        <input type="email" id="registerEmail" class="form-control" placeholder="Masukkan email Anda" required>
-                        <button type="button" class="request-code-btn" id="requestCodeBtn">Request Kode</button>
-                    </div>
-                </div>
-                <div class="form-group" id="verificationCodeGroup" style="display: none;">
-                    <label for="verificationCode" class="form-label">Kode Verifikasi</label>
-                    <input type="text" id="verificationCode" class="form-control" placeholder="Masukkan kode dari email Anda">
-                </div>
-                <div class="form-group">
-                    <label for="registerPassword" class="form-label">Password</label>
-                    <input type="password" id="registerPassword" class="form-control" placeholder="Buat password minimal 8 karakter" required>
-                </div>
-                <div class="form-group">
-                    <label for="registerConfirmPassword" class="form-label">Konfirmasi Password</label>
-                    <input type="password" id="registerConfirmPassword" class="form-control" placeholder="Ulangi password Anda" required>
-                </div>
-                <button type="submit" class="login-btn">Daftar Sekarang</button>
-            </form>
-            <div class="login-footer">
-                Sudah punya akun? <a href="#" class="login-link" id="showLogin">Masuk disini</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Notification -->
-    <div class="notification" id="notification">
-        <i class="fas fa-check-circle"></i>
-        <span id="notificationMessage">Pesan notifikasi</span>
-    </div>
-
-    <!-- Main Container -->
-    <div class="container" id="mainContainer" style="display: none;">
+    
+    <!-- Notifikasi -->
+    <div class="notifikasi" id="notifikasi"></div>
+    
+    <!-- Dashboard -->
+    <div class="dashboard" id="dashboard">
         <!-- Sidebar -->
         <div class="sidebar">
             <div class="sidebar-header">
-                <img src="https://i.ibb.co/ns1hHyqq/DASHBOARD.gif" alt="Logo" class="logo">
-                <span class="logo-text">Aliung Finance</span>
+                <img src="https://i.ibb.co/ns1hHyqq/DASHBOARD.gif" alt="User">
+                <h3 id="sidebar-username">Admin</h3>
             </div>
             <div class="sidebar-menu">
-                <div class="menu-item active" data-target="dashboard">
+                <a href="#" class="menu-item active" data-section="dashboard-section">
                     <i class="fas fa-tachometer-alt"></i>
                     <span>Dashboard</span>
-                </div>
-                <div class="menu-item" data-target="income">
+                </a>
+                <a href="#" class="menu-item" data-section="pemasukan-section">
                     <i class="fas fa-money-bill-wave"></i>
                     <span>Pemasukan</span>
-                </div>
-                <div class="menu-item" data-target="expense">
+                </a>
+                <a href="#" class="menu-item" data-section="pengeluaran-section">
                     <i class="fas fa-shopping-cart"></i>
                     <span>Pengeluaran</span>
-                </div>
-                <div class="menu-item" data-target="debt">
+                </a>
+                <a href="#" class="menu-item" data-section="piutang-section">
                     <i class="fas fa-hand-holding-usd"></i>
                     <span>Piutang</span>
-                </div>
-                <div class="menu-item" data-target="loan">
+                </a>
+                <a href="#" class="menu-item" data-section="utang-section">
                     <i class="fas fa-credit-card"></i>
-                    <span>Hutang</span>
-                </div>
-                <div class="menu-item" data-target="history">
-                    <i class="fas fa-history"></i>
-                    <span>Riwayat</span>
-                </div>
-                <div class="menu-item" data-target="report">
+                    <span>Utang</span>
+                </a>
+                <a href="#" class="menu-item" data-section="laporan-section">
                     <i class="fas fa-chart-pie"></i>
                     <span>Laporan</span>
-                </div>
-                <div class="menu-item" data-target="settings">
+                </a>
+                <a href="#" class="menu-item" data-section="riwayat-section">
+                    <i class="fas fa-history"></i>
+                    <span>Riwayat</span>
+                </a>
+                <a href="#" class="menu-item" data-section="pengaturan-section">
                     <i class="fas fa-cog"></i>
                     <span>Pengaturan</span>
-                </div>
+                </a>
             </div>
         </div>
-
+        
         <!-- Main Content -->
         <div class="main-content">
             <!-- Header -->
             <div class="header">
-                <h1 class="header-title" id="pageTitle">Dashboard</h1>
-                <div class="user-info">
-                    <span class="user-name" id="userName">Admin</span>
-                    <div class="user-avatar" id="userAvatar">A</div>
-                    <button class="logout-btn" id="logoutBtn">
-                        <i class="fas fa-sign-out-alt"></i>
-                        <span>Logout</span>
-                    </button>
+                <div class="header-title">
+                    <h1 id="page-title">Dashboard</h1>
                 </div>
-            </div>
-
-            <!-- Dashboard Content -->
-            <div id="dashboardContent">
-                <!-- Cards -->
-                <div class="cards">
-                    <div class="card card-income">
-                        <div class="card-title">Total Pemasukan</div>
-                        <div class="card-value" id="totalIncome">Rp 12.450.000</div>
-                        <div class="card-icon">
-                            <i class="fas fa-money-bill-wave"></i>
+                <div class="header-actions">
+                    <div class="user-profile">
+                        <img src="https://i.ibb.co/ns1hHyqq/DASHBOARD.gif" alt="User" id="profile-image">
+                        <span id="profile-name">Admin</span>
+                        <div class="dropdown-menu">
+                            <a href="#" class="dropdown-item" id="profile-btn">
+                                <i class="fas fa-user"></i> Profil
+                            </a>
+                            <a href="#" class="dropdown-item" id="change-password-btn">
+                                <i class="fas fa-key"></i> Ganti Password
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item" id="logout-btn">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
                         </div>
-                    </div>
-                    <div class="card card-expense">
-                        <div class="card-title">Total Pengeluaran</div>
-                        <div class="card-value" id="totalExpense">Rp 8.230.500</div>
-                        <div class="card-icon">
-                            <i class="fas fa-shopping-cart"></i>
-                        </div>
-                    </div>
-                    <div class="card card-balance">
-                        <div class="card-title">Saldo Saat Ini</div>
-                        <div class="card-value" id="totalBalance">Rp 4.219.500</div>
-                        <div class="card-icon">
-                            <i class="fas fa-wallet"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Recent Transactions -->
-                <div class="section">
-                    <div class="section-header">
-                        <h2 class="section-title">Transaksi Terakhir</h2>
-                        <button class="btn btn-primary" id="addTransactionBtn">
-                            <i class="fas fa-plus"></i>
-                            <span>Tambah Transaksi</span>
-                        </button>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Tanggal</th>
-                                    <th>Kategori</th>
-                                    <th>Deskripsi</th>
-                                    <th>Jumlah</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>15 Jun 2023</td>
-                                    <td>Gaji</td>
-                                    <td>Gaji bulan Mei</td>
-                                    <td>Rp 10.000.000</td>
-                                    <td><span class="badge badge-success">Pemasukan</span></td>
-                                </tr>
-                                <tr>
-                                    <td>16 Jun 2023</td>
-                                    <td>Belanja</td>
-                                    <td>Belanja bulanan</td>
-                                    <td>Rp 1.500.000</td>
-                                    <td><span class="badge badge-danger">Pengeluaran</span></td>
-                                </tr>
-                                <tr>
-                                    <td>18 Jun 2023</td>
-                                    <td>Bonus</td>
-                                    <td>Bonus proyek</td>
-                                    <td>Rp 2.450.000</td>
-                                    <td><span class="badge badge-success">Pemasukan</span></td>
-                                </tr>
-                                <tr>
-                                    <td>20 Jun 2023</td>
-                                    <td>Tagihan</td>
-                                    <td>Listrik dan air</td>
-                                    <td>Rp 1.200.000</td>
-                                    <td><span class="badge badge-danger">Pengeluaran</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
                     </div>
                 </div>
             </div>
-
-            <!-- Income Content -->
-            <div id="incomeContent" style="display: none;">
-                <div class="section">
-                    <div class="section-header">
-                        <h2 class="section-title">Tambah Pemasukan</h2>
-                    </div>
-                    <form id="incomeForm">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="incomeDate" class="form-label">Tanggal</label>
-                                <input type="date" id="incomeDate" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="incomeAmount" class="form-label">Jumlah</label>
-                                <input type="text" id="incomeAmount" class="form-control" placeholder="Rp" required>
+            
+            <!-- Dashboard Section -->
+            <div class="content-section" id="dashboard-section">
+                <div class="card-container">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Saldo Total</h3>
+                            <div class="card-icon">
+                                <i class="fas fa-wallet"></i>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="incomeCategory" class="form-label">Kategori</label>
-                            <select id="incomeCategory" class="form-control" required>
-                                <option value="">Pilih Kategori</option>
-                                <option value="gaji">Gaji</option>
-                                <option value="bonus">Bonus</option>
-                                <option value="investasi">Investasi</option>
-                                <option value="lainnya">Lainnya</option>
-                            </select>
+                        <div class="card-body">
+                            <h1 class="card-value" id="total-saldo">Rp12.345.678</h1>
                         </div>
-                        <div class="form-group">
-                            <label for="incomeDescription" class="form-label">Deskripsi</label>
-                            <textarea id="incomeDescription" class="form-control" rows="3" placeholder="Tambahkan deskripsi (opsional)"></textarea>
+                        <div class="card-footer">
+                            Diperbarui baru saja
                         </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i>
-                                <span>Simpan Pemasukan</span>
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <!-- Expense Content -->
-            <div id="expenseContent" style="display: none;">
-                <div class="section">
-                    <div class="section-header">
-                        <h2 class="section-title">Tambah Pengeluaran</h2>
                     </div>
-                    <form id="expenseForm">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="expenseDate" class="form-label">Tanggal</label>
-                                <input type="date" id="expenseDate" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="expenseAmount" class="form-label">Jumlah</label>
-                                <input type="text" id="expenseAmount" class="form-control" placeholder="Rp" required>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Total Pemasukan</h3>
+                            <div class="card-icon">
+                                <i class="fas fa-arrow-up"></i>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="expenseCategory" class="form-label">Kategori</label>
-                            <select id="expenseCategory" class="form-control" required>
-                                <option value="">Pilih Kategori</option>
-                                <option value="belanja">Belanja</option>
-                                <option value="tagihan">Tagihan</option>
-                                <option value="hiburan">Hiburan</option>
-                                <option value="lainnya">Lainnya</option>
-                            </select>
+                        <div class="card-body">
+                            <h1 class="card-value positive" id="total-pemasukan">Rp8.765.432</h1>
+                            <p class="card-footer">
+                                <span class="positive">+12.5%</span> dari bulan lalu
+                            </p>
                         </div>
-                        <div class="form-group">
-                            <label for="expenseDescription" class="form-label">Deskripsi</label>
-                            <textarea id="expenseDescription" class="form-control" rows="3" placeholder="Tambahkan deskripsi (opsional)"></textarea>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Total Pengeluaran</h3>
+                            <div class="card-icon">
+                                <i class="fas fa-arrow-down"></i>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i>
-                                <span>Simpan Pengeluaran</span>
+                        <div class="card-body">
+                            <h1 class="card-value negative" id="total-pengeluaran">Rp3.456.789</h1>
+                            <p class="card-footer">
+                                <span class="negative">+5.2%</span> dari bulan lalu
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Tabungan Bersih</h3>
+                            <div class="card-icon">
+                                <i class="fas fa-piggy-bank"></i>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h1 class="card-value positive" id="tabungan-bersih">Rp5.308.643</h1>
+                            <p class="card-footer">
+                                <span class="positive">+24.7%</span> dari bulan lalu
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3 class="table-title">Transaksi Terakhir</h3>
+                        <div class="table-actions">
+                            <button class="btn btn-primary" id="tambah-pemasukan">
+                                <i class="fas fa-plus"></i> Tambah Pemasukan
+                            </button>
+                            <button class="btn btn-primary" id="tambah-pengeluaran">
+                                <i class="fas fa-minus"></i> Tambah Pengeluaran
                             </button>
                         </div>
-                    </form>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Keterangan</th>
+                                <th>Kategori</th>
+                                <th>Jumlah</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transaksi-table">
+                            <!-- Data akan diisi oleh JavaScript -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
-
-            <!-- Debt Content -->
-            <div id="debtContent" style="display: none;">
-                <div class="section">
-                    <div class="section-header">
-                        <h2 class="section-title">Piutang</h2>
-                        <button class="btn btn-primary" id="addDebtBtn">
-                            <i class="fas fa-plus"></i>
-                            <span>Tambah Piutang</span>
-                        </button>
+            
+            <!-- Pemasukan Section -->
+            <div class="content-section" id="pemasukan-section" style="display: none;">
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3 class="table-title">Daftar Pemasukan</h3>
+                        <div class="table-actions">
+                            <button class="btn btn-primary" id="tambah-pemasukan-2">
+                                <i class="fas fa-plus"></i> Tambah Pemasukan
+                            </button>
+                            <button class="btn btn-success" id="export-pemasukan">
+                                <i class="fas fa-file-excel"></i> Export Excel
+                            </button>
+                        </div>
                     </div>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Nama</th>
-                                    <th>Tanggal</th>
-                                    <th>Jumlah</th>
-                                    <th>Jatuh Tempo</th>
-                                    <th>Status</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Budi Santoso</td>
-                                    <td>10 Jun 2023</td>
-                                    <td>Rp 1.500.000</td>
-                                    <td>10 Jul 2023</td>
-                                    <td><span class="badge badge-danger">Belum Lunas</span></td>
-                                    <td>
-                                        <button class="btn btn-primary btn-sm">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="btn btn-danger btn-sm">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Ani Wijaya</td>
-                                    <td>5 Mei 2023</td>
-                                    <td>Rp 750.000</td>
-                                    <td>5 Jun 2023</td>
-                                    <td><span class="badge badge-success">Lunas</span></td>
-                                    <td>
-                                        <button class="btn btn-primary btn-sm">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="btn btn-danger btn-sm">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Keterangan</th>
+                                <th>Kategori</th>
+                                <th>Jumlah</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pemasukan-table">
+                            <!-- Data akan diisi oleh JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Pengeluaran Section -->
+            <div class="content-section" id="pengeluaran-section" style="display: none;">
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3 class="table-title">Daftar Pengeluaran</h3>
+                        <div class="table-actions">
+                            <button class="btn btn-primary" id="tambah-pengeluaran-2">
+                                <i class="fas fa-minus"></i> Tambah Pengeluaran
+                            </button>
+                            <button class="btn btn-success" id="export-pengeluaran">
+                                <i class="fas fa-file-excel"></i> Export Excel
+                            </button>
+                        </div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Keterangan</th>
+                                <th>Kategori</th>
+                                <th>Jumlah</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pengeluaran-table">
+                            <!-- Data akan diisi oleh JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Piutang Section -->
+            <div class="content-section" id="piutang-section" style="display: none;">
+                <div class="card-container">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Total Piutang</h3>
+                            <div class="card-icon">
+                                <i class="fas fa-hand-holding-usd"></i>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h1 class="card-value positive" id="total-piutang">Rp2.500.000</h1>
+                        </div>
+                        <div class="card-footer">
+                            <span id="piutang-aktif">3</span> piutang aktif
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Piutang Jatuh Tempo</h3>
+                            <div class="card-icon">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h1 class="card-value negative" id="piutang-jatuh-tempo">Rp500.000</h1>
+                        </div>
+                        <div class="card-footer">
+                            <span id="jumlah-jatuh-tempo">1</span> piutang belum dibayar
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3 class="table-title">Daftar Piutang</h3>
+                        <div class="table-actions">
+                            <button class="btn btn-primary" id="tambah-piutang">
+                                <i class="fas fa-plus"></i> Tambah Piutang
+                            </button>
+                        </div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nama Peminjam</th>
+                                <th>Tanggal Pinjam</th>
+                                <th>Jatuh Tempo</th>
+                                <th>Jumlah</th>
+                                <th>Dikembalikan</th>
+                                <th>Sisa</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="piutang-table">
+                            <!-- Data akan diisi oleh JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Utang Section -->
+            <div class="content-section" id="utang-section" style="display: none;">
+                <div class="card-container">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Total Utang</h3>
+                            <div class="card-icon">
+                                <i class="fas fa-credit-card"></i>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h1 class="card-value negative" id="total-utang">Rp1.750.000</h1>
+                        </div>
+                        <div class="card-footer">
+                            <span id="utang-aktif">2</span> utang aktif
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Utang Jatuh Tempo</h3>
+                            <div class="card-icon">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h1 class="card-value negative" id="utang-jatuh-tempo">Rp750.000</h1>
+                        </div>
+                        <div class="card-footer">
+                            <span id="utang-jatuh-tempo-count">1</span> utang belum dibayar
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3 class="table-title">Daftar Utang</h3>
+                        <div class="table-actions">
+                            <button class="btn btn-primary" id="tambah-utang">
+                                <i class="fas fa-plus"></i> Tambah Utang
+                            </button>
+                        </div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Pemberi Pinjaman</th>
+                                <th>Tanggal Pinjam</th>
+                                <th>Jatuh Tempo</th>
+                                <th>Jumlah</th>
+                                <th>Terbayar</th>
+                                <th>Sisa</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="utang-table">
+                            <!-- Data akan diisi oleh JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Laporan Section -->
+            <div class="content-section" id="laporan-section" style="display: none;">
+                <div class="card-container">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Laporan Bulanan</h3>
+                            <div class="card-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="bulan-laporan">Pilih Bulan</label>
+                                <input type="month" id="bulan-laporan" class="form-control">
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary" id="generate-laporan">Generate Laporan</button>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Laporan Tahunan</h3>
+                            <div class="card-icon">
+                                <i class="fas fa-calendar"></i>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="tahun-laporan">Pilih Tahun</label>
+                                <select id="tahun-laporan" class="form-control">
+                                    <option value="2023">2023</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2025">2025</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary" id="generate-laporan-tahunan">Generate Laporan</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="table-container" id="hasil-laporan-container" style="display: none;">
+                    <div class="table-header">
+                        <h3 class="table-title" id="judul-laporan">Laporan Keuangan</h3>
+                        <div class="table-actions">
+                            <button class="btn btn-success" id="cetak-laporan">
+                                <i class="fas fa-print"></i> Cetak
+                            </button>
+                            <button class="btn btn-success" id="export-laporan">
+                                <i class="fas fa-file-excel"></i> Export Excel
+                            </button>
+                        </div>
+                    </div>
+                    <div id="hasil-laporan">
+                        <!-- Laporan akan ditampilkan di sini -->
                     </div>
                 </div>
             </div>
-
-            <!-- Loan Content -->
-            <div id="loanContent" style="display: none;">
-                <div class="section">
-                    <div class="section-header">
-                        <h2 class="section-title">Hutang</h2>
-                        <button class="btn btn-primary" id="addLoanBtn">
-                            <i class="fas fa-plus"></i>
-                            <span>Tambah Hutang</span>
-                        </button>
+            
+            <!-- Riwayat Section -->
+            <div class="content-section" id="riwayat-section" style="display: none;">
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3 class="table-title">Riwayat Transaksi</h3>
+                        <div class="table-actions">
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <select id="filter-riwayat" class="form-control">
+                                    <option value="semua">Semua Transaksi</option>
+                                    <option value="pemasukan">Pemasukan</option>
+                                    <option value="pengeluaran">Pengeluaran</option>
+                                    <option value="piutang">Piutang</option>
+                                    <option value="utang">Utang</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-success" id="export-riwayat">
+                                <i class="fas fa-file-excel"></i> Export
+                            </button>
+                        </div>
                     </div>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Nama</th>
-                                    <th>Tanggal</th>
-                                    <th>Jumlah</th>
-                                    <th>Jatuh Tempo</th>
-                                    <th>Status</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Bank ABC</td>
-                                    <td>1 Jun 2023</td>
-                                    <td>Rp 5.000.000</td>
-                                    <td>1 Dec 2023</td>
-                                    <td><span class="badge badge-danger">Belum Lunas</span></td>
-                                    <td>
-                                        <button class="btn btn-primary btn-sm">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="btn btn-danger btn-sm">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Toko Elektronik XYZ</td>
-                                    <td>15 Mei 2023</td>
-                                    <td>Rp 2.500.000</td>
-                                    <td>15 Jul 2023</td>
-                                    <td><span class="badge badge-success">Lunas</span></td>
-                                    <td>
-                                        <button class="btn btn-primary btn-sm">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="btn btn-danger btn-sm">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Jenis</th>
+                                <th>Keterangan</th>
+                                <th>Jumlah</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="riwayat-table">
+                            <!-- Data akan diisi oleh JavaScript -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
-
-            <!-- History Content -->
-            <div id="historyContent" style="display: none;">
-                <div class="section">
-                    <div class="section-header">
-                        <h2 class="section-title">Riwayat Transaksi</h2>
-                        <div>
-                            <button class="btn btn-primary">
-                                <i class="fas fa-download"></i>
-                                <span>Export Excel</span>
-                            </button>
+            
+            <!-- Pengaturan Section -->
+            <div class="content-section" id="pengaturan-section" style="display: none;">
+                <div class="card-container">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Profil Pengguna</h3>
+                            <div class="card-icon">
+                                <i class="fas fa-user"></i>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <form id="profil-form">
+                                <div class="form-group">
+                                    <label for="nama-pengguna">Nama Pengguna</label>
+                                    <input type="text" id="nama-pengguna" class="form-control" value="Admin">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email-pengguna">Email</label>
+                                    <input type="email" id="email-pengguna" class="form-control" value="admin@example.com">
+                                </div>
+                                <div class="form-group">
+                                    <label for="foto-profil">Foto Profil</label>
+                                    <input type="file" id="foto-profil" class="form-control">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary" id="simpan-profil">Simpan Perubahan</button>
                         </div>
                     </div>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Tanggal</th>
-                                    <th>Tipe</th>
-                                    <th>Kategori</th>
-                                    <th>Deskripsi</th>
-                                    <th>Jumlah</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>15 Jun 2023</td>
-                                    <td><span class="badge badge-success">Pemasukan</span></td>
-                                    <td>Gaji</td>
-                                    <td>Gaji bulan Mei</td>
-                                    <td>Rp 10.000.000</td>
-                                </tr>
-                                <tr>
-                                    <td>16 Jun 2023</td>
-                                    <td><span class="badge badge-danger">Pengeluaran</span></td>
-                                    <td>Belanja</td>
-                                    <td>Belanja bulanan</td>
-                                    <td>Rp 1.500.000</td>
-                                </tr>
-                                <tr>
-                                    <td>18 Jun 2023</td>
-                                    <td><span class="badge badge-success">Pemasukan</span></td>
-                                    <td>Bonus</td>
-                                    <td>Bonus proyek</td>
-                                    <td>Rp 2.450.000</td>
-                                </tr>
-                                <tr>
-                                    <td>20 Jun 2023</td>
-                                    <td><span class="badge badge-danger">Pengeluaran</span></td>
-                                    <td>Tagihan</td>
-                                    <td>Listrik dan air</td>
-                                    <td>Rp 1.200.000</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Report Content -->
-            <div id="reportContent" style="display: none;">
-                <div class="section">
-                    <div class="section-header">
-                        <h2 class="section-title">Laporan Keuangan</h2>
-                        <div>
-                            <button class="btn btn-primary">
-                                <i class="fas fa-download"></i>
-                                <span>Export PDF</span>
-                            </button>
-                            <button class="btn btn-primary">
-                                <i class="fas fa-download"></i>
-                                <span>Export Excel</span>
-                            </button>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Pengaturan Aplikasi</h3>
+                            <div class="card-icon">
+                                <i class="fas fa-cog"></i>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="mata-uang">Mata Uang</label>
+                                <select id="mata-uang" class="form-control">
+                                    <option value="IDR" selected>Rupiah (Rp)</option>
+                                    <option value="USD">Dollar ($)</option>
+                                    <option value="EUR">Euro (€)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="notifikasi">Notifikasi</label>
+                                <select id="notifikasi" class="form-control">
+                                    <option value="aktif">Aktif</option>
+                                    <option value="nonaktif">Nonaktif</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="tema">Tema Aplikasi</label>
+                                <select id="tema" class="form-control">
+                                    <option value="gelap">Gelap</option>
+                                    <option value="terang">Terang</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary" id="simpan-pengaturan">Simpan Pengaturan</button>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="reportStartDate" class="form-label">Dari Tanggal</label>
-                            <input type="date" id="reportStartDate" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="reportEndDate" class="form-label">Sampai Tanggal</label>
-                            <input type="date" id="reportEndDate" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="reportType" class="form-label">Jenis Laporan</label>
-                            <select id="reportType" class="form-control">
-                                <option value="all">Semua Transaksi</option>
-                                <option value="income">Pemasukan</option>
-                                <option value="expense">Pengeluaran</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <button class="btn btn-primary" style="margin-top: 22px;">
-                                <i class="fas fa-filter"></i>
-                                <span>Filter</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div style="height: 400px; background-color: #f9f9f9; display: flex; justify-content: center; align-items: center; margin-top: 20px;">
-                        <p>Grafik dan Laporan akan muncul disini</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Settings Content -->
-            <div id="settingsContent" style="display: none;">
-                <div class="section">
-                    <div class="section-header">
-                        <h2 class="section-title">Pengaturan Akun</h2>
-                    </div>
-                    <form id="settingsForm">
-                        <div class="form-group">
-                            <label for="settingsName" class="form-label">Nama Lengkap</label>
-                            <input type="text" id="settingsName" class="form-control" value="Admin Aliung" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="settingsEmail" class="form-label">Email</label>
-                            <input type="email" id="settingsEmail" class="form-control" value="admin@aliung.com" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="settingsPassword" class="form-label">Password Baru (biarkan kosong jika tidak ingin mengubah)</label>
-                            <input type="password" id="settingsPassword" class="form-control" placeholder="Masukkan password baru">
-                        </div>
-                        <div class="form-group">
-                            <label for="settingsConfirmPassword" class="form-label">Konfirmasi Password Baru</label>
-                            <input type="password" id="settingsConfirmPassword" class="form-control" placeholder="Konfirmasi password baru">
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i>
-                                <span>Simpan Perubahan</span>
-                            </button>
-                        </div>
-                    </form>
-                </div>
-                <div class="section">
-                    <div class="section-header">
-                        <h2 class="section-title">Reset Password</h2>
-                    </div>
-                    <form id="resetPasswordForm">
-                        <div class="form-group">
-                            <label for="currentPassword" class="form-label">Password Saat Ini</label>
-                            <input type="password" id="currentPassword" class="form-control" placeholder="Masukkan password saat ini" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="newPassword" class="form-label">Password Baru</label>
-                            <input type="password" id="newPassword" class="form-control" placeholder="Masukkan password baru" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="confirmNewPassword" class="form-label">Konfirmasi Password Baru</label>
-                            <input type="password" id="confirmNewPassword" class="form-control" placeholder="Konfirmasi password baru" required>
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-key"></i>
-                                <span>Reset Password</span>
-                            </button>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Add Transaction Modal -->
-    <div class="modal" id="transactionModal">
+    
+    <!-- Modal Pemasukan -->
+    <div class="form-modal" id="pemasukan-modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Tambah Transaksi</h3>
-                <button class="close-btn" id="closeTransactionModal">&times;</button>
+                <h3 class="modal-title">Tambah Pemasukan</h3>
+                <button class="close-modal">&times;</button>
             </div>
-            <form id="transactionForm">
+            <form id="pemasukan-form">
                 <div class="form-group">
-                    <label for="transactionType" class="form-label">Jenis Transaksi</label>
-                    <select id="transactionType" class="form-control" required>
-                        <option value="">Pilih Jenis</option>
-                        <option value="income">Pemasukan</option>
-                        <option value="expense">Pengeluaran</option>
-                    </select>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="transactionDate" class="form-label">Tanggal</label>
-                        <input type="date" id="transactionDate" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="transactionAmount" class="form-label">Jumlah</label>
-                        <input type="text" id="transactionAmount" class="form-control" placeholder="Rp" required>
-                    </div>
+                    <label for="jumlah-pemasukan">Jumlah (Rp)</label>
+                    <input type="number" id="jumlah-pemasukan" class="form-control" placeholder="Masukkan jumlah" required>
                 </div>
                 <div class="form-group">
-                    <label for="transactionCategory" class="form-label">Kategori</label>
-                    <select id="transactionCategory" class="form-control" required>
-                        <option value="">Pilih Kategori</option>
+                    <label for="kategori-pemasukan">Kategori</label>
+                    <select id="kategori-pemasukan" class="form-control" required>
+                        <option value="">Pilih kategori</option>
+                        <option value="gaji">Gaji</option>
+                        <option value="freelance">Freelance</option>
+                        <option value="investasi">Investasi</option>
+                        <option value="hadiah">Hadiah</option>
+                        <option value="lainnya">Lainnya</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="transactionDescription" class="form-label">Deskripsi</label>
-                    <textarea id="transactionDescription" class="form-control" rows="3" placeholder="Tambahkan deskripsi (opsional)"></textarea>
+                    <label for="tanggal-pemasukan">Tanggal</label>
+                    <input type="date" id="tanggal-pemasukan" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="keterangan-pemasukan">Keterangan</label>
+                    <textarea id="keterangan-pemasukan" class="form-control" rows="3" placeholder="Masukkan keterangan"></textarea>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" id="cancelTransaction">Batal</button>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="button" class="btn btn-danger close-modal">Batal</button>
+                    <button type="submit" class="btn btn-success">Simpan Pemasukan</button>
                 </div>
             </form>
         </div>
     </div>
-
+    
+    <!-- Modal Pengeluaran -->
+    <div class="form-modal" id="pengeluaran-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Tambah Pengeluaran</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="pengeluaran-form">
+                <div class="form-group">
+                    <label for="jumlah-pengeluaran">Jumlah (Rp)</label>
+                    <input type="number" id="jumlah-pengeluaran" class="form-control" placeholder="Masukkan jumlah" required>
+                </div>
+                <div class="form-group">
+                    <label for="kategori-pengeluaran">Kategori</label>
+                    <select id="kategori-pengeluaran" class="form-control" required>
+                        <option value="">Pilih kategori</option>
+                        <option value="makanan">Makanan</option>
+                        <option value="transportasi">Transportasi</option>
+                        <option value="tagihan">Tagihan</option>
+                        <option value="hiburan">Hiburan</option>
+                        <option value="belanja">Belanja</option>
+                        <option value="kesehatan">Kesehatan</option>
+                        <option value="lainnya">Lainnya</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="tanggal-pengeluaran">Tanggal</label>
+                    <input type="date" id="tanggal-pengeluaran" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="keterangan-pengeluaran">Keterangan</label>
+                    <textarea id="keterangan-pengeluaran" class="form-control" rows="3" placeholder="Masukkan keterangan"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger close-modal">Batal</button>
+                    <button type="submit" class="btn btn-success">Simpan Pengeluaran</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal Piutang -->
+    <div class="form-modal" id="piutang-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Tambah Piutang</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="piutang-form">
+                <div class="form-group">
+                    <label for="nama-peminjam">Nama Peminjam</label>
+                    <input type="text" id="nama-peminjam" class="form-control" placeholder="Masukkan nama peminjam" required>
+                </div>
+                <div class="form-group">
+                    <label for="jumlah-piutang">Jumlah (Rp)</label>
+                    <input type="number" id="jumlah-piutang" class="form-control" placeholder="Masukkan jumlah" required>
+                </div>
+                <div class="form-group">
+                    <label for="tanggal-piutang">Tanggal Pinjam</label>
+                    <input type="date" id="tanggal-piutang" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="jatuh-tempo-piutang">Jatuh Tempo</label>
+                    <input type="date" id="jatuh-tempo-piutang" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="keterangan-piutang">Keterangan</label>
+                    <textarea id="keterangan-piutang" class="form-control" rows="3" placeholder="Masukkan keterangan"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger close-modal">Batal</button>
+                    <button type="submit" class="btn btn-success">Simpan Piutang</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal Utang -->
+    <div class="form-modal" id="utang-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Tambah Utang</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="utang-form">
+                <div class="form-group">
+                    <label for="nama-pemberi">Nama Pemberi Pinjaman</label>
+                    <input type="text" id="nama-pemberi" class="form-control" placeholder="Masukkan nama pemberi pinjaman" required>
+                </div>
+                <div class="form-group">
+                    <label for="jumlah-utang">Jumlah (Rp)</label>
+                    <input type="number" id="jumlah-utang" class="form-control" placeholder="Masukkan jumlah" required>
+                </div>
+                <div class="form-group">
+                    <label for="tanggal-utang">Tanggal Pinjam</label>
+                    <input type="date" id="tanggal-utang" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="jatuh-tempo-utang">Jatuh Tempo</label>
+                    <input type="date" id="jatuh-tempo-utang" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="keterangan-utang">Keterangan</label>
+                    <textarea id="keterangan-utang" class="form-control" rows="3" placeholder="Masukkan keterangan"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger close-modal">Batal</button>
+                    <button type="submit" class="btn btn-success">Simpan Utang</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal Bayar Piutang -->
+    <div class="form-modal" id="bayar-piutang-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Pembayaran Piutang</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="bayar-piutang-form">
+                <div class="form-group">
+                    <label for="nama-peminjam-bayar">Nama Peminjam</label>
+                    <input type="text" id="nama-peminjam-bayar" class="form-control" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="total-piutang-bayar">Total Piutang</label>
+                    <input type="text" id="total-piutang-bayar" class="form-control" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="sisa-piutang-bayar">Sisa Piutang</label>
+                    <input type="text" id="sisa-piutang-bayar" class="form-control" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="jumlah-bayar-piutang">Jumlah Bayar (Rp)</label>
+                    <input type="number" id="jumlah-bayar-piutang" class="form-control" placeholder="Masukkan jumlah yang dibayar" required>
+                </div>
+                <div class="form-group">
+                    <label for="tanggal-bayar-piutang">Tanggal Bayar</label>
+                    <input type="date" id="tanggal-bayar-piutang" class="form-control" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger close-modal">Batal</button>
+                    <button type="submit" class="btn btn-success">Simpan Pembayaran</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal Bayar Utang -->
+    <div class="form-modal" id="bayar-utang-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Pembayaran Utang</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="bayar-utang-form">
+                <div class="form-group">
+                    <label for="nama-pemberi-bayar">Nama Pemberi Pinjaman</label>
+                    <input type="text" id="nama-pemberi-bayar" class="form-control" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="total-utang-bayar">Total Utang</label>
+                    <input type="text" id="total-utang-bayar" class="form-control" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="sisa-utang-bayar">Sisa Utang</label>
+                    <input type="text" id="sisa-utang-bayar" class="form-control" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="jumlah-bayar-utang">Jumlah Bayar (Rp)</label>
+                    <input type="number" id="jumlah-bayar-utang" class="form-control" placeholder="Masukkan jumlah yang dibayar" required>
+                </div>
+                <div class="form-group">
+                    <label for="tanggal-bayar-utang">Tanggal Bayar</label>
+                    <input type="date" id="tanggal-bayar-utang" class="form-control" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger close-modal">Batal</button>
+                    <button type="submit" class="btn btn-success">Simpan Pembayaran</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal Ganti Password -->
+    <div class="form-modal" id="password-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Ganti Password</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="password-form">
+                <div class="form-group">
+                    <label for="password-lama">Password Lama</label>
+                    <input type="password" id="password-lama" class="form-control" placeholder="Masukkan password lama" required>
+                </div>
+                <div class="form-group">
+                    <label for="password-baru">Password Baru</label>
+                    <input type="password" id="password-baru" class="form-control" placeholder="Masukkan password baru" required>
+                </div>
+                <div class="form-group">
+                    <label for="konfirmasi-password">Konfirmasi Password Baru</label>
+                    <input type="password" id="konfirmasi-password" class="form-control" placeholder="Konfirmasi password baru" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger close-modal">Batal</button>
+                    <button type="submit" class="btn btn-success">Ganti Password</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
     <script>
-        // Animasi Bintang Jatuh
-        function createStars() {
-            const starsContainer = document.getElementById('stars');
-            const starCount = 100;
+        // Data contoh untuk simulasi
+        let dataKeuangan = {
+            saldo: 12345678,
+            pemasukan: [
+                { id: 1, tanggal: '2023-06-15', keterangan: 'Gaji Bulanan', kategori: 'gaji', jumlah: 8000000 },
+                { id: 2, tanggal: '2023-06-10', keterangan: 'Proyek Freelance', kategori: 'freelance', jumlah: 2500000 },
+                { id: 3, tanggal: '2023-06-05', keterangan: 'Dividen Investasi', kategori: 'investasi', jumlah: 500000 }
+            ],
+            pengeluaran: [
+                { id: 1, tanggal: '2023-06-14', keterangan: 'Belanja Bulanan', kategori: 'belanja', jumlah: 450000 },
+                { id: 2, tanggal: '2023-06-12', keterangan: 'Tagihan Listrik', kategori: 'tagihan', jumlah: 350000 },
+                { id: 3, tanggal: '2023-06-08', keterangan: 'Makan di Restoran', kategori: 'makanan', jumlah: 275000 }
+            ],
+            piutang: [
+                { 
+                    id: 1, 
+                    nama: 'Budi Santoso', 
+                    tanggalPinjam: '2023-05-20', 
+                    jatuhTempo: '2023-07-20', 
+                    jumlah: 1500000, 
+                    dikembalikan: 500000, 
+                    keterangan: 'Pinjaman renovasi rumah',
+                    riwayatPembayaran: [
+                        { tanggal: '2023-06-20', jumlah: 500000 }
+                    ]
+                },
+                { 
+                    id: 2, 
+                    nama: 'Ani Wijaya', 
+                    tanggalPinjam: '2023-06-01', 
+                    jatuhTempo: '2023-07-01', 
+                    jumlah: 1000000, 
+                    dikembalikan: 0, 
+                    keterangan: 'Pinjaman modal usaha',
+                    riwayatPembayaran: []
+                }
+            ],
+            utang: [
+                { 
+                    id: 1, 
+                    nama: 'Bank ABC', 
+                    tanggalPinjam: '2023-04-15', 
+                    jatuhTempo: '2023-08-15', 
+                    jumlah: 2000000, 
+                    terbayar: 1250000, 
+                    keterangan: 'Kredit multiguna',
+                    riwayatPembayaran: [
+                        { tanggal: '2023-05-15', jumlah: 750000 },
+                        { tanggal: '2023-06-15', jumlah: 500000 }
+                    ]
+                },
+                { 
+                    id: 2, 
+                    nama: 'Toko Elektronik XYZ', 
+                    tanggalPinjam: '2023-06-10', 
+                    jatuhTempo: '2023-07-10', 
+                    jumlah: 750000, 
+                    terbayar: 0, 
+                    keterangan: 'Pembelian TV cicilan',
+                    riwayatPembayaran: []
+                }
+            ]
+        };
+
+        // Hitung total pemasukan, pengeluaran, piutang, dan utang
+        function hitungTotal() {
+            // Total pemasukan
+            let totalPemasukan = dataKeuangan.pemasukan.reduce((total, item) => total + item.jumlah, 0);
             
-            for (let i = 0; i < starCount; i++) {
-                const star = document.createElement('div');
-                star.classList.add('star');
+            // Total pengeluaran
+            let totalPengeluaran = dataKeuangan.pengeluaran.reduce((total, item) => total + item.jumlah, 0);
+            
+            // Total piutang
+            let totalPiutang = dataKeuangan.piutang.reduce((total, item) => total + item.jumlah, 0);
+            let piutangDikembalikan = dataKeuangan.piutang.reduce((total, item) => total + item.dikembalikan, 0);
+            let sisaPiutang = totalPiutang - piutangDikembalikan;
+            
+            // Total utang
+            let totalUtang = dataKeuangan.utang.reduce((total, item) => total + item.jumlah, 0);
+            let utangTerbayar = dataKeuangan.utang.reduce((total, item) => total + item.terbayar, 0);
+            let sisaUtang = totalUtang - utangTerbayar;
+            
+            // Update tampilan
+            document.getElementById('total-saldo').textContent = formatRupiah(dataKeuangan.saldo);
+            document.getElementById('total-pemasukan').textContent = formatRupiah(totalPemasukan);
+            document.getElementById('total-pengeluaran').textContent = formatRupiah(totalPengeluaran);
+            document.getElementById('tabungan-bersih').textContent = formatRupiah(dataKeuangan.saldo);
+            
+            document.getElementById('total-piutang').textContent = formatRupiah(totalPiutang);
+            document.getElementById('piutang-aktif').textContent = dataKeuangan.piutang.length;
+            document.getElementById('piutang-jatuh-tempo').textContent = formatRupiah(sisaPiutang);
+            document.getElementById('jumlah-jatuh-tempo').textContent = dataKeuangan.piutang.filter(p => p.dikembalikan < p.jumlah).length;
+            
+            document.getElementById('total-utang').textContent = formatRupiah(totalUtang);
+            document.getElementById('utang-aktif').textContent = dataKeuangan.utang.length;
+            document.getElementById('utang-jatuh-tempo').textContent = formatRupiah(sisaUtang);
+            document.getElementById('utang-jatuh-tempo-count').textContent = dataKeuangan.utang.filter(u => u.terbayar < u.jumlah).length;
+        }
+
+        // Format angka ke Rupiah
+        function formatRupiah(angka) {
+            return 'Rp' + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+        // Tampilkan data transaksi
+        function tampilkanTransaksi() {
+            let table = document.getElementById('transaksi-table');
+            table.innerHTML = '';
+            
+            // Gabungkan pemasukan dan pengeluaran
+            let semuaTransaksi = [
+                ...dataKeuangan.pemasukan.map(p => ({ ...p, jenis: 'pemasukan' })),
+                ...dataKeuangan.pengeluaran.map(p => ({ ...p, jenis: 'pengeluaran' }))
+            ];
+            
+            // Urutkan berdasarkan tanggal terbaru
+            semuaTransaksi.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
+            
+            // Ambil 5 transaksi terbaru
+            let transaksiTerbaru = semuaTransaksi.slice(0, 5);
+            
+            // Tambahkan ke tabel
+            transaksiTerbaru.forEach(transaksi => {
+                let row = table.insertRow();
+                row.insertCell(0).textContent = transaksi.tanggal;
+                row.insertCell(1).textContent = transaksi.keterangan;
+                row.insertCell(2).textContent = transaksi.kategori;
                 
-                // Random size between 1px and 3px
-                const size = Math.random() * 2 + 1;
-                star.style.width = `${size}px`;
-                star.style.height = `${size}px`;
+                let jumlahCell = row.insertCell(3);
+                jumlahCell.textContent = formatRupiah(transaksi.jumlah);
+                jumlahCell.className = transaksi.jenis === 'pemasukan' ? 'positive' : 'negative';
                 
-                // Random position
-                star.style.left = `${Math.random() * 100}%`;
-                star.style.top = `${Math.random() * 100}%`;
+                row.insertCell(4).innerHTML = '<span class="badge badge-success">Selesai</span>';
                 
-                // Random animation duration between 10s and 20s
-                const duration = Math.random() * 10 + 10;
-                star.style.animationDuration = `${duration}s`;
+                let aksiCell = row.insertCell(5);
+                aksiCell.innerHTML = `
+                    <button class="btn btn-success btn-sm" onclick="editTransaksi(${transaksi.id}, '${transaksi.jenis}')"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-danger btn-sm" onclick="hapusTransaksi(${transaksi.id}, '${transaksi.jenis}')"><i class="fas fa-trash"></i></button>
+                `;
+            });
+        }
+
+        // Tampilkan data pemasukan
+        function tampilkanPemasukan() {
+            let table = document.getElementById('pemasukan-table');
+            table.innerHTML = '';
+            
+            dataKeuangan.pemasukan.forEach(pemasukan => {
+                let row = table.insertRow();
+                row.insertCell(0).textContent = pemasukan.tanggal;
+                row.insertCell(1).textContent = pemasukan.keterangan;
+                row.insertCell(2).textContent = pemasukan.kategori;
                 
-                // Random delay
-                star.style.animationDelay = `${Math.random() * 5}s`;
+                let jumlahCell = row.insertCell(3);
+                jumlahCell.textContent = formatRupiah(pemasukan.jumlah);
+                jumlahCell.className = 'positive';
                 
-                starsContainer.appendChild(star);
+                let aksiCell = row.insertCell(4);
+                aksiCell.innerHTML = `
+                    <button class="btn btn-success btn-sm" onclick="editPemasukan(${pemasukan.id})"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-danger btn-sm" onclick="hapusPemasukan(${pemasukan.id})"><i class="fas fa-trash"></i></button>
+                `;
+            });
+        }
+
+        // Tampilkan data pengeluaran
+        function tampilkanPengeluaran() {
+            let table = document.getElementById('pengeluaran-table');
+            table.innerHTML = '';
+            
+            dataKeuangan.pengeluaran.forEach(pengeluaran => {
+                let row = table.insertRow();
+                row.insertCell(0).textContent = pengeluaran.tanggal;
+                row.insertCell(1).textContent = pengeluaran.keterangan;
+                row.insertCell(2).textContent = pengeluaran.kategori;
+                
+                let jumlahCell = row.insertCell(3);
+                jumlahCell.textContent = formatRupiah(pengeluaran.jumlah);
+                jumlahCell.className = 'negative';
+                
+                let aksiCell = row.insertCell(4);
+                aksiCell.innerHTML = `
+                    <button class="btn btn-success btn-sm" onclick="editPengeluaran(${pengeluaran.id})"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-danger btn-sm" onclick="hapusPengeluaran(${pengeluaran.id})"><i class="fas fa-trash"></i></button>
+                `;
+            });
+        }
+
+        // Tampilkan data piutang
+        function tampilkanPiutang() {
+            let table = document.getElementById('piutang-table');
+            table.innerHTML = '';
+            
+            dataKeuangan.piutang.forEach(piutang => {
+                let row = table.insertRow();
+                row.insertCell(0).textContent = piutang.nama;
+                row.insertCell(1).textContent = piutang.tanggalPinjam;
+                row.insertCell(2).textContent = piutang.jatuhTempo;
+                row.insertCell(3).textContent = formatRupiah(piutang.jumlah);
+                row.insertCell(4).textContent = formatRupiah(piutang.dikembalikan);
+                
+                let sisaCell = row.insertCell(5);
+                let sisa = piutang.jumlah - piutang.dikembalikan;
+                sisaCell.textContent = formatRupiah(sisa);
+                
+                let statusCell = row.insertCell(6);
+                if (sisa <= 0) {
+                    statusCell.innerHTML = '<span class="badge badge-success">Lunas</span>';
+                } else if (new Date(piutang.jatuhTempo) < new Date()) {
+                    statusCell.innerHTML = '<span class="badge badge-danger">Jatuh Tempo</span>';
+                } else {
+                    statusCell.innerHTML = '<span class="badge badge-warning">Belum Lunas</span>';
+                }
+                
+                let aksiCell = row.insertCell(7);
+                aksiCell.innerHTML = `
+                    <button class="btn btn-success btn-sm" onclick="bayarPiutang(${piutang.id})"><i class="fas fa-money-bill-wave"></i></button>
+                    <button class="btn btn-primary btn-sm" onclick="detailPiutang(${piutang.id})"><i class="fas fa-info-circle"></i></button>
+                    <button class="btn btn-danger btn-sm" onclick="hapusPiutang(${piutang.id})"><i class="fas fa-trash"></i></button>
+                `;
+            });
+        }
+
+        // Tampilkan data utang
+        function tampilkanUtang() {
+            let table = document.getElementById('utang-table');
+            table.innerHTML = '';
+            
+            dataKeuangan.utang.forEach(utang => {
+                let row = table.insertRow();
+                row.insertCell(0).textContent = utang.nama;
+                row.insertCell(1).textContent = utang.tanggalPinjam;
+                row.insertCell(2).textContent = utang.jatuhTempo;
+                row.insertCell(3).textContent = formatRupiah(utang.jumlah);
+                row.insertCell(4).textContent = formatRupiah(utang.terbayar);
+                
+                let sisaCell = row.insertCell(5);
+                let sisa = utang.jumlah - utang.terbayar;
+                sisaCell.textContent = formatRupiah(sisa);
+                
+                let statusCell = row.insertCell(6);
+                if (sisa <= 0) {
+                    statusCell.innerHTML = '<span class="badge badge-success">Lunas</span>';
+                } else if (new Date(utang.jatuhTempo) < new Date()) {
+                    statusCell.innerHTML = '<span class="badge badge-danger">Jatuh Tempo</span>';
+                } else {
+                    statusCell.innerHTML = '<span class="badge badge-warning">Belum Lunas</span>';
+                }
+                
+                let aksiCell = row.insertCell(7);
+                aksiCell.innerHTML = `
+                    <button class="btn btn-success btn-sm" onclick="bayarUtang(${utang.id})"><i class="fas fa-money-bill-wave"></i></button>
+                    <button class="btn btn-primary btn-sm" onclick="detailUtang(${utang.id})"><i class="fas fa-info-circle"></i></button>
+                    <button class="btn btn-danger btn-sm" onclick="hapusUtang(${utang.id})"><i class="fas fa-trash"></i></button>
+                `;
+            });
+        }
+
+        // Tampilkan riwayat transaksi
+        function tampilkanRiwayat() {
+            let table = document.getElementById('riwayat-table');
+            table.innerHTML = '';
+            
+            let filter = document.getElementById('filter-riwayat').value;
+            
+            // Gabungkan semua transaksi
+            let semuaRiwayat = [
+                ...dataKeuangan.pemasukan.map(p => ({ ...p, jenis: 'Pemasukan', status: 'Selesai' })),
+                ...dataKeuangan.pengeluaran.map(p => ({ ...p, jenis: 'Pengeluaran', status: 'Selesai' })),
+                ...dataKeuangan.piutang.flatMap(p => 
+                    p.riwayatPembayaran.map(r => ({
+                        tanggal: r.tanggal,
+                        jenis: 'Piutang',
+                        keterangan: `Pembayaran dari ${p.nama}`,
+                        jumlah: r.jumlah,
+                        status: 'Diterima'
+                    }))
+                ),
+                ...dataKeuangan.utang.flatMap(u => 
+                    u.riwayatPembayaran.map(r => ({
+                        tanggal: r.tanggal,
+                        jenis: 'Utang',
+                        keterangan: `Pembayaran ke ${u.nama}`,
+                        jumlah: r.jumlah,
+                        status: 'Dibayar'
+                    }))
+                )
+            ];
+            
+            // Filter jika diperlukan
+            if (filter !== 'semua') {
+                semuaRiwayat = semuaRiwayat.filter(r => r.jenis.toLowerCase() === filter);
+            }
+            
+            // Urutkan berdasarkan tanggal terbaru
+            semuaRiwayat.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
+            
+            // Tambahkan ke tabel
+            semuaRiwayat.forEach(riwayat => {
+                let row = table.insertRow();
+                row.insertCell(0).textContent = riwayat.tanggal;
+                row.insertCell(1).textContent = riwayat.jenis;
+                row.insertCell(2).textContent = riwayat.keterangan;
+                
+                let jumlahCell = row.insertCell(3);
+                jumlahCell.textContent = formatRupiah(riwayat.jumlah);
+                
+                let statusCell = row.insertCell(4);
+                if (riwayat.status === 'Selesai' || riwayat.status === 'Diterima') {
+                    statusCell.innerHTML = '<span class="badge badge-success">' + riwayat.status + '</span>';
+                } else {
+                    statusCell.innerHTML = '<span class="badge badge-danger">' + riwayat.status + '</span>';
+                }
+            });
+        }
+
+        // Fungsi untuk menambahkan pemasukan
+        function tambahPemasukan(jumlah, kategori, tanggal, keterangan) {
+            let id = dataKeuangan.pemasukan.length > 0 
+                ? Math.max(...dataKeuangan.pemasukan.map(p => p.id)) + 1 
+                : 1;
+            
+            dataKeuangan.pemasukan.push({
+                id,
+                tanggal,
+                keterangan,
+                kategori,
+                jumlah: parseInt(jumlah)
+            });
+            
+            dataKeuangan.saldo += parseInt(jumlah);
+            
+            tampilkanTransaksi();
+            tampilkanPemasukan();
+            hitungTotal();
+            tampilkanNotifikasi('Pemasukan berhasil ditambahkan');
+        }
+
+        // Fungsi untuk menambahkan pengeluaran
+        function tambahPengeluaran(jumlah, kategori, tanggal, keterangan) {
+            let id = dataKeuangan.pengeluaran.length > 0 
+                ? Math.max(...dataKeuangan.pengeluaran.map(p => p.id)) + 1 
+                : 1;
+            
+            dataKeuangan.pengeluaran.push({
+                id,
+                tanggal,
+                keterangan,
+                kategori,
+                jumlah: parseInt(jumlah)
+            });
+            
+            dataKeuangan.saldo -= parseInt(jumlah);
+            
+            tampilkanTransaksi();
+            tampilkanPengeluaran();
+            hitungTotal();
+            tampilkanNotifikasi('Pengeluaran berhasil ditambahkan');
+        }
+
+        // Fungsi untuk menambahkan piutang
+        function tambahPiutang(nama, jumlah, tanggalPinjam, jatuhTempo, keterangan) {
+            let id = dataKeuangan.piutang.length > 0 
+                ? Math.max(...dataKeuangan.piutang.map(p => p.id)) + 1 
+                : 1;
+            
+            dataKeuangan.piutang.push({
+                id,
+                nama,
+                tanggalPinjam,
+                jatuhTempo,
+                jumlah: parseInt(jumlah),
+                dikembalikan: 0,
+                keterangan,
+                riwayatPembayaran: []
+            });
+            
+            tampilkanPiutang();
+            hitungTotal();
+            tampilkanNotifikasi('Piutang berhasil ditambahkan');
+        }
+
+        // Fungsi untuk menambahkan utang
+        function tambahUtang(nama, jumlah, tanggalPinjam, jatuhTempo, keterangan) {
+            let id = dataKeuangan.utang.length > 0 
+                ? Math.max(...dataKeuangan.utang.map(u => u.id)) + 1 
+                : 1;
+            
+            dataKeuangan.utang.push({
+                id,
+                nama,
+                tanggalPinjam,
+                jatuhTempo,
+                jumlah: parseInt(jumlah),
+                terbayar: 0,
+                keterangan,
+                riwayatPembayaran: []
+            });
+            
+            tampilkanUtang();
+            hitungTotal();
+            tampilkanNotifikasi('Utang berhasil ditambahkan');
+        }
+
+        // Fungsi untuk pembayaran piutang
+        function bayarPiutang(id) {
+            let piutang = dataKeuangan.piutang.find(p => p.id === id);
+            if (!piutang) return;
+            
+            document.getElementById('nama-peminjam-bayar').value = piutang.nama;
+            document.getElementById('total-piutang-bayar').value = formatRupiah(piutang.jumlah);
+            document.getElementById('sisa-piutang-bayar').value = formatRupiah(piutang.jumlah - piutang.dikembalikan);
+            
+            // Set tanggal hari ini sebagai default
+            let today = new Date().toISOString().split('T')[0];
+            document.getElementById('tanggal-bayar-piutang').value = today;
+            
+            // Simpan ID piutang yang sedang dibayar
+            document.getElementById('bayar-piutang-form').dataset.piutangId = id;
+            
+            // Tampilkan modal
+            document.getElementById('bayar-piutang-modal').classList.add('show');
+        }
+
+        // Fungsi untuk pembayaran utang
+        function bayarUtang(id) {
+            let utang = dataKeuangan.utang.find(u => u.id === id);
+            if (!utang) return;
+            
+            document.getElementById('nama-pemberi-bayar').value = utang.nama;
+            document.getElementById('total-utang-bayar').value = formatRupiah(utang.jumlah);
+            document.getElementById('sisa-utang-bayar').value = formatRupiah(utang.jumlah - utang.terbayar);
+            
+            // Set tanggal hari ini sebagai default
+            let today = new Date().toISOString().split('T')[0];
+            document.getElementById('tanggal-bayar-utang').value = today;
+            
+            // Simpan ID utang yang sedang dibayar
+            document.getElementById('bayar-utang-form').dataset.utangId = id;
+            
+            // Tampilkan modal
+            document.getElementById('bayar-utang-modal').classList.add('show');
+        }
+
+        // Fungsi untuk edit transaksi
+        function editTransaksi(id, jenis) {
+            if (jenis === 'pemasukan') {
+                editPemasukan(id);
+            } else {
+                editPengeluaran(id);
             }
         }
 
-        // Keamanan - Disable inspect element dan right click
+        // Fungsi untuk edit pemasukan
+        function editPemasukan(id) {
+            let pemasukan = dataKeuangan.pemasukan.find(p => p.id === id);
+            if (!pemasukan) return;
+            
+            document.getElementById('jumlah-pemasukan').value = pemasukan.jumlah;
+            document.getElementById('kategori-pemasukan').value = pemasukan.kategori;
+            document.getElementById('tanggal-pemasukan').value = pemasukan.tanggal;
+            document.getElementById('keterangan-pemasukan').value = pemasukan.keterangan;
+            
+            // Simpan ID pemasukan yang sedang diedit
+            document.getElementById('pemasukan-form').dataset.editId = id;
+            
+            // Tampilkan modal
+            document.getElementById('pemasukan-modal').classList.add('show');
+        }
+
+        // Fungsi untuk edit pengeluaran
+        function editPengeluaran(id) {
+            let pengeluaran = dataKeuangan.pengeluaran.find(p => p.id === id);
+            if (!pengeluaran) return;
+            
+            document.getElementById('jumlah-pengeluaran').value = pengeluaran.jumlah;
+            document.getElementById('kategori-pengeluaran').value = pengeluaran.kategori;
+            document.getElementById('tanggal-pengeluaran').value = pengeluaran.tanggal;
+            document.getElementById('keterangan-pengeluaran').value = pengeluaran.keterangan;
+            
+            // Simpan ID pengeluaran yang sedang diedit
+            document.getElementById('pengeluaran-form').dataset.editId = id;
+            
+            // Tampilkan modal
+            document.getElementById('pengeluaran-modal').classList.add('show');
+        }
+
+        // Fungsi untuk hapus transaksi
+        function hapusTransaksi(id, jenis) {
+            if (confirm('Apakah Anda yakin ingin menghapus transaksi ini?')) {
+                if (jenis === 'pemasukan') {
+                    hapusPemasukan(id);
+                } else {
+                    hapusPengeluaran(id);
+                }
+            }
+        }
+
+        // Fungsi untuk hapus pemasukan
+        function hapusPemasukan(id) {
+            let index = dataKeuangan.pemasukan.findIndex(p => p.id === id);
+            if (index === -1) return;
+            
+            let pemasukan = dataKeuangan.pemasukan[index];
+            dataKeuangan.saldo -= pemasukan.jumlah;
+            dataKeuangan.pemasukan.splice(index, 1);
+            
+            tampilkanTransaksi();
+            tampilkanPemasukan();
+            hitungTotal();
+            tampilkanNotifikasi('Pemasukan berhasil dihapus');
+        }
+
+        // Fungsi untuk hapus pengeluaran
+        function hapusPengeluaran(id) {
+            let index = dataKeuangan.pengeluaran.findIndex(p => p.id === id);
+            if (index === -1) return;
+            
+            let pengeluaran = dataKeuangan.pengeluaran[index];
+            dataKeuangan.saldo += pengeluaran.jumlah;
+            dataKeuangan.pengeluaran.splice(index, 1);
+            
+            tampilkanTransaksi();
+            tampilkanPengeluaran();
+            hitungTotal();
+            tampilkanNotifikasi('Pengeluaran berhasil dihapus');
+        }
+
+        // Fungsi untuk hapus piutang
+        function hapusPiutang(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus piutang ini?')) {
+                let index = dataKeuangan.piutang.findIndex(p => p.id === id);
+                if (index === -1) return;
+                
+                dataKeuangan.piutang.splice(index, 1);
+                
+                tampilkanPiutang();
+                hitungTotal();
+                tampilkanNotifikasi('Piutang berhasil dihapus');
+            }
+        }
+
+        // Fungsi untuk hapus utang
+        function hapusUtang(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus utang ini?')) {
+                let index = dataKeuangan.utang.findIndex(u => u.id === id);
+                if (index === -1) return;
+                
+                dataKeuangan.utang.splice(index, 1);
+                
+                tampilkanUtang();
+                hitungTotal();
+                tampilkanNotifikasi('Utang berhasil dihapus');
+            }
+        }
+
+        // Fungsi untuk menampilkan notifikasi
+        function tampilkanNotifikasi(pesan, jenis = 'sukses') {
+            let notifikasi = document.getElementById('notifikasi');
+            notifikasi.textContent = pesan;
+            notifikasi.className = 'notifikasi show';
+            
+            if (jenis === 'sukses') {
+                notifikasi.style.backgroundColor = 'var(--warna-sukses)';
+            } else if (jenis === 'error') {
+                notifikasi.style.backgroundColor = 'var(--warna-danger)';
+            } else if (jenis === 'warning') {
+                notifikasi.style.backgroundColor = 'var(--warna-warning)';
+                notifikasi.style.color = 'var(--warna-gelap)';
+            }
+            
+            setTimeout(() => {
+                notifikasi.classList.remove('show');
+            }, 3000);
+        }
+
+        // Fungsi untuk membuat bintang
+        function buatBintang() {
+            const container = document.getElementById('bintang-bintang');
+            const jumlahBintang = 100;
+            
+            for (let i = 0; i < jumlahBintang; i++) {
+                const bintang = document.createElement('div');
+                bintang.classList.add('bintang');
+                
+                // Ukuran acak antara 1-3px
+                const size = Math.random() * 2 + 1;
+                bintang.style.width = `${size}px`;
+                bintang.style.height = `${size}px`;
+                
+                // Posisi acak
+                bintang.style.left = `${Math.random() * 100}%`;
+                bintang.style.top = `${Math.random() * 100}%`;
+                
+                // Durasi animasi acak antara 10-30 detik
+                const duration = Math.random() * 20 + 10;
+                bintang.style.animationDuration = `${duration}s`;
+                
+                // Delay acak
+                bintang.style.animationDelay = `${Math.random() * 5}s`;
+                
+                container.appendChild(bintang);
+            }
+        }
+
+        // Security measures untuk mencegah inspect
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
         });
-
+        
         document.addEventListener('keydown', function(e) {
-            // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+            // Nonaktifkan F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
             if (e.key === 'F12' || 
                 (e.ctrlKey && e.shiftKey && e.key === 'I') || 
                 (e.ctrlKey && e.shiftKey && e.key === 'J') || 
                 (e.ctrlKey && e.key === 'u')) {
                 e.preventDefault();
-                showNotification('Aksi ini tidak diizinkan', 'error');
             }
         });
-
-        // Tampilkan notifikasi
-        function showNotification(message, type = 'success') {
-            const notification = document.getElementById('notification');
-            const notificationMessage = document.getElementById('notificationMessage');
+        
+        // Toggle antara login dan register forms
+        document.getElementById('show-register').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('login-box').style.display = 'none';
+            document.getElementById('register-box').style.display = 'block';
+        });
+        
+        document.getElementById('show-login').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('register-box').style.display = 'none';
+            document.getElementById('login-box').style.display = 'block';
+        });
+        
+        // Form registrasi
+        document.getElementById('register-form').addEventListener('submit', function(e) {
+            e.preventDefault();
             
-            notificationMessage.textContent = message;
-            notification.className = 'notification';
-            notification.classList.add(`notification-${type}`);
-            notification.classList.add('show');
+            const username = document.getElementById('register-username').value;
+            const email = document.getElementById('register-email').value;
+            const otp = document.getElementById('register-otp').value;
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('register-confirm').value;
             
-            if (type === 'success') {
-                notification.innerHTML = `<i class="fas fa-check-circle"></i> <span id="notificationMessage">${message}</span>`;
-            } else {
-                notification.innerHTML = `<i class="fas fa-exclamation-circle"></i> <span id="notificationMessage">${message}</span>`;
+            // Validasi sederhana
+            if (password !== confirmPassword) {
+                tampilkanNotifikasi('Password tidak cocok', 'error');
+                return;
             }
             
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
-        }
-
-        // Navigasi menu sidebar
-        function setupMenuNavigation() {
-            const menuItems = document.querySelectorAll('.menu-item');
+            if (password.length < 6) {
+                tampilkanNotifikasi('Password minimal 6 karakter', 'error');
+                return;
+            }
             
-            menuItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    // Remove active class from all items
-                    menuItems.forEach(i => i.classList.remove('active'));
-                    
-                    // Add active class to clicked item
-                    this.classList.add('active');
-                    
-                    // Get target content id
-                    const target = this.getAttribute('data-target');
-                    
-                    // Hide all content
-                    document.querySelectorAll('[id$="Content"]').forEach(content => {
-                        content.style.display = 'none';
-                    });
-                    
-                    // Show target content
-                    document.getElementById(`${target}Content`).style.display = 'block';
-                    
-                    // Update page title
-                    document.getElementById('pageTitle').textContent = this.querySelector('span').textContent;
+            // Simulasi registrasi
+            setTimeout(() => {
+                tampilkanNotifikasi('Registrasi berhasil! Silakan login');
+                document.getElementById('register-box').style.display = 'none';
+                document.getElementById('login-box').style.display = 'block';
+                
+                // Reset form
+                this.reset();
+            }, 1500);
+        });
+        
+        // Form login
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            
+            // Validasi sederhana
+            if (!username || !password) {
+                tampilkanNotifikasi('Harap masukkan username dan password', 'error');
+                return;
+            }
+            
+            // Simulasi login
+            setTimeout(() => {
+                tampilkanNotifikasi('Login berhasil!', 'sukses');
+                
+                // Sembunyikan auth container dan tampilkan dashboard
+                document.getElementById('auth-container').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                
+                // Set username di dashboard
+                document.getElementById('sidebar-username').textContent = username;
+                document.getElementById('profile-name').textContent = username;
+                
+                // Muat data
+                hitungTotal();
+                tampilkanTransaksi();
+                tampilkanPemasukan();
+                tampilkanPengeluaran();
+                tampilkanPiutang();
+                tampilkanUtang();
+                tampilkanRiwayat();
+                
+                // Reset form
+                this.reset();
+            }, 1000);
+        });
+        
+        // Logout
+        document.getElementById('logout-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Sembunyikan dashboard dan tampilkan auth container
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('auth-container').style.display = 'flex';
+            
+            // Reset ke form login
+            document.getElementById('register-box').style.display = 'none';
+            document.getElementById('login-box').style.display = 'block';
+            
+            tampilkanNotifikasi('Anda telah logout', 'warning');
+        });
+        
+        // Navigasi menu
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Hapus class active dari semua menu item
+                document.querySelectorAll('.menu-item').forEach(i => {
+                    i.classList.remove('active');
+                });
+                
+                // Tambahkan class active ke item yang diklik
+                this.classList.add('active');
+                
+                // Dapatkan section yang akan ditampilkan
+                const sectionId = this.getAttribute('data-section');
+                
+                // Sembunyikan semua section
+                document.querySelectorAll('.content-section').forEach(section => {
+                    section.style.display = 'none';
+                });
+                
+                // Tampilkan section yang dipilih
+                document.getElementById(sectionId).style.display = 'block';
+                
+                // Update judul halaman
+                document.getElementById('page-title').textContent = this.querySelector('span').textContent;
+            });
+        });
+        
+        // Fungsi untuk setup modal
+        function setupModal(modalId, openButtonId) {
+            const modal = document.getElementById(modalId);
+            const openButton = openButtonId ? document.getElementById(openButtonId) : null;
+            const closeButtons = modal.querySelectorAll('.close-modal');
+            
+            if (openButton) {
+                openButton.addEventListener('click', () => {
+                    modal.classList.add('show');
+                });
+            }
+            
+            closeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    modal.classList.remove('show');
                 });
             });
-        }
-
-        // Format mata uang Rupiah
-        function formatRupiah(amount) {
-            return `Rp ${amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}`;
-        }
-
-        // Setup form login dan register
-        function setupAuthForms() {
-            const loginContainer = document.getElementById('loginContainer');
-            const registerContainer = document.getElementById('registerContainer');
-            const showRegister = document.getElementById('showRegister');
-            const showLogin = document.getElementById('showLogin');
-            const loginForm = document.getElementById('loginForm');
-            const registerForm = document.getElementById('registerForm');
-            const requestCodeBtn = document.getElementById('requestCodeBtn');
-            const verificationCodeGroup = document.getElementById('verificationCodeGroup');
-            const mainContainer = document.getElementById('mainContainer');
-            const logoutBtn = document.getElementById('logoutBtn');
             
-            // Tampilkan login container pertama kali
-            loginContainer.style.display = 'flex';
-            createStars();
-            
-            // Toggle antara login dan register
-            showRegister.addEventListener('click', function(e) {
-                e.preventDefault();
-                loginContainer.style.display = 'none';
-                registerContainer.style.display = 'flex';
-            });
-            
-            showLogin.addEventListener('click', function(e) {
-                e.preventDefault();
-                registerContainer.style.display = 'none';
-                loginContainer.style.display = 'flex';
-            });
-            
-            // Request kode verifikasi
-            requestCodeBtn.addEventListener('click', function() {
-                const email = document.getElementById('registerEmail').value;
-                
-                if (!email) {
-                    showNotification('Harap masukkan email terlebih dahulu', 'error');
-                    return;
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('show');
                 }
-                
-                // Simulasi pengiriman kode
-                showNotification(`Kode verifikasi telah dikirim ke ${email}`);
-                verificationCodeGroup.style.display = 'block';
-            });
-            
-            // Form login
-            loginForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const email = document.getElementById('loginEmail').value;
-                const password = document.getElementById('loginPassword').value;
-                
-                // Validasi sederhana
-                if (!email || !password) {
-                    showNotification('Harap isi semua field', 'error');
-                    return;
-                }
-                
-                // Simulasi login berhasil
-                showNotification('Login berhasil!');
-                
-                // Update info user
-                document.getElementById('userName').textContent = email.split('@')[0];
-                document.getElementById('userAvatar').textContent = email.charAt(0).toUpperCase();
-                
-                // Sembunyikan login, tampilkan main container
-                loginContainer.style.display = 'none';
-                mainContainer.style.display = 'flex';
-            });
-            
-            // Form register
-            registerForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const name = document.getElementById('registerName').value;
-                const email = document.getElementById('registerEmail').value;
-                const password = document.getElementById('registerPassword').value;
-                const confirmPassword = document.getElementById('registerConfirmPassword').value;
-                const verificationCode = document.getElementById('verificationCode').value;
-                
-                // Validasi
-                if (!name || !email || !password || !confirmPassword) {
-                    showNotification('Harap isi semua field', 'error');
-                    return;
-                }
-                
-                if (password !== confirmPassword) {
-                    showNotification('Password dan konfirmasi password tidak sama', 'error');
-                    return;
-                }
-                
-                if (password.length < 8) {
-                    showNotification('Password minimal 8 karakter', 'error');
-                    return;
-                }
-                
-                // Simulasi registrasi berhasil
-                showNotification('Registrasi berhasil! Silakan login');
-                
-                // Kembali ke form login
-                registerContainer.style.display = 'none';
-                loginContainer.style.display = 'flex';
-                
-                // Isi otomatis form login
-                document.getElementById('loginEmail').value = email;
-                document.getElementById('loginPassword').value = password;
-            });
-            
-            // Logout
-            logoutBtn.addEventListener('click', function() {
-                mainContainer.style.display = 'none';
-                loginContainer.style.display = 'flex';
-                showNotification('Anda telah logout');
             });
         }
-
-        // Setup modal transaksi
-        function setupTransactionModal() {
-            const addTransactionBtn = document.getElementById('addTransactionBtn');
-            const transactionModal = document.getElementById('transactionModal');
-            const closeTransactionModal = document.getElementById('closeTransactionModal');
-            const cancelTransaction = document.getElementById('cancelTransaction');
-            const transactionForm = document.getElementById('transactionForm');
-            const transactionType = document.getElementById('transactionType');
-            const transactionCategory = document.getElementById('transactionCategory');
+        
+        // Setup semua modal
+        setupModal('pemasukan-modal', 'tambah-pemasukan');
+        setupModal('pemasukan-modal', 'tambah-pemasukan-2');
+        setupModal('pengeluaran-modal', 'tambah-pengeluaran');
+        setupModal('pengeluaran-modal', 'tambah-pengeluaran-2');
+        setupModal('piutang-modal', 'tambah-piutang');
+        setupModal('utang-modal', 'tambah-utang');
+        setupModal('bayar-piutang-modal');
+        setupModal('bayar-utang-modal');
+        setupModal('password-modal', 'change-password-btn');
+        
+        // Form pemasukan
+        document.getElementById('pemasukan-form').addEventListener('submit', function(e) {
+            e.preventDefault();
             
-            // Buka modal
-            addTransactionBtn.addEventListener('click', function() {
-                transactionModal.style.display = 'flex';
-            });
+            const jumlah = document.getElementById('jumlah-pemasukan').value;
+            const kategori = document.getElementById('kategori-pemasukan').value;
+            const tanggal = document.getElementById('tanggal-pemasukan').value;
+            const keterangan = document.getElementById('keterangan-pemasukan').value;
             
-            // Tutup modal
-            closeTransactionModal.addEventListener('click', function() {
-                transactionModal.style.display = 'none';
-            });
+            // Cek apakah edit atau tambah baru
+            const editId = this.dataset.editId;
             
-            cancelTransaction.addEventListener('click', function() {
-                transactionModal.style.display = 'none';
-            });
-            
-            // Ketika jenis transaksi berubah, update kategori
-            transactionType.addEventListener('change', function() {
-                // Kosongkan dulu
-                transactionCategory.innerHTML = '<option value="">Pilih Kategori</option>';
-                
-                if (this.value === 'income') {
-                    // Kategori pemasukan
-                    const incomeCategories = [
-                        {value: 'gaji', text: 'Gaji'},
-                        {value: 'bonus', text: 'Bonus'},
-                        {value: 'investasi', text: 'Investasi'},
-                        {value: 'hadiah', text: 'Hadiah'},
-                        {value: 'lainnya', text: 'Lainnya'}
-                    ];
+            if (editId) {
+                // Edit pemasukan yang ada
+                let pemasukan = dataKeuangan.pemasukan.find(p => p.id === parseInt(editId));
+                if (pemasukan) {
+                    // Kembalikan saldo sebelumnya
+                    dataKeuangan.saldo -= pemasukan.jumlah;
                     
-                    incomeCategories.forEach(cat => {
-                        const option = document.createElement('option');
-                        option.value = cat.value;
-                        option.textContent = cat.text;
-                        transactionCategory.appendChild(option);
-                    });
-                } else if (this.value === 'expense') {
-                    // Kategori pengeluaran
-                    const expenseCategories = [
-                        {value: 'belanja', text: 'Belanja'},
-                        {value: 'tagihan', text: 'Tagihan'},
-                        {value: 'hiburan', text: 'Hiburan'},
-                        {value: 'makanan', text: 'Makanan'},
-                        {value: 'transportasi', text: 'Transportasi'},
-                        {value: 'lainnya', text: 'Lainnya'}
-                    ];
+                    // Update data
+                    pemasukan.jumlah = parseInt(jumlah);
+                    pemasukan.kategori = kategori;
+                    pemasukan.tanggal = tanggal;
+                    pemasukan.keterangan = keterangan;
                     
-                    expenseCategories.forEach(cat => {
-                        const option = document.createElement('option');
-                        option.value = cat.value;
-                        option.textContent = cat.text;
-                        transactionCategory.appendChild(option);
-                    });
-                }
-            });
-            
-            // Form submit
-            transactionForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const type = transactionType.value;
-                const date = document.getElementById('transactionDate').value;
-                const amount = document.getElementById('transactionAmount').value;
-                const category = transactionCategory.value;
-                const description = document.getElementById('transactionDescription').value;
-                
-                if (!type || !date || !amount || !category) {
-                    showNotification('Harap isi semua field yang wajib', 'error');
-                    return;
+                    // Tambahkan saldo baru
+                    dataKeuangan.saldo += parseInt(jumlah);
+                    
+                    tampilkanNotifikasi('Pemasukan berhasil diperbarui');
                 }
                 
-                // Simpan transaksi (simulasi)
-                showNotification('Transaksi berhasil disimpan');
-                transactionModal.style.display = 'none';
-                transactionForm.reset();
-            });
-        }
-
-        // Inisialisasi semua fungsi ketika DOM siap
-        document.addEventListener('DOMContentLoaded', function() {
-            setupAuthForms();
-            setupMenuNavigation();
-            setupTransactionModal();
+                // Hapus editId
+                delete this.dataset.editId;
+            } else {
+                // Tambah pemasukan baru
+                tambahPemasukan(jumlah, kategori, tanggal, keterangan);
+            }
             
-            // Format semua nilai mata uang
-            document.querySelectorAll('.card-value').forEach(el => {
-                const amount = parseInt(el.textContent.replace(/\D/g, ''));
-                el.textContent = formatRupiah(amount);
-            });
+            // Tutup modal dan reset form
+            document.getElementById('pemasukan-modal').classList.remove('show');
+            this.reset();
             
-            // Format nilai di tabel
-            document.querySelectorAll('table td:nth-child(4)').forEach(el => {
-                if (el.textContent.includes('Rp')) {
-                    const amount = parseInt(el.textContent.replace(/\D/g, ''));
-                    el.textContent = formatRupiah(amount);
+            // Perbarui tampilan
+            hitungTotal();
+            tampilkanTransaksi();
+            tampilkanPemasukan();
+        });
+        
+        // Form pengeluaran
+        document.getElementById('pengeluaran-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const jumlah = document.getElementById('jumlah-pengeluaran').value;
+            const kategori = document.getElementById('kategori-pengeluaran').value;
+            const tanggal = document.getElementById('tanggal-pengeluaran').value;
+            const keterangan = document.getElementById('keterangan-pengeluaran').value;
+            
+            // Cek apakah edit atau tambah baru
+            const editId = this.dataset.editId;
+            
+            if (editId) {
+                // Edit pengeluaran yang ada
+                let pengeluaran = dataKeuangan.pengeluaran.find(p => p.id === parseInt(editId));
+                if (pengeluaran) {
+                    // Kembalikan saldo sebelumnya
+                    dataKeuangan.saldo += pengeluaran.jumlah;
+                    
+                    // Update data
+                    pengeluaran.jumlah = parseInt(jumlah);
+                    pengeluaran.kategori = kategori;
+                    pengeluaran.tanggal = tanggal;
+                    pengeluaran.keterangan = keterangan;
+                    
+                    // Kurangi saldo baru
+                    dataKeuangan.saldo -= parseInt(jumlah);
+                    
+                    tampilkanNotifikasi('Pengeluaran berhasil diperbarui');
                 }
-            });
+                
+                // Hapus editId
+                delete this.dataset.editId;
+            } else {
+                // Tambah pengeluaran baru
+                tambahPengeluaran(jumlah, kategori, tanggal, keterangan);
+            }
+            
+            // Tutup modal dan reset form
+            document.getElementById('pengeluaran-modal').classList.remove('show');
+            this.reset();
+            
+            // Perbarui tampilan
+            hitungTotal();
+            tampilkanTransaksi();
+            tampilkanPengeluaran();
+        });
+        
+        // Form piutang
+        document.getElementById('piutang-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const nama = document.getElementById('nama-peminjam').value;
+            const jumlah = document.getElementById('jumlah-piutang').value;
+            const tanggalPinjam = document.getElementById('tanggal-piutang').value;
+            const jatuhTempo = document.getElementById('jatuh-tempo-piutang').value;
+            const keterangan = document.getElementById('keterangan-piutang').value;
+            
+            tambahPiutang(nama, jumlah, tanggalPinjam, jatuhTempo, keterangan);
+            
+            // Tutup modal dan reset form
+            document.getElementById('piutang-modal').classList.remove('show');
+            this.reset();
+        });
+        
+        // Form utang
+        document.getElementById('utang-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const nama = document.getElementById('nama-pemberi').value;
+            const jumlah = document.getElementById('jumlah-utang').value;
+            const tanggalPinjam = document.getElementById('tanggal-utang').value;
+            const jatuhTempo = document.getElementById('jatuh-tempo-utang').value;
+            const keterangan = document.getElementById('keterangan-utang').value;
+            
+            tambahUtang(nama, jumlah, tanggalPinjam, jatuhTempo, keterangan);
+            
+            // Tutup modal dan reset form
+            document.getElementById('utang-modal').classList.remove('show');
+            this.reset();
+        });
+        
+        // Form bayar piutang
+        document.getElementById('bayar-piutang-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const piutangId = parseInt(this.dataset.piutangId);
+            const jumlahBayar = parseInt(document.getElementById('jumlah-bayar-piutang').value);
+            const tanggalBayar = document.getElementById('tanggal-bayar-piutang').value;
+            
+            let piutang = dataKeuangan.piutang.find(p => p.id === piutangId);
+            if (piutang) {
+                // Tambahkan ke riwayat pembayaran
+                piutang.riwayatPembayaran.push({
+                    tanggal: tanggalBayar,
+                    jumlah: jumlahBayar
+                });
+                
+                // Update jumlah yang sudah dikembalikan
+                piutang.dikembalikan += jumlahBayar;
+                
+                // Tambahkan ke saldo
+                dataKeuangan.saldo += jumlahBayar;
+                
+                tampilkanNotifikasi('Pembayaran piutang berhasil dicatat');
+            }
+            
+            // Tutup modal dan reset form
+            document.getElementById('bayar-piutang-modal').classList.remove('show');
+            this.reset();
+            
+            // Perbarui tampilan
+            hitungTotal();
+            tampilkanPiutang();
+            tampilkanRiwayat();
+        });
+        
+        // Form bayar utang
+        document.getElementById('bayar-utang-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const utangId = parseInt(this.dataset.utangId);
+            const jumlahBayar = parseInt(document.getElementById('jumlah-bayar-utang').value);
+            const tanggalBayar = document.getElementById('tanggal-bayar-utang').value;
+            
+            let utang = dataKeuangan.utang.find(u => u.id === utangId);
+            if (utang) {
+                // Tambahkan ke riwayat pembayaran
+                utang.riwayatPembayaran.push({
+                    tanggal: tanggalBayar,
+                    jumlah: jumlahBayar
+                });
+                
+                // Update jumlah yang sudah terbayar
+                utang.terbayar += jumlahBayar;
+                
+                // Kurangi dari saldo
+                dataKeuangan.saldo -= jumlahBayar;
+                
+                tampilkanNotifikasi('Pembayaran utang berhasil dicatat');
+            }
+            
+            // Tutup modal dan reset form
+            document.getElementById('bayar-utang-modal').classList.remove('show');
+            this.reset();
+            
+            // Perbarui tampilan
+            hitungTotal();
+            tampilkanUtang();
+            tampilkanRiwayat();
+        });
+        
+        // Form ganti password
+        document.getElementById('password-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const passwordLama = document.getElementById('password-lama').value;
+            const passwordBaru = document.getElementById('password-baru').value;
+            const konfirmasiPassword = document.getElementById('konfirmasi-password').value;
+            
+            if (passwordBaru !== konfirmasiPassword) {
+                tampilkanNotifikasi('Password baru tidak cocok', 'error');
+                return;
+            }
+            
+            if (passwordBaru.length < 6) {
+                tampilkanNotifikasi('Password minimal 6 karakter', 'error');
+                return;
+            }
+            
+            // Simulasi ganti password
+            setTimeout(() => {
+                document.getElementById('password-modal').classList.remove('show');
+                tampilkanNotifikasi('Password berhasil diubah');
+                this.reset();
+            }, 1500);
+        });
+        
+        // Filter riwayat
+        document.getElementById('filter-riwayat').addEventListener('change', function() {
+            tampilkanRiwayat();
+        });
+        
+        // Generate laporan bulanan
+        document.getElementById('generate-laporan').addEventListener('click', function() {
+            const bulan = document.getElementById('bulan-laporan').value;
+            if (!bulan) {
+                tampilkanNotifikasi('Pilih bulan terlebih dahulu', 'error');
+                return;
+            }
+            
+            // Format laporan sederhana
+            let laporan = `
+                <h3>Laporan Keuangan Bulan ${bulan}</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Jenis</th>
+                            <th>Jumlah</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Total Pemasukan</td>
+                            <td>${formatRupiah(2500000)}</td>
+                        </tr>
+                        <tr>
+                            <td>Total Pengeluaran</td>
+                            <td>${formatRupiah(1500000)}</td>
+                        </tr>
+                        <tr>
+                            <td>Saldo Bersih</td>
+                            <td>${formatRupiah(1000000)}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            `;
+            
+            document.getElementById('hasil-laporan').innerHTML = laporan;
+            document.getElementById('hasil-laporan-container').style.display = 'block';
+            document.getElementById('judul-laporan').textContent = `Laporan Bulan ${bulan}`;
+            
+            tampilkanNotifikasi('Laporan berhasil digenerate');
+        });
+        
+        // Generate laporan tahunan
+        document.getElementById('generate-laporan-tahunan').addEventListener('click', function() {
+            const tahun = document.getElementById('tahun-laporan').value;
+            
+            // Format laporan sederhana
+            let laporan = `
+                <h3>Laporan Keuangan Tahun ${tahun}</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Bulan</th>
+                            <th>Pemasukan</th>
+                            <th>Pengeluaran</th>
+                            <th>Saldo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Januari</td>
+                            <td>${formatRupiah(3000000)}</td>
+                            <td>${formatRupiah(2000000)}</td>
+                            <td>${formatRupiah(1000000)}</td>
+                        </tr>
+                        <tr>
+                            <td>Februari</td>
+                            <td>${formatRupiah(2500000)}</td>
+                            <td>${formatRupiah(1500000)}</td>
+                            <td>${formatRupiah(1000000)}</td>
+                        </tr>
+                        <!-- Tambahkan bulan lainnya -->
+                    </tbody>
+                </table>
+                <h4>Total Tahun ${tahun}</h4>
+                <table class="table">
+                    <tr>
+                        <td>Total Pemasukan</td>
+                        <td>${formatRupiah(5500000)}</td>
+                    </tr>
+                    <tr>
+                        <td>Total Pengeluaran</td>
+                        <td>${formatRupiah(3500000)}</td>
+                    </tr>
+                    <tr>
+                        <td>Saldo Bersih</td>
+                        <td>${formatRupiah(2000000)}</td>
+                    </tr>
+                </table>
+            `;
+            
+            document.getElementById('hasil-laporan').innerHTML = laporan;
+            document.getElementById('hasil-laporan-container').style.display = 'block';
+            document.getElementById('judul-laporan').textContent = `Laporan Tahun ${tahun}`;
+            
+            tampilkanNotifikasi('Laporan tahunan berhasil digenerate');
+        });
+        
+        // Cetak laporan
+        document.getElementById('cetak-laporan').addEventListener('click', function() {
+            window.print();
+        });
+        
+        // Export data
+        document.getElementById('export-pemasukan').addEventListener('click', function() {
+            tampilkanNotifikasi('Fitur export akan mengunduh file Excel', 'warning');
+        });
+        
+        document.getElementById('export-pengeluaran').addEventListener('click', function() {
+            tampilkanNotifikasi('Fitur export akan mengunduh file Excel', 'warning');
+        });
+        
+        document.getElementById('export-riwayat').addEventListener('click', function() {
+            tampilkanNotifikasi('Fitur export akan mengunduh file Excel', 'warning');
+        });
+        
+        document.getElementById('export-laporan').addEventListener('click', function() {
+            tampilkanNotifikasi('Fitur export akan mengunduh file Excel', 'warning');
+        });
+        
+        // Simpan profil
+        document.getElementById('simpan-profil').addEventListener('click', function() {
+            const nama = document.getElementById('nama-pengguna').value;
+            const email = document.getElementById('email-pengguna').value;
+            
+            document.getElementById('profile-name').textContent = nama;
+            document.getElementById('sidebar-username').textContent = nama;
+            
+            tampilkanNotifikasi('Profil berhasil diperbarui');
+        });
+        
+        // Simpan pengaturan
+        document.getElementById('simpan-pengaturan').addEventListener('click', function() {
+            const mataUang = document.getElementById('mata-uang').value;
+            const notifikasi = document.getElementById('notifikasi').value;
+            const tema = document.getElementById('tema').value;
+            
+            tampilkanNotifikasi('Pengaturan berhasil disimpan');
+        });
+        
+        // Inisialisasi
+        window.addEventListener('DOMContentLoaded', () => {
+            buatBintang();
+            
+            // Set tanggal hari ini sebagai default di form
+            let today = new Date().toISOString().split('T')[0];
+            document.getElementById('tanggal-pemasukan').value = today;
+            document.getElementById('tanggal-pengeluaran').value = today;
+            document.getElementById('tanggal-piutang').value = today;
+            document.getElementById('jatuh-tempo-piutang').value = today;
+            document.getElementById('tanggal-utang').value = today;
+            document.getElementById('jatuh-tempo-utang').value = today;
+            
+            // Set bulan dan tahun saat ini untuk laporan
+            let now = new Date();
+            document.getElementById('bulan-laporan').value = now.toISOString().slice(0, 7);
+            document.getElementById('tahun-laporan').value = now.getFullYear().toString();
         });
     </script>
 </body>
