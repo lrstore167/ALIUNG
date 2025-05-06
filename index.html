@@ -5,22 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Keuangan Pribadi</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <style>
         :root {
             --warna-utama: #6c5ce7;
             --warna-sekunder: #a29bfe;
-            --warna-gelap: #2d3436;
+            --warna-gelap: #1a1a2e;
+            --warna-gelap-2: #16213e;
             --warna-terang: #f5f6fa;
             --warna-sukses: #00b894;
             --warna-danger: #d63031;
             --warna-warning: #fdcb6e;
+            --warna-info: #0984e3;
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
@@ -28,7 +31,26 @@
             color: var(--warna-terang);
             overflow-x: hidden;
             position: relative;
-            height: 100vh;
+            min-height: 100vh;
+        }
+        
+        /* Animasi Background Gradient */
+        .gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: linear-gradient(-45deg, #0f0f1a, #1a1a2e, #16213e, #0f3460);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
         /* Animasi Bintang */
@@ -40,6 +62,7 @@
             height: 100%;
             z-index: -1;
             pointer-events: none;
+            overflow: hidden;
         }
         
         .bintang {
@@ -48,6 +71,7 @@
             border-radius: 50%;
             animation: jatuh linear infinite;
             opacity: 0.8;
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.7));
         }
         
         @keyframes jatuh {
@@ -76,6 +100,13 @@
             overflow: hidden;
             border: 1px solid var(--warna-utama);
             animation: glow 2s infinite alternate;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .auth-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(108, 92, 231, 0.3);
         }
         
         @keyframes glow {
@@ -117,6 +148,11 @@
             border-radius: 50%;
             border: 3px solid var(--warna-utama);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s;
+        }
+        
+        .logo img:hover {
+            transform: rotate(10deg) scale(1.05);
         }
         
         .auth-title {
@@ -125,6 +161,21 @@
             color: var(--warna-terang);
             font-size: 24px;
             font-weight: 600;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .auth-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(to right, var(--warna-utama), var(--warna-sekunder));
+            border-radius: 3px;
         }
         
         .form-group {
@@ -206,12 +257,29 @@
             cursor: pointer;
             transition: all 0.3s;
             margin-top: 10px;
+            position: relative;
+            overflow: hidden;
         }
         
         .btn-auth:hover {
             background-color: #5649d1;
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+        }
+        
+        .btn-auth::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn-auth:hover::before {
+            left: 100%;
         }
         
         .auth-footer {
@@ -225,11 +293,26 @@
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s;
+            position: relative;
         }
         
         .auth-footer a:hover {
             color: var(--warna-utama);
-            text-decoration: underline;
+        }
+        
+        .auth-footer a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--warna-utama);
+            transition: width 0.3s;
+        }
+        
+        .auth-footer a:hover::after {
+            width: 100%;
         }
         
         .notifikasi {
@@ -244,10 +327,17 @@
             z-index: 1000;
             transform: translateX(150%);
             transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
         .notifikasi.show {
             transform: translateX(0);
+        }
+        
+        .notifikasi i {
+            font-size: 20px;
         }
         
         /* Dashboard Styles */
@@ -265,6 +355,7 @@
             box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
             z-index: 10;
             transition: all 0.3s;
+            backdrop-filter: blur(10px);
         }
         
         .sidebar-header {
@@ -279,6 +370,11 @@
             height: 40px;
             border-radius: 50%;
             margin-right: 10px;
+            transition: transform 0.3s;
+        }
+        
+        .sidebar-header img:hover {
+            transform: rotate(15deg);
         }
         
         .sidebar-header h3 {
@@ -300,17 +396,23 @@
             transition: all 0.3s;
             position: relative;
             overflow: hidden;
+            margin: 5px 0;
         }
         
         .menu-item i {
             margin-right: 10px;
             font-size: 18px;
+            transition: transform 0.3s;
         }
         
         .menu-item:hover {
             background-color: rgba(108, 92, 231, 0.2);
             color: var(--warna-sekunder);
             transform: translateX(5px);
+        }
+        
+        .menu-item:hover i {
+            transform: scale(1.2);
         }
         
         .menu-item.active {
@@ -342,6 +444,7 @@
             width: calc(100% - 250px);
             min-height: 100vh;
             background-color: rgba(15, 15, 26, 0.7);
+            backdrop-filter: blur(5px);
         }
         
         .header {
@@ -353,12 +456,19 @@
             border-radius: 10px;
             margin-bottom: 20px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .header:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         }
         
         .header-title h1 {
             font-size: 24px;
             color: var(--warna-terang);
             margin: 0;
+            font-weight: 600;
         }
         
         .header-actions {
@@ -371,6 +481,11 @@
             align-items: center;
             cursor: pointer;
             position: relative;
+            transition: all 0.3s;
+        }
+        
+        .user-profile:hover {
+            transform: scale(1.05);
         }
         
         .user-profile img {
@@ -379,6 +494,11 @@
             border-radius: 50%;
             margin-right: 10px;
             border: 2px solid var(--warna-utama);
+            transition: transform 0.3s;
+        }
+        
+        .user-profile:hover img {
+            transform: rotate(15deg);
         }
         
         .user-profile span {
@@ -400,6 +520,7 @@
             transition: all 0.3s;
             z-index: 100;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
         }
         
         .user-profile:hover .dropdown-menu {
@@ -419,6 +540,13 @@
         .dropdown-item:hover {
             background-color: rgba(108, 92, 231, 0.2);
             color: var(--warna-sekunder);
+            padding-left: 25px;
+        }
+        
+        .dropdown-item i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
         }
         
         .dropdown-divider {
@@ -441,6 +569,20 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             transition: all 0.3s;
             border-left: 4px solid var(--warna-utama);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(108, 92, 231, 0.1), transparent);
+            z-index: -1;
         }
         
         .card:hover {
@@ -470,6 +612,11 @@
             justify-content: center;
             background-color: rgba(108, 92, 231, 0.2);
             color: var(--warna-utama);
+            transition: transform 0.3s;
+        }
+        
+        .card:hover .card-icon {
+            transform: rotate(15deg) scale(1.1);
         }
         
         .card-body {
@@ -481,11 +628,21 @@
             font-weight: 600;
             color: var(--warna-terang);
             margin: 5px 0;
+            transition: transform 0.3s;
+        }
+        
+        .card:hover .card-value {
+            transform: scale(1.05);
         }
         
         .card-footer {
             font-size: 14px;
             color: rgba(255, 255, 255, 0.7);
+            transition: color 0.3s;
+        }
+        
+        .card:hover .card-footer {
+            color: var(--warna-terang);
         }
         
         .positive {
@@ -496,12 +653,27 @@
             color: var(--warna-danger);
         }
         
+        .warning {
+            color: var(--warna-warning);
+        }
+        
+        .info {
+            color: var(--warna-info);
+        }
+        
         .table-container {
             background-color: rgba(30, 30, 46, 0.7);
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             margin-bottom: 30px;
+            transition: transform 0.3s;
+            backdrop-filter: blur(5px);
+        }
+        
+        .table-container:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         }
         
         .table-header {
@@ -515,6 +687,19 @@
             font-size: 18px;
             color: var(--warna-terang);
             font-weight: 500;
+            position: relative;
+            padding-bottom: 5px;
+        }
+        
+        .table-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(to right, var(--warna-utama), var(--warna-sekunder));
+            border-radius: 3px;
         }
         
         .table-actions {
@@ -533,6 +718,10 @@
             display: flex;
             align-items: center;
             gap: 5px;
+        }
+        
+        .btn i {
+            font-size: 14px;
         }
         
         .btn-primary {
@@ -568,6 +757,28 @@
             box-shadow: 0 5px 10px rgba(214, 48, 49, 0.3);
         }
         
+        .btn-warning {
+            background-color: var(--warna-warning);
+            color: var(--warna-gelap);
+        }
+        
+        .btn-warning:hover {
+            background-color: #fcb933;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(253, 203, 110, 0.3);
+        }
+        
+        .btn-info {
+            background-color: var(--warna-info);
+            color: white;
+        }
+        
+        .btn-info:hover {
+            background-color: #0a7bc8;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(9, 132, 227, 0.3);
+        }
+        
         table {
             width: 100%;
             border-collapse: collapse;
@@ -584,6 +795,8 @@
             font-weight: 600;
             color: var(--warna-sekunder);
             background-color: rgba(108, 92, 231, 0.1);
+            position: sticky;
+            top: 0;
         }
         
         tr:hover {
@@ -595,6 +808,7 @@
             border-radius: 4px;
             font-size: 12px;
             font-weight: 500;
+            display: inline-block;
         }
         
         .badge-success {
@@ -612,6 +826,11 @@
             color: var(--warna-warning);
         }
         
+        .badge-info {
+            background-color: rgba(9, 132, 227, 0.2);
+            color: var(--warna-info);
+        }
+        
         .form-modal {
             position: fixed;
             top: 0;
@@ -626,6 +845,7 @@
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s;
+            backdrop-filter: blur(5px);
         }
         
         .form-modal.show {
@@ -644,6 +864,7 @@
             transform: translateY(-20px);
             transition: all 0.3s;
             border: 1px solid var(--warna-utama);
+            backdrop-filter: blur(10px);
         }
         
         .form-modal.show .modal-content {
@@ -672,11 +893,18 @@
             font-size: 24px;
             cursor: pointer;
             transition: all 0.3s;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
         }
         
         .close-modal:hover {
             color: var(--warna-danger);
             transform: rotate(90deg);
+            background-color: rgba(214, 48, 49, 0.1);
         }
         
         .modal-footer {
@@ -686,6 +914,13 @@
             margin-top: 20px;
             padding-top: 15px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Chart container */
+        .chart-container {
+            width: 100%;
+            height: 300px;
+            margin-bottom: 20px;
         }
         
         /* Responsive */
@@ -724,6 +959,38 @@
                 align-items: flex-start;
                 gap: 15px;
             }
+            
+            .table-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .table-actions {
+                width: 100%;
+                flex-wrap: wrap;
+            }
+            
+            .auth-box {
+                width: 95%;
+                padding: 30px 20px;
+            }
+        }
+        
+        /* Animasi loading */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-left: 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
         
         /* Security measures */
@@ -746,6 +1013,9 @@
     </style>
 </head>
 <body>
+    <!-- Background Gradient -->
+    <div class="gradient-bg"></div>
+    
     <!-- Background Bintang -->
     <div class="bintang-bintang" id="bintang-bintang"></div>
     
@@ -765,7 +1035,9 @@
                     <label for="login-password">Password</label>
                     <input type="password" id="login-password" class="form-control" placeholder="Masukkan password" required>
                 </div>
-                <button type="submit" class="btn-auth">Login</button>
+                <button type="submit" class="btn-auth" id="login-button">
+                    <span>Login</span>
+                </button>
             </form>
             <div class="auth-footer">
                 Belum punya akun? <a href="#" id="show-register">Daftar</a>
@@ -787,10 +1059,6 @@
                     <input type="email" id="register-email" class="form-control" placeholder="Masukkan email" required>
                 </div>
                 <div class="form-group">
-                    <label for="register-otp">Kode Verifikasi</label>
-                    <input type="text" id="register-otp" class="form-control" placeholder="Masukkan kode dari email" required>
-                </div>
-                <div class="form-group">
                     <label for="register-password">Password</label>
                     <input type="password" id="register-password" class="form-control" placeholder="Buat password" required>
                 </div>
@@ -798,7 +1066,9 @@
                     <label for="register-confirm">Konfirmasi Password</label>
                     <input type="password" id="register-confirm" class="form-control" placeholder="Konfirmasi password" required>
                 </div>
-                <button type="submit" class="btn-auth">Daftar</button>
+                <button type="submit" class="btn-auth" id="register-button">
+                    <span>Daftar</span>
+                </button>
             </form>
             <div class="auth-footer">
                 Sudah punya akun? <a href="#" id="show-login">Login</a>
@@ -807,14 +1077,17 @@
     </div>
     
     <!-- Notifikasi -->
-    <div class="notifikasi" id="notifikasi"></div>
+    <div class="notifikasi" id="notifikasi">
+        <i class="fas fa-check-circle"></i>
+        <span id="notifikasi-text">Pesan notifikasi</span>
+    </div>
     
     <!-- Dashboard -->
     <div class="dashboard" id="dashboard">
         <!-- Sidebar -->
         <div class="sidebar">
             <div class="sidebar-header">
-                <img src="https://i.ibb.co/ns1hHyqq/DASHBOARD.gif" alt="User">
+                <img src="https://i.ibb.co/ns1hHyqq/DASHBOARD.gif" alt="User" id="sidebar-user-image">
                 <h3 id="sidebar-username">Admin</h3>
             </div>
             <div class="sidebar-menu">
@@ -940,6 +1213,21 @@
                             <p class="card-footer">
                                 <span class="positive">+24.7%</span> dari bulan lalu
                             </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Chart Container -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Statistik Keuangan</h3>
+                        <div class="card-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container" id="finance-chart">
+                            <canvas id="chartCanvas"></canvas>
                         </div>
                     </div>
                 </div>
@@ -1179,7 +1467,9 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button class="btn btn-primary" id="generate-laporan">Generate Laporan</button>
+                            <button class="btn btn-primary" id="generate-laporan">
+                                <i class="fas fa-chart-bar"></i> Generate Laporan
+                            </button>
                         </div>
                     </div>
                     
@@ -1196,12 +1486,14 @@
                                 <select id="tahun-laporan" class="form-control">
                                     <option value="2023">2023</option>
                                     <option value="2024">2024</option>
-                                    <option value="2025">2025</option>
+                                    <option value="2025" selected>2025</option>
                                 </select>
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button class="btn btn-primary" id="generate-laporan-tahunan">Generate Laporan</button>
+                            <button class="btn btn-primary" id="generate-laporan-tahunan">
+                                <i class="fas fa-chart-pie"></i> Generate Laporan
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -1283,12 +1575,14 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="foto-profil">Foto Profil</label>
-                                    <input type="file" id="foto-profil" class="form-control">
+                                    <input type="file" id="foto-profil" class="form-control" accept="image/*">
                                 </div>
                             </form>
                         </div>
                         <div class="card-footer">
-                            <button class="btn btn-primary" id="simpan-profil">Simpan Perubahan</button>
+                            <button class="btn btn-primary" id="simpan-profil">
+                                <i class="fas fa-save"></i> Simpan Perubahan
+                            </button>
                         </div>
                     </div>
                     
@@ -1324,7 +1618,9 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button class="btn btn-primary" id="simpan-pengaturan">Simpan Pengaturan</button>
+                            <button class="btn btn-primary" id="simpan-pengaturan">
+                                <i class="fas fa-save"></i> Simpan Pengaturan
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -1364,8 +1660,12 @@
                     <textarea id="keterangan-pemasukan" class="form-control" rows="3" placeholder="Masukkan keterangan"></textarea>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger close-modal">Batal</button>
-                    <button type="submit" class="btn btn-success">Simpan Pemasukan</button>
+                    <button type="button" class="btn btn-danger close-modal">
+                        <i class="fas fa-times"></i> Batal
+                    </button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save"></i> Simpan Pemasukan
+                    </button>
                 </div>
             </form>
         </div>
@@ -1405,8 +1705,12 @@
                     <textarea id="keterangan-pengeluaran" class="form-control" rows="3" placeholder="Masukkan keterangan"></textarea>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger close-modal">Batal</button>
-                    <button type="submit" class="btn btn-success">Simpan Pengeluaran</button>
+                    <button type="button" class="btn btn-danger close-modal">
+                        <i class="fas fa-times"></i> Batal
+                    </button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save"></i> Simpan Pengeluaran
+                    </button>
                 </div>
             </form>
         </div>
@@ -1441,8 +1745,12 @@
                     <textarea id="keterangan-piutang" class="form-control" rows="3" placeholder="Masukkan keterangan"></textarea>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger close-modal">Batal</button>
-                    <button type="submit" class="btn btn-success">Simpan Piutang</button>
+                    <button type="button" class="btn btn-danger close-modal">
+                        <i class="fas fa-times"></i> Batal
+                    </button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save"></i> Simpan Piutang
+                    </button>
                 </div>
             </form>
         </div>
@@ -1477,8 +1785,12 @@
                     <textarea id="keterangan-utang" class="form-control" rows="3" placeholder="Masukkan keterangan"></textarea>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger close-modal">Batal</button>
-                    <button type="submit" class="btn btn-success">Simpan Utang</button>
+                    <button type="button" class="btn btn-danger close-modal">
+                        <i class="fas fa-times"></i> Batal
+                    </button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save"></i> Simpan Utang
+                    </button>
                 </div>
             </form>
         </div>
@@ -1513,8 +1825,12 @@
                     <input type="date" id="tanggal-bayar-piutang" class="form-control" required>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger close-modal">Batal</button>
-                    <button type="submit" class="btn btn-success">Simpan Pembayaran</button>
+                    <button type="button" class="btn btn-danger close-modal">
+                        <i class="fas fa-times"></i> Batal
+                    </button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save"></i> Simpan Pembayaran
+                    </button>
                 </div>
             </form>
         </div>
@@ -1549,8 +1865,12 @@
                     <input type="date" id="tanggal-bayar-utang" class="form-control" required>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger close-modal">Batal</button>
-                    <button type="submit" class="btn btn-success">Simpan Pembayaran</button>
+                    <button type="button" class="btn btn-danger close-modal">
+                        <i class="fas fa-times"></i> Batal
+                    </button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save"></i> Simpan Pembayaran
+                    </button>
                 </div>
             </form>
         </div>
@@ -1577,13 +1897,18 @@
                     <input type="password" id="konfirmasi-password" class="form-control" placeholder="Konfirmasi password baru" required>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger close-modal">Batal</button>
-                    <button type="submit" class="btn btn-success">Ganti Password</button>
+                    <button type="button" class="btn btn-danger close-modal">
+                        <i class="fas fa-times"></i> Batal
+                    </button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save"></i> Ganti Password
+                    </button>
                 </div>
             </form>
         </div>
     </div>
     
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         // Data contoh untuk simulasi
         let dataKeuangan = {
@@ -1649,6 +1974,64 @@
             ]
         };
 
+        // Data pengguna yang valid
+        const validUsers = {
+            "aliung": { password: "company209", name: "Ali Ung" },
+            "admin": { password: "admin123", name: "Administrator" }
+        };
+
+        // Chart instance
+        let financeChart = null;
+
+        // Cek apakah pengguna sudah login
+        function checkLogin() {
+            const loggedInUser = localStorage.getItem('loggedInUser');
+            if (loggedInUser) {
+                const userData = JSON.parse(loggedInUser);
+                loginUser(userData.username, userData.name);
+            }
+        }
+
+        // Login pengguna
+        function loginUser(username, name) {
+            document.getElementById('auth-container').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            
+            // Set username di dashboard
+            document.getElementById('sidebar-username').textContent = name;
+            document.getElementById('profile-name').textContent = name;
+            
+            // Simpan data login di localStorage
+            localStorage.setItem('loggedInUser', JSON.stringify({
+                username: username,
+                name: name
+            }));
+            
+            // Muat data
+            hitungTotal();
+            tampilkanTransaksi();
+            tampilkanPemasukan();
+            tampilkanPengeluaran();
+            tampilkanPiutang();
+            tampilkanUtang();
+            tampilkanRiwayat();
+            initChart();
+        }
+
+        // Logout pengguna
+        function logoutUser() {
+            localStorage.removeItem('loggedInUser');
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('auth-container').style.display = 'flex';
+            document.getElementById('register-box').style.display = 'none';
+            document.getElementById('login-box').style.display = 'block';
+            
+            // Reset form login
+            document.getElementById('login-form').reset();
+            
+            tampilkanNotifikasi('Anda telah logout', 'warning');
+        }
+
         // Hitung total pemasukan, pengeluaran, piutang, dan utang
         function hitungTotal() {
             // Total pemasukan
@@ -1689,6 +2072,87 @@
             return 'Rp' + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         }
 
+        // Inisialisasi chart
+        function initChart() {
+            const ctx = document.getElementById('chartCanvas').getContext('2d');
+            
+            // Data contoh untuk chart
+            const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'];
+            const pemasukanData = [5000000, 6000000, 5500000, 7000000, 8000000, 8500000];
+            const pengeluaranData = [3000000, 3500000, 4000000, 4500000, 5000000, 5500000];
+            
+            if (financeChart) {
+                financeChart.destroy();
+            }
+            
+            financeChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Pemasukan',
+                            data: pemasukanData,
+                            borderColor: '#00b894',
+                            backgroundColor: 'rgba(0, 184, 148, 0.1)',
+                            tension: 0.3,
+                            fill: true
+                        },
+                        {
+                            label: 'Pengeluaran',
+                            data: pengeluaranData,
+                            borderColor: '#d63031',
+                            backgroundColor: 'rgba(214, 48, 49, 0.1)',
+                            tension: 0.3,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                color: '#f5f6fa'
+                            }
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + formatRupiah(context.raw);
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                color: '#f5f6fa',
+                                callback: function(value) {
+                                    return formatRupiah(value);
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: '#f5f6fa'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
         // Tampilkan data transaksi
         function tampilkanTransaksi() {
             let table = document.getElementById('transaksi-table');
@@ -1721,8 +2185,12 @@
                 
                 let aksiCell = row.insertCell(5);
                 aksiCell.innerHTML = `
-                    <button class="btn btn-success btn-sm" onclick="editTransaksi(${transaksi.id}, '${transaksi.jenis}')"><i class="fas fa-edit"></i></button>
-                    <button class="btn btn-danger btn-sm" onclick="hapusTransaksi(${transaksi.id}, '${transaksi.jenis}')"><i class="fas fa-trash"></i></button>
+                    <button class="btn btn-success btn-sm" onclick="editTransaksi(${transaksi.id}, '${transaksi.jenis}')">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-danger btn-sm" onclick="hapusTransaksi(${transaksi.id}, '${transaksi.jenis}')">
+                        <i class="fas fa-trash"></i>
+                    </button>
                 `;
             });
         }
@@ -1744,8 +2212,12 @@
                 
                 let aksiCell = row.insertCell(4);
                 aksiCell.innerHTML = `
-                    <button class="btn btn-success btn-sm" onclick="editPemasukan(${pemasukan.id})"><i class="fas fa-edit"></i></button>
-                    <button class="btn btn-danger btn-sm" onclick="hapusPemasukan(${pemasukan.id})"><i class="fas fa-trash"></i></button>
+                    <button class="btn btn-success btn-sm" onclick="editPemasukan(${pemasukan.id})">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-danger btn-sm" onclick="hapusPemasukan(${pemasukan.id})">
+                        <i class="fas fa-trash"></i>
+                    </button>
                 `;
             });
         }
@@ -1767,8 +2239,12 @@
                 
                 let aksiCell = row.insertCell(4);
                 aksiCell.innerHTML = `
-                    <button class="btn btn-success btn-sm" onclick="editPengeluaran(${pengeluaran.id})"><i class="fas fa-edit"></i></button>
-                    <button class="btn btn-danger btn-sm" onclick="hapusPengeluaran(${pengeluaran.id})"><i class="fas fa-trash"></i></button>
+                    <button class="btn btn-success btn-sm" onclick="editPengeluaran(${pengeluaran.id})">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-danger btn-sm" onclick="hapusPengeluaran(${pengeluaran.id})">
+                        <i class="fas fa-trash"></i>
+                    </button>
                 `;
             });
         }
@@ -1801,9 +2277,15 @@
                 
                 let aksiCell = row.insertCell(7);
                 aksiCell.innerHTML = `
-                    <button class="btn btn-success btn-sm" onclick="bayarPiutang(${piutang.id})"><i class="fas fa-money-bill-wave"></i></button>
-                    <button class="btn btn-primary btn-sm" onclick="detailPiutang(${piutang.id})"><i class="fas fa-info-circle"></i></button>
-                    <button class="btn btn-danger btn-sm" onclick="hapusPiutang(${piutang.id})"><i class="fas fa-trash"></i></button>
+                    <button class="btn btn-success btn-sm" onclick="bayarPiutang(${piutang.id})">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </button>
+                    <button class="btn btn-primary btn-sm" onclick="detailPiutang(${piutang.id})">
+                        <i class="fas fa-info-circle"></i>
+                    </button>
+                    <button class="btn btn-danger btn-sm" onclick="hapusPiutang(${piutang.id})">
+                        <i class="fas fa-trash"></i>
+                    </button>
                 `;
             });
         }
@@ -1836,9 +2318,15 @@
                 
                 let aksiCell = row.insertCell(7);
                 aksiCell.innerHTML = `
-                    <button class="btn btn-success btn-sm" onclick="bayarUtang(${utang.id})"><i class="fas fa-money-bill-wave"></i></button>
-                    <button class="btn btn-primary btn-sm" onclick="detailUtang(${utang.id})"><i class="fas fa-info-circle"></i></button>
-                    <button class="btn btn-danger btn-sm" onclick="hapusUtang(${utang.id})"><i class="fas fa-trash"></i></button>
+                    <button class="btn btn-success btn-sm" onclick="bayarUtang(${utang.id})">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </button>
+                    <button class="btn btn-primary btn-sm" onclick="detailUtang(${utang.id})">
+                        <i class="fas fa-info-circle"></i>
+                    </button>
+                    <button class="btn btn-danger btn-sm" onclick="hapusUtang(${utang.id})">
+                        <i class="fas fa-trash"></i>
+                    </button>
                 `;
             });
         }
@@ -2144,16 +2632,26 @@
         // Fungsi untuk menampilkan notifikasi
         function tampilkanNotifikasi(pesan, jenis = 'sukses') {
             let notifikasi = document.getElementById('notifikasi');
-            notifikasi.textContent = pesan;
+            let notifikasiText = document.getElementById('notifikasi-text');
+            let icon = notifikasi.querySelector('i');
+            
+            notifikasiText.textContent = pesan;
             notifikasi.className = 'notifikasi show';
             
+            // Set icon berdasarkan jenis notifikasi
             if (jenis === 'sukses') {
                 notifikasi.style.backgroundColor = 'var(--warna-sukses)';
+                icon.className = 'fas fa-check-circle';
             } else if (jenis === 'error') {
                 notifikasi.style.backgroundColor = 'var(--warna-danger)';
+                icon.className = 'fas fa-exclamation-circle';
             } else if (jenis === 'warning') {
                 notifikasi.style.backgroundColor = 'var(--warna-warning)';
                 notifikasi.style.color = 'var(--warna-gelap)';
+                icon.className = 'fas fa-exclamation-triangle';
+            } else if (jenis === 'info') {
+                notifikasi.style.backgroundColor = 'var(--warna-info)';
+                icon.className = 'fas fa-info-circle';
             }
             
             setTimeout(() => {
@@ -2165,6 +2663,9 @@
         function buatBintang() {
             const container = document.getElementById('bintang-bintang');
             const jumlahBintang = 100;
+            
+            // Hapus bintang yang ada
+            container.innerHTML = '';
             
             for (let i = 0; i < jumlahBintang; i++) {
                 const bintang = document.createElement('div');
@@ -2190,9 +2691,113 @@
             }
         }
 
+        // Fungsi untuk export data ke Excel
+        function exportToExcel(data, fileName) {
+            // Buat worksheet dari data
+            const ws = XLSX.utils.json_to_sheet(data);
+            
+            // Buat workbook
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+            
+            // Export ke file Excel
+            XLSX.writeFile(wb, `${fileName}.xlsx`);
+            
+            tampilkanNotifikasi(`File ${fileName}.xlsx berhasil diunduh`, 'sukses');
+        }
+
+        // Fungsi untuk export pemasukan
+        function exportPemasukan() {
+            const data = dataKeuangan.pemasukan.map(p => ({
+                Tanggal: p.tanggal,
+                Keterangan: p.keterangan,
+                Kategori: p.kategori,
+                Jumlah: p.jumlah,
+                'Jumlah (Rp)': formatRupiah(p.jumlah)
+            }));
+            
+            exportToExcel(data, 'pemasukan');
+        }
+
+        // Fungsi untuk export pengeluaran
+        function exportPengeluaran() {
+            const data = dataKeuangan.pengeluaran.map(p => ({
+                Tanggal: p.tanggal,
+                Keterangan: p.keterangan,
+                Kategori: p.kategori,
+                Jumlah: p.jumlah,
+                'Jumlah (Rp)': formatRupiah(p.jumlah)
+            }));
+            
+            exportToExcel(data, 'pengeluaran');
+        }
+
+        // Fungsi untuk export riwayat
+        function exportRiwayat() {
+            let semuaRiwayat = [
+                ...dataKeuangan.pemasukan.map(p => ({ 
+                    Tanggal: p.tanggal,
+                    Jenis: 'Pemasukan',
+                    Keterangan: p.keterangan,
+                    Jumlah: p.jumlah,
+                    'Jumlah (Rp)': formatRupiah(p.jumlah),
+                    Status: 'Selesai'
+                })),
+                ...dataKeuangan.pengeluaran.map(p => ({ 
+                    Tanggal: p.tanggal,
+                    Jenis: 'Pengeluaran',
+                    Keterangan: p.keterangan,
+                    Jumlah: p.jumlah,
+                    'Jumlah (Rp)': formatRupiah(p.jumlah),
+                    Status: 'Selesai'
+                })),
+                ...dataKeuangan.piutang.flatMap(p => 
+                    p.riwayatPembayaran.map(r => ({
+                        Tanggal: r.tanggal,
+                        Jenis: 'Piutang',
+                        Keterangan: `Pembayaran dari ${p.nama}`,
+                        Jumlah: r.jumlah,
+                        'Jumlah (Rp)': formatRupiah(r.jumlah),
+                        Status: 'Diterima'
+                    }))
+                ),
+                ...dataKeuangan.utang.flatMap(u => 
+                    u.riwayatPembayaran.map(r => ({
+                        Tanggal: r.tanggal,
+                        Jenis: 'Utang',
+                        Keterangan: `Pembayaran ke ${u.nama}`,
+                        Jumlah: r.jumlah,
+                        'Jumlah (Rp)': formatRupiah(r.jumlah),
+                        Status: 'Dibayar'
+                    }))
+                )
+            ];
+            
+            // Urutkan berdasarkan tanggal terbaru
+            semuaRiwayat.sort((a, b) => new Date(b.Tanggal) - new Date(a.Tanggal));
+            
+            exportToExcel(semuaRiwayat, 'riwayat-transaksi');
+        }
+
+        // Fungsi untuk export laporan
+        function exportLaporan() {
+            const bulan = document.getElementById('bulan-laporan').value;
+            const tahun = document.getElementById('tahun-laporan').value;
+            
+            const data = [
+                { Keterangan: 'Total Pemasukan', Jumlah: 2500000, 'Jumlah (Rp)': formatRupiah(2500000) },
+                { Keterangan: 'Total Pengeluaran', Jumlah: 1500000, 'Jumlah (Rp)': formatRupiah(1500000) },
+                { Keterangan: 'Saldo Bersih', Jumlah: 1000000, 'Jumlah (Rp)': formatRupiah(1000000) }
+            ];
+            
+            const fileName = bulan ? `laporan-bulan-${bulan}` : `laporan-tahun-${tahun}`;
+            exportToExcel(data, fileName);
+        }
+
         // Security measures untuk mencegah inspect
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
+            tampilkanNotifikasi('Aksi ini diblokir untuk keamanan', 'error');
         });
         
         document.addEventListener('keydown', function(e) {
@@ -2202,6 +2807,7 @@
                 (e.ctrlKey && e.shiftKey && e.key === 'J') || 
                 (e.ctrlKey && e.key === 'u')) {
                 e.preventDefault();
+                tampilkanNotifikasi('Aksi ini diblokir untuk keamanan', 'error');
             }
         });
         
@@ -2224,11 +2830,10 @@
             
             const username = document.getElementById('register-username').value;
             const email = document.getElementById('register-email').value;
-            const otp = document.getElementById('register-otp').value;
             const password = document.getElementById('register-password').value;
             const confirmPassword = document.getElementById('register-confirm').value;
             
-            // Validasi sederhana
+            // Validasi
             if (password !== confirmPassword) {
                 tampilkanNotifikasi('Password tidak cocok', 'error');
                 return;
@@ -2239,14 +2844,32 @@
                 return;
             }
             
-            // Simulasi registrasi
+            if (validUsers[username]) {
+                tampilkanNotifikasi('Username sudah digunakan', 'error');
+                return;
+            }
+            
+            // Simpan user baru (simulasi)
+            validUsers[username] = { password: password, name: username };
+            
+            // Tampilkan loading
+            const registerButton = document.getElementById('register-button');
+            const originalText = registerButton.querySelector('span').textContent;
+            registerButton.querySelector('span').textContent = 'Mendaftar...';
+            registerButton.disabled = true;
+            
+            // Simulasi proses registrasi
             setTimeout(() => {
-                tampilkanNotifikasi('Registrasi berhasil! Silakan login');
+                tampilkanNotifikasi('Registrasi berhasil! Silakan login', 'sukses');
                 document.getElementById('register-box').style.display = 'none';
                 document.getElementById('login-box').style.display = 'block';
                 
                 // Reset form
                 this.reset();
+                
+                // Kembalikan tombol ke keadaan semula
+                registerButton.querySelector('span').textContent = originalText;
+                registerButton.disabled = false;
             }, 1500);
         });
         
@@ -2257,51 +2880,38 @@
             const username = document.getElementById('login-username').value;
             const password = document.getElementById('login-password').value;
             
-            // Validasi sederhana
+            // Validasi
             if (!username || !password) {
                 tampilkanNotifikasi('Harap masukkan username dan password', 'error');
                 return;
             }
             
-            // Simulasi login
+            // Tampilkan loading
+            const loginButton = document.getElementById('login-button');
+            const originalText = loginButton.querySelector('span').textContent;
+            loginButton.querySelector('span').textContent = 'Memproses...';
+            loginButton.disabled = true;
+            
+            // Validasi login
             setTimeout(() => {
-                tampilkanNotifikasi('Login berhasil!', 'sukses');
+                const user = validUsers[username];
                 
-                // Sembunyikan auth container dan tampilkan dashboard
-                document.getElementById('auth-container').style.display = 'none';
-                document.getElementById('dashboard').style.display = 'block';
+                if (user && user.password === password) {
+                    loginUser(username, user.name);
+                } else {
+                    tampilkanNotifikasi('Username atau password salah', 'error');
+                }
                 
-                // Set username di dashboard
-                document.getElementById('sidebar-username').textContent = username;
-                document.getElementById('profile-name').textContent = username;
-                
-                // Muat data
-                hitungTotal();
-                tampilkanTransaksi();
-                tampilkanPemasukan();
-                tampilkanPengeluaran();
-                tampilkanPiutang();
-                tampilkanUtang();
-                tampilkanRiwayat();
-                
-                // Reset form
-                this.reset();
+                // Kembalikan tombol ke keadaan semula
+                loginButton.querySelector('span').textContent = originalText;
+                loginButton.disabled = false;
             }, 1000);
         });
         
         // Logout
         document.getElementById('logout-btn').addEventListener('click', function(e) {
             e.preventDefault();
-            
-            // Sembunyikan dashboard dan tampilkan auth container
-            document.getElementById('dashboard').style.display = 'none';
-            document.getElementById('auth-container').style.display = 'flex';
-            
-            // Reset ke form login
-            document.getElementById('register-box').style.display = 'none';
-            document.getElementById('login-box').style.display = 'block';
-            
-            tampilkanNotifikasi('Anda telah logout', 'warning');
+            logoutUser();
         });
         
         // Navigasi menu
@@ -2705,28 +3315,40 @@
         
         // Export data
         document.getElementById('export-pemasukan').addEventListener('click', function() {
-            tampilkanNotifikasi('Fitur export akan mengunduh file Excel', 'warning');
+            exportPemasukan();
         });
         
         document.getElementById('export-pengeluaran').addEventListener('click', function() {
-            tampilkanNotifikasi('Fitur export akan mengunduh file Excel', 'warning');
+            exportPengeluaran();
         });
         
         document.getElementById('export-riwayat').addEventListener('click', function() {
-            tampilkanNotifikasi('Fitur export akan mengunduh file Excel', 'warning');
+            exportRiwayat();
         });
         
         document.getElementById('export-laporan').addEventListener('click', function() {
-            tampilkanNotifikasi('Fitur export akan mengunduh file Excel', 'warning');
+            exportLaporan();
         });
         
         // Simpan profil
         document.getElementById('simpan-profil').addEventListener('click', function() {
             const nama = document.getElementById('nama-pengguna').value;
             const email = document.getElementById('email-pengguna').value;
+            const fotoProfil = document.getElementById('foto-profil').files[0];
             
+            // Update nama di dashboard
             document.getElementById('profile-name').textContent = nama;
             document.getElementById('sidebar-username').textContent = nama;
+            
+            // Simpan foto profil jika ada
+            if (fotoProfil) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profile-image').src = e.target.result;
+                    document.getElementById('sidebar-user-image').src = e.target.result;
+                };
+                reader.readAsDataURL(fotoProfil);
+            }
             
             tampilkanNotifikasi('Profil berhasil diperbarui');
         });
@@ -2743,6 +3365,7 @@
         // Inisialisasi
         window.addEventListener('DOMContentLoaded', () => {
             buatBintang();
+            checkLogin();
             
             // Set tanggal hari ini sebagai default di form
             let today = new Date().toISOString().split('T')[0];
