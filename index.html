@@ -8,6 +8,8 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+    <!-- SheetJS for Excel export -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Google Fonts -->
@@ -802,11 +804,11 @@
         }
 
         .notification {
-            background: var(--secondary);
+            background: rgba(0, 0, 0, 0.8);
             border-left: 4px solid var(--highlight);
             border-radius: 4px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            color: var(--text);
+            color: white;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -855,13 +857,13 @@
 
         .notification-message {
             font-size: 14px;
-            color: var(--text-secondary);
+            color: #eee;
         }
 
         .notification-close {
             background: none;
             border: none;
-            color: var(--text-secondary);
+            color: #eee;
             cursor: pointer;
             font-size: 16px;
             margin-left: 15px;
@@ -935,6 +937,15 @@
         .no-inspect {
             /* This makes it harder to inspect elements */
             display: none !important;
+        }
+        
+        /* Text visibility improvements */
+        .text-dark {
+            color: #333 !important;
+        }
+        
+        .text-light {
+            color: #f8f9fa !important;
         }
     </style>
 </head>
@@ -2010,13 +2021,6 @@
                 return false;
             }
         };
-
-        // Make it harder to inspect elements
-        document.addEventListener('DOMContentLoaded', function() {
-            setInterval(function() {
-                debugger;
-            }, 1000);
-        });
     </script>
 
     <!-- Firebase Configuration -->
@@ -2247,7 +2251,6 @@
                 const lang = item.getAttribute('data-lang');
                 currentLanguage.textContent = item.textContent;
                 language = lang;
-                // TODO: Implement language change
                 showNotification('success', 'Bahasa Diubah', `Bahasa antarmuka telah diubah ke ${item.textContent}`);
             });
         });
@@ -2356,11 +2359,31 @@
                     loadBankAccounts();
                     loadTransactions();
                     
+                    // Populate year dropdown for reports
+                    populateYearDropdown();
+                    
                     showNotification('success', 'Login Berhasil', 'Selamat datang di Dashboard Kas Bos Aliung Lim');
                 })
                 .catch(error => {
                     showNotification('error', 'Error', 'Gagal memuat data pengguna.');
                 });
+        }
+
+        // Populate year dropdown for reports
+        function populateYearDropdown() {
+            const yearSelect = document.getElementById('generateYear');
+            const currentYear = new Date().getFullYear();
+            
+            // Clear existing options
+            yearSelect.innerHTML = '<option value="" id="selectYear">Pilih Tahun</option>';
+            
+            // Add years from current year to 5 years back
+            for (let year = currentYear; year >= currentYear - 5; year--) {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = year;
+                yearSelect.appendChild(option);
+            }
         }
 
         // Logout
@@ -2746,9 +2769,9 @@
             
             // Transaction data totals
             document.getElementById('totalDepositData').textContent = formatCurrency(totalDeposit);
-            document.getElementById('totalDepositCount').textContent = `Total: ${deposits.length} transaksi`;
+            document.getElementById('totalDepositCount').textContent = `Total: ${transactions.filter(t => t.type === 'deposit').length} transaksi`;
             document.getElementById('totalWithdrawData').textContent = formatCurrency(totalWithdraw);
-            document.getElementById('totalWithdrawCount').textContent = `Total: ${withdraws.length} transaksi`;
+            document.getElementById('totalWithdrawCount').textContent = `Total: ${transactions.filter(t => t.type === 'withdraw').length} transaksi`;
         }
 
         // Check if date is this week
@@ -2949,6 +2972,166 @@
             }
         }
 
+        // Export Data to Excel
+        function exportToExcel(data, fileName) {
+            // Create a worksheet
+            const ws = XLSX.utils.json_to_sheet(data);
+            
+            // Create a workbook
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+            
+            // Generate Excel file
+            XLSX.writeFile(wb, `${fileName}.xlsx`);
+        }
+
+        // Export Bank Data
+        document.getElementById('exportBankDataBtn').addEventListener('click', () => {
+            const data = bankAccounts.map(account => ({
+                'Nama Bank': account.bank,
+                'Jenis Akun': account.type === 'bank' ? 'Bank' : 'E-Wallet',
+                'Pemilik Rekening': account.accountName,
+                'Nomor Rekening': account.accountNumber,
+                'Saldo Awal': account.amount,
+                'Saldo Saat Ini': account.currentBalance || account.amount,
+                'Terakhir Diupdate': formatDateTime(account.updatedAt || account.date)
+            }));
+            
+            exportToExcel(data, 'Data_Bank_E-Wallet');
+            showNotification('success', 'Export Berhasil', 'Data bank/ewallet berhasil diexport ke Excel.');
+        });
+
+        // Export Deposit Data
+        document.getElementById('exportDepositDataBtn').addEventListener('click', () => {
+            const deposits = transactions.filter(t => t.type === 'deposit');
+            const data = deposits.map(transaction => {
+                const bankAccount = bankAccounts.find(b => b.id === transaction.bankId);
+                return {
+                    'Tanggal': formatDate(transaction.date),
+                    'Situs': transaction.site,
+                    'User ID': transaction.userId,
+                    'Nama Rekening': transaction.accountName,
+                    'Nomor Rekening': transaction.accountNumber,
+                    'Nominal': transaction.amount,
+                    'Bank/E-Wallet': bankAccount ? bankAccount.bank : 'N/A'
+                };
+            });
+            
+            exportToExcel(data, 'Data_Deposit');
+            showNotification('success', 'Export Berhasil', 'Data deposit berhasil diexport ke Excel.');
+        });
+
+        // Export Withdraw Data
+        document.getElementById('exportWithdrawDataBtn').addEventListener('click', () => {
+            const withdraws = transactions.filter(t => t.type === 'withdraw');
+            const data = withdraws.map(transaction => {
+                const bankAccount = bankAccounts.find(b => b.id === transaction.bankId);
+                return {
+                    'Tanggal': formatDate(transaction.date),
+                    'Situs': transaction.site,
+                    'User ID': transaction.userId,
+                    'Nama Rekening': transaction.accountName,
+                    'Nomor Rekening': transaction.accountNumber,
+                    'Nominal': transaction.amount,
+                    'Bank/E-Wallet': bankAccount ? bankAccount.bank : 'N/A'
+                };
+            });
+            
+            exportToExcel(data, 'Data_Withdraw');
+            showNotification('success', 'Export Berhasil', 'Data withdraw berhasil diexport ke Excel.');
+        });
+
+        // Export Indonesia Bank Data
+        document.getElementById('exportIndonesiaDataBtn').addEventListener('click', () => {
+            const indonesiaBanks = bankAccounts.filter(account => account.type === 'bank');
+            const data = indonesiaBanks.map(account => ({
+                'Nama Bank': account.bank,
+                'Pemilik Rekening': account.accountName,
+                'Nomor Rekening': account.accountNumber,
+                'Saldo Saat Ini': account.currentBalance || account.amount
+            }));
+            
+            exportToExcel(data, 'Data_Bank_Indonesia');
+            showNotification('success', 'Export Berhasil', 'Data bank Indonesia berhasil diexport ke Excel.');
+        });
+
+        // Generate Report
+        document.getElementById('generateForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const month = document.getElementById('generateMonth').value;
+            const year = document.getElementById('generateYear').value;
+            const type = document.getElementById('generateType').value;
+            
+            if (!month || !year || !type) {
+                showNotification('error', 'Error', 'Harap pilih bulan, tahun, dan jenis laporan.');
+                return;
+            }
+            
+            // Filter transactions by month and year
+            const filteredTransactions = transactions.filter(transaction => {
+                const date = new Date(transaction.date);
+                return date.getMonth() + 1 === parseInt(month) && 
+                       date.getFullYear() === parseInt(year) &&
+                       (type === 'all' || transaction.type === type);
+            });
+            
+            if (filteredTransactions.length === 0) {
+                showNotification('warning', 'Tidak Ada Data', 'Tidak ada transaksi yang ditemukan untuk periode yang dipilih.');
+                document.getElementById('generatedReportContainer').style.display = 'none';
+                return;
+            }
+            
+            // Render the report
+            const reportTable = document.getElementById('generatedReportData');
+            reportTable.innerHTML = '';
+            
+            filteredTransactions.forEach(transaction => {
+                const bankAccount = bankAccounts.find(b => b.id === transaction.bankId);
+                reportTable.innerHTML += `
+                    <tr>
+                        <td>${formatDate(transaction.date)}</td>
+                        <td>${transaction.site}</td>
+                        <td>${transaction.userId}</td>
+                        <td>${transaction.accountName}</td>
+                        <td>${transaction.accountNumber}</td>
+                        <td class="currency">${formatCurrency(transaction.amount)}</td>
+                        <td>${transaction.type === 'deposit' ? 'Deposit' : 'Withdraw'}</td>
+                        <td>${bankAccount ? bankAccount.bank : 'N/A'}</td>
+                    </tr>
+                `;
+            });
+            
+            // Update report title
+            const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+            document.getElementById('generatedReportTitle').textContent = `Laporan ${monthNames[parseInt(month)-1]} ${year}`;
+            
+            // Show the report container
+            document.getElementById('generatedReportContainer').style.display = 'block';
+            
+            // Add event listener for export button
+            document.getElementById('exportGeneratedReportBtn').addEventListener('click', () => {
+                const data = filteredTransactions.map(transaction => {
+                    const bankAccount = bankAccounts.find(b => b.id === transaction.bankId);
+                    return {
+                        'Tanggal': formatDate(transaction.date),
+                        'Situs': transaction.site,
+                        'User ID': transaction.userId,
+                        'Nama Rekening': transaction.accountName,
+                        'Nomor Rekening': transaction.accountNumber,
+                        'Nominal': transaction.amount,
+                        'Tipe': transaction.type === 'deposit' ? 'Deposit' : 'Withdraw',
+                        'Bank/E-Wallet': bankAccount ? bankAccount.bank : 'N/A'
+                    };
+                });
+                
+                exportToExcel(data, `Laporan_${monthNames[parseInt(month)-1]}_${year}`);
+                showNotification('success', 'Export Berhasil', 'Laporan berhasil diexport ke Excel.');
+            });
+            
+            showNotification('success', 'Laporan Dibuat', `Laporan untuk ${monthNames[parseInt(month)-1]} ${year} berhasil dibuat.`);
+        });
+
         // Start Maintenance
         startMaintenanceBtn.addEventListener('click', () => {
             if (confirm('Apakah Anda yakin ingin memulai maintenance? Dashboard akan tidak dapat diakses selama 1 jam.')) {
@@ -2982,6 +3165,15 @@
                 }, 1000);
                 
                 showNotification('warning', 'Maintenance Dimulai', 'Dashboard akan kembali online dalam 1 jam.');
+            }
+        });
+
+        // View All Transactions
+        document.getElementById('viewAllTransactions').addEventListener('click', (e) => {
+            e.preventDefault();
+            const transactionLink = document.querySelector('.menu-link[data-target="transactionData"]');
+            if (transactionLink) {
+                transactionLink.click();
             }
         });
 
