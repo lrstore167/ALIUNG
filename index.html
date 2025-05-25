@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,7 +27,6 @@
             --warning: #ffc107;
             --danger: #dc3545;
             --info: #17a2b8;
-            --maintenance: #ffcc00;
         }
 
         * {
@@ -190,7 +189,7 @@
         .form-group label {
             display: block;
             margin-bottom: 8px;
-            color: var(--text-secondary);
+            color: var(--text);
             font-size: 14px;
             font-weight: 500;
         }
@@ -237,40 +236,6 @@
 
         .btn:active {
             transform: translateY(0);
-        }
-
-        .auth-footer {
-            text-align: center;
-            margin-top: 20px;
-            color: var(--text-secondary);
-            font-size: 14px;
-        }
-
-        .auth-footer a {
-            color: var(--highlight);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .auth-footer a:hover {
-            text-decoration: underline;
-        }
-
-        .form-switch {
-            text-align: center;
-            margin-top: 20px;
-            color: var(--text-secondary);
-            font-size: 14px;
-        }
-
-        .form-switch a {
-            color: var(--highlight);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .form-switch a:hover {
-            text-decoration: underline;
         }
 
         /* Dashboard Styles */
@@ -452,42 +417,6 @@
             margin: 5px 0;
         }
 
-        .language-selector {
-            margin-right: 20px;
-            position: relative;
-        }
-
-        .language-btn {
-            background: none;
-            border: none;
-            color: var(--text);
-            font-size: 14px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-        }
-
-        .language-btn i {
-            margin-left: 5px;
-        }
-
-        .language-dropdown {
-            position: absolute;
-            top: 40px;
-            right: 0;
-            background: var(--secondary);
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            width: 150px;
-            padding: 10px 0;
-            z-index: 100;
-            display: none;
-        }
-
-        .language-selector:hover .language-dropdown {
-            display: block;
-        }
-
         /* Dashboard Content */
         .dashboard-content {
             display: none;
@@ -525,7 +454,7 @@
         }
 
         .card-title {
-            color: var(--text-secondary);
+            color: var(--text);
             font-size: 14px;
             font-weight: 500;
         }
@@ -666,7 +595,7 @@
         }
 
         th {
-            color: var(--text-secondary);
+            color: var(--text);
             font-weight: 500;
             font-size: 14px;
             text-transform: uppercase;
@@ -748,51 +677,6 @@
         .form-footer {
             margin-top: 20px;
             text-align: right;
-        }
-
-        /* Maintenance Styles */
-        .maintenance-mode {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--maintenance);
-            z-index: 2000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            color: #000;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .maintenance-content {
-            max-width: 600px;
-        }
-
-        .maintenance-icon {
-            font-size: 80px;
-            margin-bottom: 20px;
-            color: #000;
-        }
-
-        .maintenance-title {
-            font-size: 36px;
-            font-weight: 700;
-            margin-bottom: 15px;
-        }
-
-        .maintenance-text {
-            font-size: 18px;
-            margin-bottom: 30px;
-        }
-
-        .countdown {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 30px;
         }
 
         /* Notification Styles */
@@ -933,11 +817,6 @@
             -moz-user-select: none;
             -ms-user-select: none;
         }
-
-        .no-inspect {
-            /* This makes it harder to inspect elements */
-            display: none !important;
-        }
         
         /* Text visibility improvements */
         .text-dark {
@@ -963,57 +842,20 @@
                 <div class="auth-logo">
                     <i class="fas fa-wallet"></i>
                 </div>
-                <h2 id="loginTitle">Login</h2>
-                <p id="loginSubtitle">Masukkan email dan password Anda</p>
+                <h2>Login Dashboard</h2>
+                <p>Masukkan email dan password Anda</p>
             </div>
             <form id="loginForm">
                 <div class="form-group">
-                    <label for="loginEmail" id="emailLabel">Email</label>
+                    <label for="loginEmail">Email</label>
                     <input type="email" class="form-control" id="loginEmail" placeholder="Email Anda" required>
                 </div>
                 <div class="form-group">
-                    <label for="loginPassword" id="passwordLabel">Password</label>
+                    <label for="loginPassword">Password</label>
                     <input type="password" class="form-control" id="loginPassword" placeholder="Password Anda" required>
                 </div>
-                <button type="submit" class="btn" id="loginBtn">Login</button>
+                <button type="submit" class="btn">Login</button>
             </form>
-            <div class="form-switch">
-                <span id="noAccountText">Belum punya akun?</span>
-                <a href="#" id="switchToRegister">Daftar disini</a>
-            </div>
-        </div>
-
-        <div class="auth-box" id="registerBox" style="display: none;">
-            <div class="auth-header">
-                <div class="auth-logo">
-                    <i class="fas fa-wallet"></i>
-                </div>
-                <h2 id="registerTitle">Daftar Akun</h2>
-                <p id="registerSubtitle">Buat akun baru untuk mengakses dashboard</p>
-            </div>
-            <form id="registerForm">
-                <div class="form-group">
-                    <label for="registerName" id="nameLabel">Nama Lengkap</label>
-                    <input type="text" class="form-control" id="registerName" placeholder="Nama lengkap Anda" required>
-                </div>
-                <div class="form-group">
-                    <label for="registerEmail" id="regEmailLabel">Email</label>
-                    <input type="email" class="form-control" id="registerEmail" placeholder="Email Anda" required>
-                </div>
-                <div class="form-group">
-                    <label for="registerPassword" id="regPasswordLabel">Password</label>
-                    <input type="password" class="form-control" id="registerPassword" placeholder="Password Anda" required>
-                </div>
-                <div class="form-group">
-                    <label for="registerConfirmPassword" id="confirmPasswordLabel">Konfirmasi Password</label>
-                    <input type="password" class="form-control" id="registerConfirmPassword" placeholder="Konfirmasi password" required>
-                </div>
-                <button type="submit" class="btn" id="registerBtn">Daftar</button>
-            </form>
-            <div class="form-switch">
-                <span id="haveAccountText">Sudah punya akun?</span>
-                <a href="#" id="switchToLogin">Login disini</a>
-            </div>
         </div>
     </div>
 
@@ -1031,80 +873,68 @@
                 <div class="menu-item">
                     <a href="#" class="menu-link active" data-target="dashboard">
                         <i class="fas fa-tachometer-alt"></i>
-                        <span id="menuDashboard">Dashboard</span>
+                        <span>Dashboard</span>
                     </a>
                 </div>
                 <div class="menu-item">
                     <a href="#" class="menu-link" data-target="balance">
                         <i class="fas fa-piggy-bank"></i>
-                        <span id="menuBalance">Isi Saldo Bank</span>
+                        <span>Isi Saldo Bank</span>
                     </a>
                 </div>
                 <div class="menu-item">
                     <a href="#" class="menu-link" data-target="transaction">
                         <i class="fas fa-exchange-alt"></i>
-                        <span id="menuTransaction">Input Data</span>
+                        <span>Input Data</span>
                     </a>
                 </div>
                 <div class="menu-item">
                     <a href="#" class="menu-link" data-target="bankData">
                         <i class="fas fa-database"></i>
-                        <span id="menuBankData">Data Saldo Bank</span>
+                        <span>Data Saldo Bank</span>
                     </a>
                 </div>
                 <div class="menu-item">
                     <a href="#" class="menu-link" data-target="transactionData">
                         <i class="fas fa-table"></i>
-                        <span id="menuTransactionData">Data Transaksi</span>
+                        <span>Data Transaksi</span>
                     </a>
                 </div>
                 <div class="menu-item">
                     <a href="#" class="menu-link" data-target="indonesiaData">
                         <i class="fas fa-flag"></i>
-                        <span id="menuIndonesiaData">Data Indonesia</span>
+                        <span>Data Indonesia</span>
                     </a>
                 </div>
                 <div class="menu-item">
                     <a href="#" class="menu-link" data-target="generateData">
                         <i class="fas fa-file-export"></i>
-                        <span id="menuGenerateData">Generate Data</span>
+                        <span>Generate Data</span>
                     </a>
                 </div>
                 <div class="menu-item has-submenu">
                     <a href="#" class="menu-link" id="settingsMenu">
                         <i class="fas fa-cog"></i>
-                        <span id="menuSettings">Pengaturan</span>
+                        <span>Pengaturan</span>
                         <i class="fas fa-chevron-down ml-auto" id="settingsChevron"></i>
                     </a>
                     <div class="submenu" id="settingsSubmenu">
                         <div class="menu-item">
                             <a href="#" class="menu-link" data-target="profileSettings">
                                 <i class="fas fa-user"></i>
-                                <span id="menuProfile">Profil</span>
+                                <span>Profil</span>
                             </a>
                         </div>
                         <div class="menu-item">
                             <a href="#" class="menu-link" data-target="passwordSettings">
                                 <i class="fas fa-key"></i>
-                                <span id="menuPassword">Password</span>
-                            </a>
-                        </div>
-                        <div class="menu-item">
-                            <a href="#" class="menu-link" data-target="maintenanceSettings">
-                                <i class="fas fa-tools"></i>
-                                <span id="menuMaintenance">Maintenance</span>
+                                <span>Password</span>
                             </a>
                         </div>
                         <div class="menu-item">
                             <a href="#" class="menu-link" data-target="accountSettings">
                                 <i class="fas fa-users"></i>
-                                <span id="menuAccounts">Akun Pengguna</span>
-                            </a>
-                        </div>
-                        <div class="menu-item">
-                            <a href="#" class="menu-link" data-target="otherSettings">
-                                <i class="fas fa-sliders-h"></i>
-                                <span id="menuOther">Lain-lain</span>
+                                <span>Akun Pengguna</span>
                             </a>
                         </div>
                     </div>
@@ -1112,7 +942,7 @@
                 <div class="menu-item">
                     <a href="#" class="menu-link" id="logoutBtn">
                         <i class="fas fa-sign-out-alt"></i>
-                        <span id="menuLogout">Logout</span>
+                        <span>Logout</span>
                     </a>
                 </div>
             </div>
@@ -1131,17 +961,8 @@
                     </div>
                 </div>
                 <div class="topbar-right">
-                    <div class="language-selector">
-                        <button class="language-btn" id="languageBtn">
-                            <span id="currentLanguage">Indonesia</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div class="language-dropdown" id="languageDropdown">
-                            <a href="#" class="dropdown-item" data-lang="id">Indonesia</a>
-                            <a href="#" class="dropdown-item" data-lang="en">English</a>
-                            <a href="#" class="dropdown-item" data-lang="zh">中文 (Chinese)</a>
-                        </div>
-                    </div>
+                    <div class="real-time-clock" id="realTimeClock"></div>
+                    <span class="network-indicator" title="Koneksi aktif"></span>
                     <div class="user-profile">
                         <div class="user-avatar" id="userAvatar">
                             <i class="fas fa-user"></i>
@@ -1150,16 +971,16 @@
                         <div class="user-dropdown">
                             <a href="#" class="dropdown-item" data-target="profileSettings">
                                 <i class="fas fa-user mr-2"></i>
-                                <span id="dropdownProfile">Profil</span>
+                                <span>Profil</span>
                             </a>
                             <a href="#" class="dropdown-item" data-target="passwordSettings">
                                 <i class="fas fa-key mr-2"></i>
-                                <span id="dropdownPassword">Password</span>
+                                <span>Password</span>
                             </a>
                             <div class="dropdown-divider"></div>
                             <a href="#" class="dropdown-item" id="dropdownLogout">
                                 <i class="fas fa-sign-out-alt mr-2"></i>
-                                <span id="dropdownLogoutText">Logout</span>
+                                <span>Logout</span>
                             </a>
                         </div>
                     </div>
@@ -1171,7 +992,7 @@
                 <div class="card-grid">
                     <div class="card">
                         <div class="card-header">
-                            <span class="card-title" id="totalBalanceTitle">Total Saldo</span>
+                            <span class="card-title">Total Saldo</span>
                             <div class="card-icon">
                                 <i class="fas fa-wallet"></i>
                             </div>
@@ -1182,12 +1003,12 @@
                         </div>
                         <div class="card-footer">
                             <i class="fas fa-sync-alt"></i>
-                            <span id="updatedJustNow">Baru saja diperbarui</span>
+                            <span>Baru saja diperbarui</span>
                         </div>
                     </div>
                     <div class="card deposit">
                         <div class="card-header">
-                            <span class="card-title" id="totalDepositTitle">Total Deposit</span>
+                            <span class="card-title">Total Deposit</span>
                             <div class="card-icon">
                                 <i class="fas fa-arrow-down"></i>
                             </div>
@@ -1198,12 +1019,12 @@
                         </div>
                         <div class="card-footer">
                             <i class="fas fa-sync-alt"></i>
-                            <span id="updatedJustNow2">Baru saja diperbarui</span>
+                            <span>Baru saja diperbarui</span>
                         </div>
                     </div>
                     <div class="card withdraw">
                         <div class="card-header">
-                            <span class="card-title" id="totalWithdrawTitle">Total Withdraw</span>
+                            <span class="card-title">Total Withdraw</span>
                             <div class="card-icon">
                                 <i class="fas fa-arrow-up"></i>
                             </div>
@@ -1214,12 +1035,12 @@
                         </div>
                         <div class="card-footer">
                             <i class="fas fa-sync-alt"></i>
-                            <span id="updatedJustNow3">Baru saja diperbarui</span>
+                            <span>Baru saja diperbarui</span>
                         </div>
                     </div>
                     <div class="card balance">
                         <div class="card-header">
-                            <span class="card-title" id="netBalanceTitle">Saldo Bersih</span>
+                            <span class="card-title">Saldo Bersih</span>
                             <div class="card-icon">
                                 <i class="fas fa-balance-scale"></i>
                             </div>
@@ -1230,18 +1051,18 @@
                         </div>
                         <div class="card-footer">
                             <i class="fas fa-sync-alt"></i>
-                            <span id="updatedJustNow4">Baru saja diperbarui</span>
+                            <span>Baru saja diperbarui</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="table-container">
                     <div class="table-header">
-                        <h3 class="table-title" id="recentTransactionsTitle">Transaksi Terkini</h3>
+                        <h3 class="table-title">Transaksi Terkini</h3>
                         <div class="table-actions">
                             <button class="btn btn-sm btn-primary" id="viewAllTransactions">
                                 <i class="fas fa-list"></i>
-                                <span id="viewAllText">Lihat Semua</span>
+                                <span>Lihat Semua</span>
                             </button>
                         </div>
                     </div>
@@ -1249,19 +1070,19 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th id="thDate">Tanggal</th>
-                                    <th id="thSite">Situs</th>
-                                    <th id="thUserId">User ID</th>
-                                    <th id="thAccountName">Nama Rekening</th>
-                                    <th id="thAccountNumber">Nomor Rekening</th>
-                                    <th id="thAmount">Nominal</th>
-                                    <th id="thType">Tipe</th>
-                                    <th id="thActions">Aksi</th>
+                                    <th>Tanggal</th>
+                                    <th>Situs</th>
+                                    <th>User ID</th>
+                                    <th>Nama Rekening</th>
+                                    <th>Nomor Rekening</th>
+                                    <th>Nominal</th>
+                                    <th>Tipe</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody id="recentTransactions">
                                 <tr>
-                                    <td colspan="8" class="text-center" id="noTransactions">Tidak ada transaksi terbaru</td>
+                                    <td colspan="8" class="text-center">Tidak ada transaksi terbaru</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1272,30 +1093,30 @@
                     <div class="col-md-6">
                         <div class="table-container">
                             <div class="table-header">
-                                <h3 class="table-title" id="depositSummaryTitle">Ringkasan Deposit</h3>
+                                <h3 class="table-title">Ringkasan Deposit</h3>
                             </div>
                             <div class="table-responsive">
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th id="thPeriod">Periode</th>
-                                            <th id="thTotalDeposits">Total Deposit</th>
-                                            <th id="thCount">Jumlah</th>
+                                            <th>Periode</th>
+                                            <th>Total Deposit</th>
+                                            <th>Jumlah</th>
                                         </tr>
                                     </thead>
                                     <tbody id="depositSummary">
                                         <tr>
-                                            <td id="tdToday">Hari Ini</td>
+                                            <td>Hari Ini</td>
                                             <td class="currency">Rp 0</td>
                                             <td>0</td>
                                         </tr>
                                         <tr>
-                                            <td id="tdThisWeek">Minggu Ini</td>
+                                            <td>Minggu Ini</td>
                                             <td class="currency">Rp 0</td>
                                             <td>0</td>
                                         </tr>
                                         <tr>
-                                            <td id="tdThisMonth">Bulan Ini</td>
+                                            <td>Bulan Ini</td>
                                             <td class="currency">Rp 0</td>
                                             <td>0</td>
                                         </tr>
@@ -1307,30 +1128,30 @@
                     <div class="col-md-6">
                         <div class="table-container">
                             <div class="table-header">
-                                <h3 class="table-title" id="withdrawSummaryTitle">Ringkasan Withdraw</h3>
+                                <h3 class="table-title">Ringkasan Withdraw</h3>
                             </div>
                             <div class="table-responsive">
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th id="thPeriod2">Periode</th>
-                                            <th id="thTotalWithdraws">Total Withdraw</th>
-                                            <th id="thCount2">Jumlah</th>
+                                            <th>Periode</th>
+                                            <th>Total Withdraw</th>
+                                            <th>Jumlah</th>
                                         </tr>
                                     </thead>
                                     <tbody id="withdrawSummary">
                                         <tr>
-                                            <td id="tdToday2">Hari Ini</td>
+                                            <td>Hari Ini</td>
                                             <td class="currency">Rp 0</td>
                                             <td>0</td>
                                         </tr>
                                         <tr>
-                                            <td id="tdThisWeek2">Minggu Ini</td>
+                                            <td>Minggu Ini</td>
                                             <td class="currency">Rp 0</td>
                                             <td>0</td>
                                         </tr>
                                         <tr>
-                                            <td id="tdThisMonth2">Bulan Ini</td>
+                                            <td>Bulan Ini</td>
                                             <td class="currency">Rp 0</td>
                                             <td>0</td>
                                         </tr>
@@ -1345,22 +1166,22 @@
             <!-- Balance Content -->
             <div class="dashboard-content" id="balanceContent">
                 <div class="form-container">
-                    <h3 class="form-title" id="addBalanceTitle">Tambah Saldo Bank/E-Wallet</h3>
+                    <h3 class="form-title">Tambah Saldo Bank/E-Wallet</h3>
                     <form id="balanceForm">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="balanceBank" id="bankNameLabel">Nama Bank/E-Wallet</label>
+                                    <label for="balanceBank">Nama Bank/E-Wallet</label>
                                     <input type="text" class="form-control" id="balanceBank" placeholder="Contoh: BCA, OVO, GoPay" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="balanceType" id="accountTypeLabel">Jenis Akun</label>
+                                    <label for="balanceType">Jenis Akun</label>
                                     <select class="form-control" id="balanceType" required>
-                                        <option value="" id="selectType">Pilih Jenis</option>
-                                        <option value="bank" id="typeBank">Bank</option>
-                                        <option value="ewallet" id="typeEwallet">E-Wallet</option>
+                                        <option value="">Pilih Jenis</option>
+                                        <option value="bank">Bank</option>
+                                        <option value="ewallet">E-Wallet</option>
                                     </select>
                                 </div>
                             </div>
@@ -1368,13 +1189,13 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="balanceAccountName" id="accountNameLabel">Nama Pemilik Rekening</label>
+                                    <label for="balanceAccountName">Nama Pemilik Rekening</label>
                                     <input type="text" class="form-control" id="balanceAccountName" placeholder="Nama pemilik rekening" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="balanceAccountNumber" id="accountNumberLabel">Nomor Rekening</label>
+                                    <label for="balanceAccountNumber">Nomor Rekening</label>
                                     <input type="text" class="form-control" id="balanceAccountNumber" placeholder="Nomor rekening" required>
                                 </div>
                             </div>
@@ -1382,13 +1203,13 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="balanceAmount" id="initialBalanceLabel">Saldo Awal</label>
+                                    <label for="balanceAmount">Saldo Awal</label>
                                     <input type="number" class="form-control" id="balanceAmount" placeholder="Jumlah saldo awal" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="balanceDate" id="dateLabel">Tanggal</label>
+                                    <label for="balanceDate">Tanggal</label>
                                     <input type="date" class="form-control" id="balanceDate" required>
                                 </div>
                             </div>
@@ -1396,7 +1217,7 @@
                         <div class="form-footer">
                             <button type="submit" class="btn btn-success" id="saveBalanceBtn">
                                 <i class="fas fa-save"></i>
-                                <span id="saveBalanceText">Simpan</span>
+                                <span>Simpan</span>
                             </button>
                         </div>
                     </form>
@@ -1404,11 +1225,11 @@
 
                 <div class="table-container">
                     <div class="table-header">
-                        <h3 class="table-title" id="bankAccountsTitle">Daftar Bank/E-Wallet</h3>
+                        <h3 class="table-title">Daftar Bank/E-Wallet</h3>
                         <div class="table-actions">
                             <button class="btn btn-sm btn-danger" id="deleteAllBanksBtn">
                                 <i class="fas fa-trash"></i>
-                                <span id="deleteAllBanksText">Hapus Semua</span>
+                                <span>Hapus Semua</span>
                             </button>
                         </div>
                     </div>
@@ -1416,17 +1237,17 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th id="thBankName">Nama Bank</th>
-                                    <th id="thAccountType">Jenis Akun</th>
-                                    <th id="thAccountOwner">Pemilik Rekening</th>
-                                    <th id="thAccountNo">Nomor Rekening</th>
-                                    <th id="thCurrentBalance">Saldo Saat Ini</th>
-                                    <th id="thActions2">Aksi</th>
+                                    <th>Nama Bank</th>
+                                    <th>Jenis Akun</th>
+                                    <th>Pemilik Rekening</th>
+                                    <th>Nomor Rekening</th>
+                                    <th>Saldo Saat Ini</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody id="bankAccountsList">
                                 <tr>
-                                    <td colspan="6" class="text-center" id="noBankAccounts">Tidak ada data bank/ewallet</td>
+                                    <td colspan="6" class="text-center">Tidak ada data bank/ewallet</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1437,22 +1258,22 @@
             <!-- Transaction Content -->
             <div class="dashboard-content" id="transactionContent">
                 <div class="form-container">
-                    <h3 class="form-title" id="addTransactionTitle">Tambah Transaksi</h3>
+                    <h3 class="form-title">Tambah Transaksi</h3>
                     <form id="transactionForm">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="transactionDate" id="transactionDateLabel">Tanggal</label>
+                                    <label for="transactionDate">Tanggal</label>
                                     <input type="date" class="form-control" id="transactionDate" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="transactionType" id="transactionTypeLabel">Jenis Transaksi</label>
+                                    <label for="transactionType">Jenis Transaksi</label>
                                     <select class="form-control" id="transactionType" required>
-                                        <option value="" id="selectTransactionType">Pilih Jenis</option>
-                                        <option value="deposit" id="typeDeposit">Deposit</option>
-                                        <option value="withdraw" id="typeWithdraw">Withdraw</option>
+                                        <option value="">Pilih Jenis</option>
+                                        <option value="deposit">Deposit</option>
+                                        <option value="withdraw">Withdraw</option>
                                     </select>
                                 </div>
                             </div>
@@ -1460,13 +1281,13 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="transactionSite" id="transactionSiteLabel">Situs</label>
+                                    <label for="transactionSite">Situs</label>
                                     <input type="text" class="form-control" id="transactionSite" placeholder="Nama situs/platform" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="transactionUserId" id="transactionUserIdLabel">User ID</label>
+                                    <label for="transactionUserId">User ID</label>
                                     <input type="text" class="form-control" id="transactionUserId" placeholder="User ID" required>
                                 </div>
                             </div>
@@ -1474,13 +1295,13 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="transactionAccountName" id="transactionAccountNameLabel">Nama Rekening</label>
+                                    <label for="transactionAccountName">Nama Rekening</label>
                                     <input type="text" class="form-control" id="transactionAccountName" placeholder="Nama pemilik rekening" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="transactionAccountNumber" id="transactionAccountNumberLabel">Nomor Rekening</label>
+                                    <label for="transactionAccountNumber">Nomor Rekening</label>
                                     <input type="text" class="form-control" id="transactionAccountNumber" placeholder="Nomor rekening" required>
                                 </div>
                             </div>
@@ -1488,15 +1309,15 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="transactionAmount" id="transactionAmountLabel">Nominal</label>
+                                    <label for="transactionAmount">Nominal</label>
                                     <input type="number" class="form-control" id="transactionAmount" placeholder="Jumlah transaksi" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="transactionBank" id="transactionBankLabel">Bank/E-Wallet</label>
+                                    <label for="transactionBank">Bank/E-Wallet</label>
                                     <select class="form-control" id="transactionBank" required>
-                                        <option value="" id="selectBank">Pilih Bank/E-Wallet</option>
+                                        <option value="">Pilih Bank/E-Wallet</option>
                                     </select>
                                 </div>
                             </div>
@@ -1504,7 +1325,7 @@
                         <div class="form-footer">
                             <button type="submit" class="btn btn-success" id="saveTransactionBtn">
                                 <i class="fas fa-save"></i>
-                                <span id="saveTransactionText">Simpan</span>
+                                <span>Simpan</span>
                             </button>
                         </div>
                     </form>
@@ -1515,11 +1336,11 @@
             <div class="dashboard-content" id="bankDataContent">
                 <div class="table-container">
                     <div class="table-header">
-                        <h3 class="table-title" id="bankDataTitle">Data Saldo Bank/E-Wallet</h3>
+                        <h3 class="table-title">Data Saldo Bank/E-Wallet</h3>
                         <div class="table-actions">
                             <button class="btn btn-sm btn-primary" id="exportBankDataBtn">
                                 <i class="fas fa-file-excel"></i>
-                                <span id="exportBankDataText">Export Excel</span>
+                                <span>Export Excel</span>
                             </button>
                         </div>
                     </div>
@@ -1527,19 +1348,19 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th id="thBankName2">Nama Bank</th>
-                                    <th id="thAccountType2">Jenis Akun</th>
-                                    <th id="thAccountOwner2">Pemilik Rekening</th>
-                                    <th id="thAccountNo2">Nomor Rekening</th>
-                                    <th id="thInitialBalance">Saldo Awal</th>
-                                    <th id="thCurrentBalance2">Saldo Saat Ini</th>
-                                    <th id="thLastUpdate">Terakhir Diupdate</th>
-                                    <th id="thActions3">Aksi</th>
+                                    <th>Nama Bank</th>
+                                    <th>Jenis Akun</th>
+                                    <th>Pemilik Rekening</th>
+                                    <th>Nomor Rekening</th>
+                                    <th>Saldo Awal</th>
+                                    <th>Saldo Saat Ini</th>
+                                    <th>Terakhir Diupdate</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody id="bankDataList">
                                 <tr>
-                                    <td colspan="8" class="text-center" id="noBankData">Tidak ada data bank/ewallet</td>
+                                    <td colspan="8" class="text-center">Tidak ada data bank/ewallet</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1551,11 +1372,11 @@
             <div class="dashboard-content" id="transactionDataContent">
                 <div class="table-container">
                     <div class="table-header">
-                        <h3 class="table-title" id="depositDataTitle">Data Deposit</h3>
+                        <h3 class="table-title">Data Deposit</h3>
                         <div class="table-actions">
                             <button class="btn btn-sm btn-primary" id="exportDepositDataBtn">
                                 <i class="fas fa-file-excel"></i>
-                                <span id="exportDepositDataText">Export Excel</span>
+                                <span>Export Excel</span>
                             </button>
                         </div>
                     </div>
@@ -1563,19 +1384,19 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th id="thDate2">Tanggal</th>
-                                    <th id="thSite2">Situs</th>
-                                    <th id="thUserId2">User ID</th>
-                                    <th id="thAccountName2">Nama Rekening</th>
-                                    <th id="thAccountNumber2">Nomor Rekening</th>
-                                    <th id="thAmount2">Nominal</th>
-                                    <th id="thBankName3">Bank/E-Wallet</th>
-                                    <th id="thActions4">Aksi</th>
+                                    <th>Tanggal</th>
+                                    <th>Situs</th>
+                                    <th>User ID</th>
+                                    <th>Nama Rekening</th>
+                                    <th>Nomor Rekening</th>
+                                    <th>Nominal</th>
+                                    <th>Bank/E-Wallet</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody id="depositDataList">
                                 <tr>
-                                    <td colspan="8" class="text-center" id="noDepositData">Tidak ada data deposit</td>
+                                    <td colspan="8" class="text-center">Tidak ada data deposit</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1584,11 +1405,11 @@
 
                 <div class="table-container" style="margin-top: 30px;">
                     <div class="table-header">
-                        <h3 class="table-title" id="withdrawDataTitle">Data Withdraw</h3>
+                        <h3 class="table-title">Data Withdraw</h3>
                         <div class="table-actions">
                             <button class="btn btn-sm btn-primary" id="exportWithdrawDataBtn">
                                 <i class="fas fa-file-excel"></i>
-                                <span id="exportWithdrawDataText">Export Excel</span>
+                                <span>Export Excel</span>
                             </button>
                         </div>
                     </div>
@@ -1596,19 +1417,19 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th id="thDate3">Tanggal</th>
-                                    <th id="thSite3">Situs</th>
-                                    <th id="thUserId3">User ID</th>
-                                    <th id="thAccountName3">Nama Rekening</th>
-                                    <th id="thAccountNumber3">Nomor Rekening</th>
-                                    <th id="thAmount3">Nominal</th>
-                                    <th id="thBankName4">Bank/E-Wallet</th>
-                                    <th id="thActions5">Aksi</th>
+                                    <th>Tanggal</th>
+                                    <th>Situs</th>
+                                    <th>User ID</th>
+                                    <th>Nama Rekening</th>
+                                    <th>Nomor Rekening</th>
+                                    <th>Nominal</th>
+                                    <th>Bank/E-Wallet</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody id="withdrawDataList">
                                 <tr>
-                                    <td colspan="8" class="text-center" id="noWithdrawData">Tidak ada data withdraw</td>
+                                    <td colspan="8" class="text-center">Tidak ada data withdraw</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1619,7 +1440,7 @@
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-header">
-                                <span class="card-title" id="totalDepositCardTitle">Total Deposit</span>
+                                <span class="card-title">Total Deposit</span>
                                 <div class="card-icon">
                                     <i class="fas fa-arrow-down"></i>
                                 </div>
@@ -1633,7 +1454,7 @@
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-header">
-                                <span class="card-title" id="totalWithdrawCardTitle">Total Withdraw</span>
+                                <span class="card-title">Total Withdraw</span>
                                 <div class="card-icon">
                                     <i class="fas fa-arrow-up"></i>
                                 </div>
@@ -1651,11 +1472,11 @@
             <div class="dashboard-content" id="indonesiaDataContent">
                 <div class="table-container">
                     <div class="table-header">
-                        <h3 class="table-title" id="indonesiaBankDataTitle">Data Bank Indonesia</h3>
+                        <h3 class="table-title">Data Bank Indonesia</h3>
                         <div class="table-actions">
                             <button class="btn btn-sm btn-primary" id="exportIndonesiaDataBtn">
                                 <i class="fas fa-file-excel"></i>
-                                <span id="exportIndonesiaDataText">Export Excel</span>
+                                <span>Export Excel</span>
                             </button>
                         </div>
                     </div>
@@ -1663,16 +1484,16 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th id="thBankName5">Nama Bank</th>
-                                    <th id="thAccountOwner3">Pemilik Rekening</th>
-                                    <th id="thAccountNo3">Nomor Rekening</th>
-                                    <th id="thCurrentBalance3">Saldo Saat Ini</th>
-                                    <th id="thActions6">Aksi</th>
+                                    <th>Nama Bank</th>
+                                    <th>Pemilik Rekening</th>
+                                    <th>Nomor Rekening</th>
+                                    <th>Saldo Saat Ini</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody id="indonesiaBankDataList">
                                 <tr>
-                                    <td colspan="5" class="text-center" id="noIndonesiaBankData">Tidak ada data bank Indonesia</td>
+                                    <td colspan="5" class="text-center">Tidak ada data bank Indonesia</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1683,45 +1504,45 @@
             <!-- Generate Data Content -->
             <div class="dashboard-content" id="generateDataContent">
                 <div class="form-container">
-                    <h3 class="form-title" id="generateReportTitle">Generate Laporan</h3>
+                    <h3 class="form-title">Generate Laporan</h3>
                     <form id="generateForm">
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="generateMonth" id="monthLabel">Bulan</label>
+                                    <label for="generateMonth">Bulan</label>
                                     <select class="form-control" id="generateMonth" required>
-                                        <option value="" id="selectMonth">Pilih Bulan</option>
-                                        <option value="1" id="month1">Januari</option>
-                                        <option value="2" id="month2">Februari</option>
-                                        <option value="3" id="month3">Maret</option>
-                                        <option value="4" id="month4">April</option>
-                                        <option value="5" id="month5">Mei</option>
-                                        <option value="6" id="month6">Juni</option>
-                                        <option value="7" id="month7">Juli</option>
-                                        <option value="8" id="month8">Agustus</option>
-                                        <option value="9" id="month9">September</option>
-                                        <option value="10" id="month10">Oktober</option>
-                                        <option value="11" id="month11">November</option>
-                                        <option value="12" id="month12">Desember</option>
+                                        <option value="">Pilih Bulan</option>
+                                        <option value="1">Januari</option>
+                                        <option value="2">Februari</option>
+                                        <option value="3">Maret</option>
+                                        <option value="4">April</option>
+                                        <option value="5">Mei</option>
+                                        <option value="6">Juni</option>
+                                        <option value="7">Juli</option>
+                                        <option value="8">Agustus</option>
+                                        <option value="9">September</option>
+                                        <option value="10">Oktober</option>
+                                        <option value="11">November</option>
+                                        <option value="12">Desember</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="generateYear" id="yearLabel">Tahun</label>
+                                    <label for="generateYear">Tahun</label>
                                     <select class="form-control" id="generateYear" required>
-                                        <option value="" id="selectYear">Pilih Tahun</option>
+                                        <option value="">Pilih Tahun</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="generateType" id="reportTypeLabel">Jenis Laporan</label>
+                                    <label for="generateType">Jenis Laporan</label>
                                     <select class="form-control" id="generateType" required>
-                                        <option value="" id="selectReportType">Pilih Jenis</option>
-                                        <option value="all" id="typeAll">Semua Transaksi</option>
-                                        <option value="deposit" id="typeDepositOnly">Deposit Saja</option>
-                                        <option value="withdraw" id="typeWithdrawOnly">Withdraw Saja</option>
+                                        <option value="">Pilih Jenis</option>
+                                        <option value="all">Semua Transaksi</option>
+                                        <option value="deposit">Deposit Saja</option>
+                                        <option value="withdraw">Withdraw Saja</option>
                                     </select>
                                 </div>
                             </div>
@@ -1729,7 +1550,7 @@
                         <div class="form-footer">
                             <button type="submit" class="btn btn-primary" id="generateReportBtn">
                                 <i class="fas fa-file-export"></i>
-                                <span id="generateReportText">Generate</span>
+                                <span>Generate</span>
                             </button>
                         </div>
                     </form>
@@ -1737,11 +1558,11 @@
 
                 <div class="table-container" id="generatedReportContainer" style="display: none;">
                     <div class="table-header">
-                        <h3 class="table-title" id="generatedReportTitle">Laporan Bulanan</h3>
+                        <h3 class="table-title">Laporan Bulanan</h3>
                         <div class="table-actions">
                             <button class="btn btn-sm btn-success" id="exportGeneratedReportBtn">
                                 <i class="fas fa-file-excel"></i>
-                                <span id="exportGeneratedReportText">Export Excel</span>
+                                <span>Export Excel</span>
                             </button>
                         </div>
                     </div>
@@ -1749,14 +1570,14 @@
                         <table id="generatedReportTable">
                             <thead>
                                 <tr>
-                                    <th id="thDate4">Tanggal</th>
-                                    <th id="thSite4">Situs</th>
-                                    <th id="thUserId4">User ID</th>
-                                    <th id="thAccountName4">Nama Rekening</th>
-                                    <th id="thAccountNumber4">Nomor Rekening</th>
-                                    <th id="thAmount4">Nominal</th>
-                                    <th id="thType2">Tipe</th>
-                                    <th id="thBankName6">Bank/E-Wallet</th>
+                                    <th>Tanggal</th>
+                                    <th>Situs</th>
+                                    <th>User ID</th>
+                                    <th>Nama Rekening</th>
+                                    <th>Nomor Rekening</th>
+                                    <th>Nominal</th>
+                                    <th>Tipe</th>
+                                    <th>Bank/E-Wallet</th>
                                 </tr>
                             </thead>
                             <tbody id="generatedReportData">
@@ -1770,18 +1591,18 @@
             <!-- Profile Settings Content -->
             <div class="dashboard-content" id="profileSettingsContent">
                 <div class="form-container">
-                    <h3 class="form-title" id="profileSettingsTitle">Pengaturan Profil</h3>
+                    <h3 class="form-title">Pengaturan Profil</h3>
                     <form id="profileForm">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="profileName" id="profileNameLabel">Nama Lengkap</label>
+                                    <label for="profileName">Nama Lengkap</label>
                                     <input type="text" class="form-control" id="profileName" placeholder="Nama lengkap Anda" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="profileEmail" id="profileEmailLabel">Email</label>
+                                    <label for="profileEmail">Email</label>
                                     <input type="email" class="form-control" id="profileEmail" placeholder="Email Anda" required readonly>
                                 </div>
                             </div>
@@ -1789,7 +1610,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="profilePhoto" id="profilePhotoLabel">Foto Profil</label>
+                                    <label for="profilePhoto">Foto Profil</label>
                                     <input type="file" class="form-control" id="profilePhoto" accept="image/*">
                                 </div>
                                 <div class="form-group">
@@ -1798,12 +1619,12 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label id="profileInfoLabel">Informasi Akun</label>
+                                    <label>Informasi Akun</label>
                                     <div style="background: rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 8px;">
-                                        <p style="margin-bottom: 5px;"><strong id="joinedDateLabel">Bergabung pada:</strong> <span id="profileJoinDate">-</span></p>
-                                        <p style="margin-bottom: 5px;"><strong id="lastLoginLabel">Terakhir login:</strong> <span id="profileLastLogin">-</span></p>
-                                        <p style="margin-bottom: 5px;"><strong id="ipAddressLabel">IP Address:</strong> <span id="profileIpAddress">-</span></p>
-                                        <p style="margin-bottom: 0;"><strong id="statusLabel">Status:</strong> <span id="profileStatus" class="badge badge-success">Aktif</span></p>
+                                        <p style="margin-bottom: 5px;"><strong>Bergabung pada:</strong> <span id="profileJoinDate">-</span></p>
+                                        <p style="margin-bottom: 5px;"><strong>Terakhir login:</strong> <span id="profileLastLogin">-</span></p>
+                                        <p style="margin-bottom: 5px;"><strong>IP Address:</strong> <span id="profileIpAddress">-</span></p>
+                                        <p style="margin-bottom: 0;"><strong>Status:</strong> <span id="profileStatus" class="badge badge-success">Aktif</span></p>
                                     </div>
                                 </div>
                             </div>
@@ -1811,7 +1632,7 @@
                         <div class="form-footer">
                             <button type="submit" class="btn btn-success" id="saveProfileBtn">
                                 <i class="fas fa-save"></i>
-                                <span id="saveProfileText">Simpan Perubahan</span>
+                                <span>Simpan Perubahan</span>
                             </button>
                         </div>
                     </form>
@@ -1821,61 +1642,25 @@
             <!-- Password Settings Content -->
             <div class="dashboard-content" id="passwordSettingsContent">
                 <div class="form-container">
-                    <h3 class="form-title" id="passwordSettingsTitle">Ganti Password</h3>
+                    <h3 class="form-title">Ganti Password</h3>
                     <form id="passwordForm">
                         <div class="form-group">
-                            <label for="currentPassword" id="currentPasswordLabel">Password Saat Ini</label>
+                            <label for="currentPassword">Password Saat Ini</label>
                             <input type="password" class="form-control" id="currentPassword" placeholder="Masukkan password saat ini" required>
                         </div>
                         <div class="form-group">
-                            <label for="newPassword" id="newPasswordLabel">Password Baru</label>
+                            <label for="newPassword">Password Baru</label>
                             <input type="password" class="form-control" id="newPassword" placeholder="Masukkan password baru" required>
                         </div>
                         <div class="form-group">
-                            <label for="confirmNewPassword" id="confirmNewPasswordLabel">Konfirmasi Password Baru</label>
+                            <label for="confirmNewPassword">Konfirmasi Password Baru</label>
                             <input type="password" class="form-control" id="confirmNewPassword" placeholder="Konfirmasi password baru" required>
                         </div>
                         <div class="form-footer">
                             <button type="submit" class="btn btn-success" id="changePasswordBtn">
                                 <i class="fas fa-key"></i>
-                                <span id="changePasswordText">Ganti Password</span>
+                                <span>Ganti Password</span>
                             </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <!-- Maintenance Settings Content -->
-            <div class="dashboard-content" id="maintenanceSettingsContent">
-                <div class="form-container">
-                    <h3 class="form-title" id="maintenanceSettingsTitle">Maintenance Dashboard</h3>
-                    <div class="alert alert-warning" style="background: rgba(255, 193, 7, 0.2); color: #ffc107; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <span id="maintenanceWarningText">Fitur ini akan membersihkan data bug dan sisa data yang tidak terpakai. Data transaksi dan saldo Anda tidak akan terpengaruh.</span>
-                    </div>
-                    <form id="maintenanceForm">
-                        <div class="form-group">
-                            <label id="maintenanceScheduleLabel">Jadwalkan Maintenance</label>
-                            <div style="display: flex; align-items: center;">
-                                <select class="form-control" id="maintenanceSchedule" style="flex: 1; margin-right: 10px;">
-                                    <option value="now" id="maintenanceNow">Sekarang</option>
-                                    <option value="1h" id="maintenance1h">1 Jam Lagi</option>
-                                    <option value="3h" id="maintenance3h">3 Jam Lagi</option>
-                                    <option value="6h" id="maintenance6h">6 Jam Lagi</option>
-                                    <option value="12h" id="maintenance12h">12 Jam Lagi</option>
-                                    <option value="24h" id="maintenance24h">24 Jam Lagi</option>
-                                </select>
-                                <button type="button" class="btn btn-warning" id="startMaintenanceBtn">
-                                    <i class="fas fa-tools"></i>
-                                    <span id="startMaintenanceText">Mulai Maintenance</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label id="maintenanceHistoryLabel">Riwayat Maintenance</label>
-                            <div style="background: rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 8px; max-height: 200px; overflow-y: auto;">
-                                <p style="margin-bottom: 5px;"><i class="fas fa-info-circle"></i> <span id="noMaintenanceHistory">Belum ada riwayat maintenance</span></p>
-                            </div>
                         </div>
                     </form>
                 </div>
@@ -1885,11 +1670,11 @@
             <div class="dashboard-content" id="accountSettingsContent">
                 <div class="table-container">
                     <div class="table-header">
-                        <h3 class="table-title" id="accountSettingsTitle">Daftar Akun Pengguna</h3>
+                        <h3 class="table-title">Daftar Akun Pengguna</h3>
                         <div class="table-actions">
                             <button class="btn btn-sm btn-primary" id="refreshAccountsBtn">
                                 <i class="fas fa-sync-alt"></i>
-                                <span id="refreshAccountsText">Refresh</span>
+                                <span>Refresh</span>
                             </button>
                         </div>
                     </div>
@@ -1897,107 +1682,24 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th id="thNo">No</th>
-                                    <th id="thUserName">Nama Pengguna</th>
-                                    <th id="thUserEmail">Email</th>
-                                    <th id="thJoinDate">Tanggal Daftar</th>
-                                    <th id="thLastLogin2">Terakhir Login</th>
-                                    <th id="thStatus">Status</th>
-                                    <th id="thActions7">Aksi</th>
+                                    <th>No</th>
+                                    <th>Nama Pengguna</th>
+                                    <th>Email</th>
+                                    <th>Tanggal Daftar</th>
+                                    <th>Terakhir Login</th>
+                                    <th>Status</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody id="accountList">
                                 <tr>
-                                    <td colspan="7" class="text-center" id="noAccounts">Tidak ada data pengguna</td>
+                                    <td colspan="7" class="text-center">Tidak ada data pengguna</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-
-            <!-- Other Settings Content -->
-            <div class="dashboard-content" id="otherSettingsContent">
-                <div class="form-container">
-                    <h3 class="form-title" id="otherSettingsTitle">Pengaturan Lainnya</h3>
-                    <form id="otherSettingsForm">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="systemTheme" id="themeLabel">Tema Sistem</label>
-                                    <select class="form-control" id="systemTheme">
-                                        <option value="dark" id="themeDark">Gelap</option>
-                                        <option value="light" id="themeLight">Terang</option>
-                                        <option value="blue" id="themeBlue">Biru</option>
-                                        <option value="green" id="themeGreen">Hijau</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="systemCurrency" id="currencyLabel">Mata Uang Default</label>
-                                    <select class="form-control" id="systemCurrency">
-                                        <option value="IDR" selected id="currencyIDR">Rupiah (IDR)</option>
-                                        <option value="USD" id="currencyUSD">Dollar (USD)</option>
-                                        <option value="EUR" id="currencyEUR">Euro (EUR)</option>
-                                        <option value="CNY" id="currencyCNY">Yuan (CNY)</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="systemLanguage" id="systemLanguageLabel">Bahasa Sistem</label>
-                                    <select class="form-control" id="systemLanguage">
-                                        <option value="id" selected id="langID">Indonesia</option>
-                                        <option value="en" id="langEN">English</option>
-                                        <option value="zh" id="langZH">中文 (Chinese)</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="systemTimezone" id="timezoneLabel">Zona Waktu</label>
-                                    <select class="form-control" id="systemTimezone">
-                                        <option value="Asia/Jakarta" selected id="timezoneJakarta">WIB (Jakarta)</option>
-                                        <option value="Asia/Shanghai" id="timezoneShanghai">Waktu China (Shanghai)</option>
-                                        <option value="UTC" id="timezoneUTC">UTC</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label id="systemInfoLabel">Informasi Sistem</label>
-                            <div style="background: rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 8px;">
-                                <p style="margin-bottom: 5px;"><strong id="versionLabel">Versi:</strong> <span id="systemVersion">1.0.0</span></p>
-                                <p style="margin-bottom: 5px;"><strong id="lastUpdateLabel">Pembaruan Terakhir:</strong> <span id="systemLastUpdate">-</span></p>
-                                <p style="margin-bottom: 5px;"><strong id="databaseLabel">Database:</strong> <span id="systemDatabase">Firebase Realtime</span></p>
-                                <p style="margin-bottom: 0;"><strong id="status2Label">Status:</strong> <span id="systemStatus" class="badge badge-success">Berjalan Normal</span></p>
-                            </div>
-                        </div>
-                        <div class="form-footer">
-                            <button type="submit" class="btn btn-success" id="saveSettingsBtn">
-                                <i class="fas fa-save"></i>
-                                <span id="saveSettingsText">Simpan Pengaturan</span>
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Maintenance Mode -->
-    <div class="maintenance-mode" id="maintenanceMode" style="display: none;">
-        <div class="maintenance-content">
-            <div class="maintenance-icon">
-                <i class="fas fa-tools"></i>
-            </div>
-            <h1 class="maintenance-title" id="maintenanceModeTitle">MAINTENANCE MODE</h1>
-            <p class="maintenance-text" id="maintenanceModeText">Dashboard sedang dalam proses maintenance. Kami akan kembali online dalam:</p>
-            <div class="countdown" id="maintenanceCountdown">01:00:00</div>
-            <p id="maintenanceNote">Catatan: Semua data transaksi dan saldo Anda aman dan tidak akan terpengaruh oleh proses ini.</p>
         </div>
     </div>
 
@@ -2048,12 +1750,7 @@
         // DOM Elements
         const authContainer = document.getElementById('authContainer');
         const dashboardContainer = document.getElementById('dashboardContainer');
-        const loginBox = document.getElementById('loginBox');
-        const registerBox = document.getElementById('registerBox');
         const loginForm = document.getElementById('loginForm');
-        const registerForm = document.getElementById('registerForm');
-        const switchToRegister = document.getElementById('switchToRegister');
-        const switchToLogin = document.getElementById('switchToLogin');
         const logoutBtn = document.getElementById('logoutBtn');
         const dropdownLogout = document.getElementById('dropdownLogout');
         const menuToggle = document.getElementById('menuToggle');
@@ -2063,14 +1760,7 @@
         const settingsChevron = document.getElementById('settingsChevron');
         const menuLinks = document.querySelectorAll('.menu-link[data-target]');
         const dashboardContents = document.querySelectorAll('.dashboard-content');
-        const languageBtn = document.getElementById('languageBtn');
-        const languageDropdown = document.getElementById('languageDropdown');
-        const languageItems = document.querySelectorAll('.language-dropdown .dropdown-item');
-        const currentLanguage = document.getElementById('currentLanguage');
-        const maintenanceMode = document.getElementById('maintenanceMode');
-        const startMaintenanceBtn = document.getElementById('startMaintenanceBtn');
-        const spaceBackground = document.getElementById('spaceBackground');
-        const notificationContainer = document.getElementById('notificationContainer');
+        const realTimeClock = document.getElementById('realTimeClock');
         const userAvatar = document.getElementById('userAvatar');
         const userName = document.getElementById('userName');
         
@@ -2082,12 +1772,10 @@
 
         // App State
         let currentUser = null;
-        let maintenanceActive = false;
-        let maintenanceEndTime = null;
-        let language = 'id';
         let userData = {};
         let bankAccounts = [];
         let transactions = [];
+        let activeNotifications = new Set();
 
         // Initialize Space Background
         function initSpaceBackground() {
@@ -2101,7 +1789,7 @@
                 star.style.top = `${Math.random() * 100}%`;
                 star.style.opacity = Math.random();
                 star.style.setProperty('--duration', `${5 + Math.random() * 10}s`);
-                spaceBackground.appendChild(star);
+                document.getElementById('spaceBackground').appendChild(star);
             }
 
             // Create meteors
@@ -2111,12 +1799,18 @@
                 meteor.style.left = `${Math.random() * 100}%`;
                 meteor.style.top = `${Math.random() * 100}%`;
                 meteor.style.setProperty('--meteor-duration', `${5 + Math.random() * 10}s`);
-                spaceBackground.appendChild(meteor);
+                document.getElementById('spaceBackground').appendChild(meteor);
             }
         }
 
         // Show Notification
         function showNotification(type, title, message) {
+            // Check if this notification is already active
+            const notificationKey = `${type}-${title}-${message}`;
+            if (activeNotifications.has(notificationKey)) return;
+            
+            activeNotifications.add(notificationKey);
+            
             const notification = document.createElement('div');
             notification.className = `notification ${type}`;
             notification.innerHTML = `
@@ -2135,7 +1829,7 @@
                 </button>
             `;
             
-            notificationContainer.appendChild(notification);
+            document.getElementById('notificationContainer').appendChild(notification);
             
             // Show notification
             setTimeout(() => {
@@ -2148,6 +1842,7 @@
                 notification.classList.remove('show');
                 setTimeout(() => {
                     notification.remove();
+                    activeNotifications.delete(notificationKey);
                 }, 300);
             });
             
@@ -2156,6 +1851,7 @@
                 notification.classList.remove('show');
                 setTimeout(() => {
                     notification.remove();
+                    activeNotifications.delete(notificationKey);
                 }, 300);
             }, 5000);
         }
@@ -2186,6 +1882,16 @@
                 day: '2-digit',
                 month: '2-digit',
                 year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+        }
+
+        // Update Real-time Clock
+        function updateClock() {
+            const now = new Date();
+            realTimeClock.textContent = now.toLocaleTimeString('id-ID', {
                 hour: '2-digit',
                 minute: '2-digit',
                 second: '2-digit'
@@ -2233,41 +1939,6 @@
             });
         });
 
-        // Language Selector
-        languageBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            languageDropdown.style.display = languageDropdown.style.display === 'block' ? 'none' : 'block';
-        });
-
-        // Close language dropdown when clicking outside
-        document.addEventListener('click', () => {
-            languageDropdown.style.display = 'none';
-        });
-
-        // Language Selection
-        languageItems.forEach(item => {
-            item.addEventListener('click', (e) => {
-                e.preventDefault();
-                const lang = item.getAttribute('data-lang');
-                currentLanguage.textContent = item.textContent;
-                language = lang;
-                showNotification('success', 'Bahasa Diubah', `Bahasa antarmuka telah diubah ke ${item.textContent}`);
-            });
-        });
-
-        // Switch Between Login and Register Forms
-        switchToRegister.addEventListener('click', (e) => {
-            e.preventDefault();
-            loginBox.style.display = 'none';
-            registerBox.style.display = 'block';
-        });
-
-        switchToLogin.addEventListener('click', (e) => {
-            e.preventDefault();
-            registerBox.style.display = 'none';
-            loginBox.style.display = 'block';
-        });
-
         // Login Form Submission
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -2294,42 +1965,6 @@
                 });
         });
 
-        // Register Form Submission
-        registerForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const name = document.getElementById('registerName').value;
-            const email = document.getElementById('registerEmail').value;
-            const password = document.getElementById('registerPassword').value;
-            const confirmPassword = document.getElementById('registerConfirmPassword').value;
-            
-            if (password !== confirmPassword) {
-                showNotification('error', 'Pendaftaran Gagal', 'Password dan konfirmasi password tidak cocok.');
-                return;
-            }
-            
-            // Firebase registration
-            auth.createUserWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    // Save additional user data
-                    return database.ref('users/' + userCredential.user.uid).set({
-                        name: name,
-                        email: email,
-                        createdAt: new Date().toISOString(),
-                        lastLogin: new Date().toISOString(),
-                        ipAddress: '127.0.0.1' // In a real app, you'd get this from the request
-                    });
-                })
-                .then(() => {
-                    showNotification('success', 'Pendaftaran Berhasil', 'Akun Anda telah berhasil dibuat. Silakan login.');
-                    registerBox.style.display = 'none';
-                    loginBox.style.display = 'block';
-                    registerForm.reset();
-                })
-                .catch(error => {
-                    showNotification('error', 'Pendaftaran Gagal', error.message);
-                });
-        });
-
         // Handle Successful Login
         function handleSuccessfulLogin(userCredential) {
             currentUser = userCredential.user;
@@ -2339,10 +1974,22 @@
                 .then(snapshot => {
                     userData = snapshot.val() || {};
                     
+                    // If new user, create user data
+                    if (!userData) {
+                        userData = {
+                            name: currentUser.email.split('@')[0],
+                            email: currentUser.email,
+                            createdAt: new Date().toISOString(),
+                            lastLogin: new Date().toISOString(),
+                            ipAddress: '127.0.0.1'
+                        };
+                        return database.ref('users/' + currentUser.uid).set(userData);
+                    }
+                    
                     // Update last login
                     const updates = {
                         lastLogin: new Date().toISOString(),
-                        ipAddress: '127.0.0.1' // In a real app, you'd get this from the request
+                        ipAddress: '127.0.0.1'
                     };
                     return database.ref('users/' + currentUser.uid).update(updates);
                 })
@@ -2375,7 +2022,7 @@
             const currentYear = new Date().getFullYear();
             
             // Clear existing options
-            yearSelect.innerHTML = '<option value="" id="selectYear">Pilih Tahun</option>';
+            yearSelect.innerHTML = '<option value="">Pilih Tahun</option>';
             
             // Add years from current year to 5 years back
             for (let year = currentYear; year >= currentYear - 5; year--) {
@@ -2396,12 +2043,9 @@
                 
                 dashboardContainer.style.display = 'none';
                 authContainer.style.display = 'flex';
-                loginBox.style.display = 'block';
-                registerBox.style.display = 'none';
                 
                 // Reset forms
                 loginForm.reset();
-                registerForm.reset();
                 
                 showNotification('success', 'Logout Berhasil', 'Anda telah berhasil logout.');
             }).catch(error => {
@@ -3132,42 +2776,6 @@
             showNotification('success', 'Laporan Dibuat', `Laporan untuk ${monthNames[parseInt(month)-1]} ${year} berhasil dibuat.`);
         });
 
-        // Start Maintenance
-        startMaintenanceBtn.addEventListener('click', () => {
-            if (confirm('Apakah Anda yakin ingin memulai maintenance? Dashboard akan tidak dapat diakses selama 1 jam.')) {
-                maintenanceActive = true;
-                maintenanceEndTime = new Date(Date.now() + 60 * 60 * 1000); // 1 hour from now
-                
-                // Show maintenance mode
-                maintenanceMode.style.display = 'flex';
-                dashboardContainer.style.display = 'none';
-                
-                // Start countdown
-                const countdown = document.getElementById('maintenanceCountdown');
-                const interval = setInterval(() => {
-                    const now = new Date();
-                    const diff = maintenanceEndTime - now;
-                    
-                    if (diff <= 0) {
-                        clearInterval(interval);
-                        maintenanceActive = false;
-                        maintenanceMode.style.display = 'none';
-                        dashboardContainer.style.display = 'block';
-                        showNotification('success', 'Maintenance Selesai', 'Dashboard telah kembali online.');
-                        return;
-                    }
-                    
-                    const hours = Math.floor(diff / (1000 * 60 * 60));
-                    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-                    
-                    countdown.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                }, 1000);
-                
-                showNotification('warning', 'Maintenance Dimulai', 'Dashboard akan kembali online dalam 1 jam.');
-            }
-        });
-
         // View All Transactions
         document.getElementById('viewAllTransactions').addEventListener('click', (e) => {
             e.preventDefault();
@@ -3176,35 +2784,6 @@
                 transactionLink.click();
             }
         });
-
-        // Real-time Clock
-        function updateClock() {
-            const now = new Date();
-            const clockElement = document.createElement('div');
-            clockElement.className = 'real-time-clock';
-            clockElement.textContent = now.toLocaleTimeString('id-ID', {
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
-            });
-            
-            const existingClock = document.querySelector('.real-time-clock');
-            if (existingClock) {
-                existingClock.replaceWith(clockElement);
-            } else {
-                const topbarRight = document.querySelector('.topbar-right');
-                if (topbarRight) {
-                    // Add network indicator
-                    const networkIndicator = document.createElement('span');
-                    networkIndicator.className = 'network-indicator';
-                    networkIndicator.title = 'Koneksi aktif';
-                    
-                    // Add clock after network indicator
-                    topbarRight.insertBefore(networkIndicator, topbarRight.firstChild);
-                    topbarRight.insertBefore(clockElement, topbarRight.firstChild);
-                }
-            }
-        }
 
         // Initialize App
         function initApp() {
